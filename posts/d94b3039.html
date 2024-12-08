@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>神经网络技术 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这篇文章介绍了神经网络技术，包括神经网络概念与术语，感知机与神经元，前馈神经网络，卷积神经网络，循环神经网络，深度信念网络，以及生成对抗网络。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络技术">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/d94b3039.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:description" content="这篇文章介绍了神经网络技术，包括神经网络概念与术语，感知机与神经元，前馈神经网络，卷积神经网络，循环神经网络，深度信念网络，以及生成对抗网络。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-neuralnetwork.webp">
+<meta property="article:published_time" content="2024-11-16T15:05:55.000Z">
+<meta property="article:modified_time" content="2024-12-08T22:19:21.425Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="前馈神经网络">
+<meta property="article:tag" content="CNN">
+<meta property="article:tag" content="卷积神经网络">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="循环神经网络">
+<meta property="article:tag" content="DBN">
+<meta property="article:tag" content="深度信念网络">
+<meta property="article:tag" content="GAN">
+<meta property="article:tag" content="生成对抗网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-neuralnetwork.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/d94b3039.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '神经网络技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-12-08 22:19:21',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">184</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/schedule/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-neuralnetwork.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">神经网络技术</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/schedule/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">神经网络技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-16T15:05:55.000Z" title="发表于 2024-11-16 15:05:55">2024-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-08T22:19:21.425Z" title="更新于 2024-12-08 22:19:21">2024-12-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/">AI-X开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-neuralnetwork.webp);"></div><article class="post-content" id="article-container"><h1 id="神经网络概念与术语"><a href="#神经网络概念与术语" class="headerlink" title="神经网络概念与术语"></a>神经网络概念与术语</h1><h2 id="感知机与神经元"><a href="#感知机与神经元" class="headerlink" title="感知机与神经元"></a>感知机与神经元</h2><h2 id="前馈神经网络"><a href="#前馈神经网络" class="headerlink" title="前馈神经网络"></a>前馈神经网络</h2><h2 id="卷积神经网络-CNN"><a href="#卷积神经网络-CNN" class="headerlink" title="卷积神经网络 CNN"></a>卷积神经网络 CNN</h2><p>CNN，即卷积神经网络（Convolutional Neural Network），是一种特别为处理具有<strong>类似网格结构(比如，图片)的数据</strong>而设计的深度学习算法，最典型的应用是<strong>图像识别和处理</strong>，其中数据可以被视为2D网格。CNN通过<strong>卷积层、池化层和全连接层的组合</strong>来自动并有效地提取图像中的特征，用于<strong>分类、检测</strong>等任务。</p>
+<p>这是CNN的标准定义，卷积神经网络，这个翻译至少给理解它加深了一个难度。Convolutional 解释为盘旋，缠绕，估计就好很多。配合下面这张gif图，就彻底搞明白了。本质上，是使用了一个卷积核(过滤器，或者叫matrix)，类似盘旋的方式，依次从左到右，从上到下，跟输入数据做<code>加减乘除</code>运算。<br><img src="/posts/d94b3039/filter-kernel.gif" alt="alt text"></p>
+<h3 id="CNN的由来"><a href="#CNN的由来" class="headerlink" title="CNN的由来"></a>CNN的由来</h3><p>CNN的基础理念可以追溯到Hubel和Wiesel在1960年代对猫的视觉皮层的研究，他们发现视觉皮层包含专门对光斑、边缘等简单模式敏感的神经元。</p>
+<p>基于这一发现，Fukushima在1980年提出了一个层次化的、无监督学习的神经网络模型，称为“Neocognitron”，可以看作是现代CNN的雏形。CNN在1998年由Yann LeCun及其合作者提出，提出CNN最初的目的是为了解决全连接神经网络在处理数据时的局限性。</p>
+<p><strong>图像数据具有一种固有的空间结构</strong> - 相邻的像素点在空间上是相连的,并携带着相似的局部模式和特征。例如一个像素及其周围的像素很可能属于同一个边缘或物体的一部分。</p>
+<p>传统的全连接神经网络，将图像数据直接展平作为输入,把图像转化为1维向量,这意味着图像中相邻像素之间的空间邻近性信息丢失,破坏了图像的局部连续性特征,也不能有效地利用图像中的平移不变性。</p>
+<p>网络在处理这个向量时，等同对待所有特征（像素值），无法识别哪些特征是相邻并可能具有相关性的。比如，识别图片中是否有一只猫，我们希望的是，猫在图片的左边，或者右边（相当于做了图像的平移），都能够识别出来，全连接神经网络并不能很好地解决。</p>
+<p>CNN网络结构如下，接下来，我们来讲讲理解CNN网络结构，必须要了解的知识点。<br><img src="/posts/d94b3039/cnn-structure.png" alt="alt text"></p>
+<h3 id="什么是卷积核-filter"><a href="#什么是卷积核-filter" class="headerlink" title="什么是卷积核(filter)"></a>什么是卷积核(filter)</h3><p>卷积核（或过滤器）在卷积神经网络（CNN）中是用于<strong>提取特征的关键组件</strong>。每个卷积核由一系列可学习的权重组成，以帮助模型识别输入数据中的特定模式或特征，这些核通过在输入数据上滑动（<code>盘旋</code>操作）来应用，从而产生特征图（feature map），这个过程能够捕获输入数据中的空间和模式信息。</p>
+<p>每个卷积核仅与输入图像的一个小区域（即局部感知域）进行运算，这意味着网络的每个神经元不需要一次性处理整个图像，而是只处理一小块区域。这种机制使得<strong>卷积核能够捕捉到局部的特征</strong>，如边缘、角点、纹理等。</p>
+<p>卷积操作的另一个关键特性是<strong>权重共享</strong>，即网络中的卷积核在整个输入图像上滑动时使用相同的权重集。这不仅显著减少了模型的参数数量，提高了训练效率，而且意味着一旦卷积核学会了在图像的某一部分识别特定特征，它就可以在图像的任何其他部分识别同样的特征。这种<strong>平移不变性</strong>（即特征不论位于图像何处都能被相同方式识别的能力）是卷积神经网络特别适合图像处理任务的关键原因之一。</p>
+<p>核的大小会影响模型捕捉输入数据特征的能力：</p>
+<p>小核尺寸（如1x1，3x3）：能够捕捉到细粒度特征，对于捕获局部信息非常有效。3x3尺寸的核特别流行，因为它们在提取特征时提供了良好的平衡，既能捕获重要信息，又能保持计算效率。多个3x3的卷积层堆叠在一起，可以有效地增加网络的深度，而不会显著增加参数数量和计算复杂度。</p>
+<p>大核尺寸（如5x5，7x7）：可以捕捉更广泛的空间信息，对于提取更大范围的特征很有帮助。但是，大核尺寸会增加模型的参数数量，从而增加计算负担和过拟合的风险。</p>
+<p>实际应用中，核大小的选择取决于具体任务和输入数据的特性。一般来说，3x3的核被广泛认为是效率和效果之间的一个好平衡，并且是很多现代CNN架构的首选。</p>
+<h3 id="卷积核与输入层的Channel"><a href="#卷积核与输入层的Channel" class="headerlink" title="卷积核与输入层的Channel"></a>卷积核与输入层的Channel</h3><p>channels 该如何理解？先看一看不同框架中的解释文档。<br>首先，是 tensorflow 中给出的，对于输入样本中 channels 的含义。<strong>一般的RGB图片，channels 数量是 3 （红、绿、蓝）</strong>；而monochrome图片，channels 数量是 1 。channels : Number of color channels in the example images. For color images, the number of channels is 3 (red, green, blue). For monochrome images, there is just 1 channel (black). ——tensorflow</p>
+<p>其次，mxnet 中提到的，一般 channels 的含义是，每个卷积层中卷积核的数量。channels (int) : The dimensionality of the output space, i.e. the number of output channels (filters) in the convolution. ——mxnet</p>
+<p>为了更直观的理解，看下面的例子，图片使用自吴恩达老师的深度学习课程。</p>
+<p>如下图，假设现有一个为 6×6×3的图片样本，使用 3×3×3的卷积核（filter）进行卷积操作。此时输入图片的 channels 为 3，而卷积核中的 in_channels 与 需要进行卷积操作的数据的 channels 一致（这里就是图片样本，为3）。<br><img src="/posts/d94b3039/cnn-pic-rgb3.png" alt="alt text"><br>接下来，进行卷积操作，卷积核中的27个数字分别与样本对应相乘后，再进行求和，得到第一个结果。依次进行，最终得到 4×4的结果。<br><img src="/posts/d94b3039/cnn-pic-rgb3-27.png" alt="alt text"><br>上面步骤完成后，由于只有一个卷积核，所以最终得到的结果为 4×4×1,out_channels 为 1。<br>在实际应用中，都会使用多个卷积核。这里如果再加一个卷积核，就会得到 4×4×2的结果。<br><img src="/posts/d94b3039/cnn-pic-rgb3-27-2.png" alt="alt text"></p>
+<p>总结一下，把上面提到的 channels 分为三种：</p>
+<p>最初输入的图片样本的 channels ，取决于图片类型，比如RGB；<br>卷积操作完成后输出的 out_channels ，取决于卷积核的数量。此时的 out_channels 也会作为下一次卷积时的卷积核的 in_channels；<br>卷积核中的 in_channels ，刚刚2中已经说了，就是上一次卷积的 out_channels ，如果是第一次做卷积，就是1中样本图片的 channels 。</p>
+<p>在CNN中，想搞清楚每一层的传递关系，主要就是 height,width 的变化情况，和 channels 的变化情况。</p>
+<h3 id="卷积核是如何跟输入做计算的，为什么要做padding"><a href="#卷积核是如何跟输入做计算的，为什么要做padding" class="headerlink" title="卷积核是如何跟输入做计算的，为什么要做padding?"></a>卷积核是如何跟输入做计算的，为什么要做padding?</h3><p>卷积运算的基本过程是：卷积核(也叫滤波器kernel)在输入数据(如图像)上滑动，对与卷积核覆盖的局部数据区域进行元素级别的加权求和运算(就是小学学的<code>加减乘除</code>四则运算)，得到一个卷积后的特征映射。</p>
+<p>如下面这个例子，假设输入数据是个二维矩阵，卷积核也是一个二维矩阵(当然也可以是三维的用于彩色图像)，卷积核在输入数据上按stride(步长)大小滑动，在每个位置，将卷积核与输入数据的对应区域进行元素级别乘法、求和运算,得到一个新的像素值,最终就得到了一个新的特征映射层。<br><img src="/posts/d94b3039/featuremap.png" alt="alt text"><br>或者这样理解，卷积核3x3的矩阵，覆盖在原来输入的数据上，也就得到两个重叠在一起的九宫格，九宫格中重叠位置的元素做乘法运算，运算的结果做加法，然后输出到对应的位置。</p>
+<p>那为什么还要做padding呢？核心原因有三个：</p>
+<ol>
+<li><p><strong>提升数据边缘特征信号的有效性</strong>，如果观察卷积操作的过程，我们可以发现，边缘数据参与卷积的次数要小于中间区域，在处理图像等空间数据时，边缘区域包含有用的信息，尤其是对于图像识别、边缘检测等任务。不使用padding可能会导致边缘信息在每次卷积操作后逐渐减少，特别是在深层网络中，这可能会损害模型的性能。</p>
+</li>
+<li><p><strong>支持深层次的网络结构，在设计深层网络时，可能需要多个卷积层叠加</strong>。如果每次卷积都减小特征图的尺寸，会限制网络深度，因为特征图的尺寸不能无限缩小。通过使用padding保持尺寸不变，可以构建更深的网络结构，而不必担心输入尺寸的快速减少。</p>
+</li>
+<li><p>便于后续做特征融合。</p>
+</li>
+</ol>
+<p>那么，如何做Padding呢？通用做法是给原来的输入扩展出<code>边缘</code>，使得卷积核能从边缘处开始计算。padding和计算过程可以看下面这个gif图。<br><img src="/posts/d94b3039/padding.gif" alt="alt text"></p>
+<h3 id="什么是子采样，池化-pooling"><a href="#什么是子采样，池化-pooling" class="headerlink" title="什么是子采样，池化(pooling)"></a>什么是子采样，池化(pooling)</h3><p>本文子采样（Subsampling）和池化（Pooling）是卷积神经网络（CNN）中常用的操作，用于减小特征图的尺寸，从而减少计算量和模型参数的数量。这两种操作有助于提高模型的泛化能力，通过减少过拟合的风险来提升模型性能。</p>
+<p>子采样和池化还是有一些区别，接下来分别讲解。</p>
+<ol>
+<li>subsampling(子采样)</li>
+</ol>
+<p>子采样是一种减少数据维度和复杂度的过程，旨在降低后续层的计算需求并提高模型的效率。在图像处理和深度学习中，子采样通常意味着减小图像或特征图的尺寸，同时尽量保留重要信息。子采样的方法包括但不限于：<br>调整卷积核的stride：卷积核默认是一次挪一步，可以改成2步，减少采样</p>
+<p>池化操作，也就是下面要讲的pooling</p>
+<ol start="2">
+<li>池化(pooling)</li>
+</ol>
+<p>池化是子采样的一种特殊形式，专门用于深度学习中。它通过<strong>对特征图的邻近像素进行聚合操作来减小尺寸</strong>，最常见的池化操作是最大池化（Max Pooling，取区域内的最大值）和平均池化（Average Pooling，取区域内的平均值）。</p>
+<p>池化层的引入是基于这样一个观察：在图像中，一旦一个特征被检测到，其确切的位置相对于周围的像素来说就不那么重要。通过池化，<strong>CNN能够检测到特征的存在，并对图像中的小变化（如平移）保持不变性</strong>。此外，池化层通过减少特征图的尺寸，帮助减少计算量和模型的过拟合风险。<br><img src="/posts/d94b3039/maxpooling.png" alt="alt text"></p>
+<p align="center">maxpooling</p>
+
+<p>pooling翻译成池化，也是有故意提升难度的嫌疑。pooling，本质是提取某一个区域内，最显著的特征，比如做max pooling，我们就可以理解为，在做指定的区域内(pool，想象成泳池的形状，框住一片数据)，<strong>图像如果出现平移</strong>，我们提取的特征都是一样的，因为不管最大值在上下左右的哪个位置，那片区域的最大值都是一样的。</p>
+<h3 id="什么是dropout，它有什么作用"><a href="#什么是dropout，它有什么作用" class="headerlink" title="什么是dropout，它有什么作用"></a>什么是dropout，它有什么作用</h3><p>Dropout是一种在训练深度神经网络时广泛使用的正则化技术，由Srivastava等人在2014年提出。它的核心思想非常直观：在网络的训练过程中，随机丢弃（以一定的概率，不计算某些神经元）网络中的一部分神经元（以及它们的连接），从而防止模型对训练数据的过拟合。</p>
+<p>这意味着在每次训练迭代中，每个神经元都有一定概率不被包含在前向和后向传播过程中，这个概率由dropout率控制，通常设置为0.5（即50%的概率被丢弃）。</p>
+<p>在实践中，应用dropout非常简单。只有在神经网络的训练过程中，在全连接层或卷积层之后加入dropout层。在测试或评估模型时，关闭dropout（即保留所有的神经元），确保所有的特征都被用于决策。</p>
+<h3 id="pytorch实现CNN示例"><a href="#pytorch实现CNN示例" class="headerlink" title="pytorch实现CNN示例"></a>pytorch实现CNN示例</h3><p>用pytorch实现一个简单的CNN网络架构：</p>
+<ol>
+<li>第一个卷积层：使用32个3x3的卷积核，步长为1，激活函数为ReLU。</li>
+<li>第一个池化层：使用2x2的最大池化。</li>
+<li>第二个卷积层：使用64个3x3的卷积核，步长为1，激活函数为ReLU。</li>
+<li>第二个池化层：使用2x2的最大池化。</li>
+<li>一个全连接层：将前一层的输出平坦化后，连接到一个具有128个神经元的全连接层，激活函数为ReLU。</li>
+<li>输出层：一个具有10个神经元的全连接层，对应于10个类别的输出，使用Softmax函数作为激活函数。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">import torch.nn.functional as F</span><br><span class="line"></span><br><span class="line">class SimpleCNN(nn.Module):</span><br><span class="line">def __init__(self):</span><br><span class="line">super(SimpleCNN, self).__init__()</span><br><span class="line">self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)</span><br><span class="line">self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)</span><br><span class="line">self.pool = nn.MaxPool2d(kernel_size=2, stride=2)</span><br><span class="line">self.fc1 = nn.Linear(7*7*64, 128)</span><br><span class="line">self.fc2 = nn.Linear(128, 10)</span><br><span class="line"></span><br><span class="line">def forward(self, x):</span><br><span class="line">x = self.pool(F.relu(self.conv1(x)))</span><br><span class="line">x = self.pool(F.relu(self.conv2(x)))</span><br><span class="line">x = x.view(-1, 7*7*64)</span><br><span class="line">x = F.relu(self.fc1(x))</span><br><span class="line">x = self.fc2(x)</span><br><span class="line">return F.log_softmax(x, dim=1)</span><br><span class="line"></span><br><span class="line"># 实例化模型</span><br><span class="line">model = SimpleCNN()</span><br><span class="line">print(model)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="循环神经网络-RNN"><a href="#循环神经网络-RNN" class="headerlink" title="循环神经网络(RNN)"></a>循环神经网络(RNN)</h2><ul>
+<li>循环神经网络（recurrent neural network）：时间上的展开，处理的是序列结构的信息，是有环图</li>
+<li>递归神经网络（recursive neural network）：空间上的展开，处理的是树状结构的信息，是无环图<br>二者简称都是 RNN，但是一般提到的RNN指的是循环神经网络（recurrent neural network）<br>循环神经网络是一类用于处理序列数据的神经网络，就像卷积神经网络是专门用于处理网格化数据（如一张图像）的神经网络，循环神经网络时专门用于处理序列 x^{(1)},…,x^{(T)} 的神经网络。</li>
+</ul>
+<h2 id="深度信念网络"><a href="#深度信念网络" class="headerlink" title="深度信念网络"></a>深度信念网络</h2><h2 id="生成对抗网络"><a href="#生成对抗网络" class="headerlink" title="生成对抗网络"></a>生成对抗网络</h2><p align="center">持续完善中</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/d94b3039.html">https://www.ai-x.co.uk/posts/d94b3039.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">前馈神经网络</a><a class="post-meta__tags" href="/tags/CNN/">CNN</a><a class="post-meta__tags" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a><a class="post-meta__tags" href="/tags/RNN/">RNN</a><a class="post-meta__tags" href="/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">循环神经网络</a><a class="post-meta__tags" href="/tags/DBN/">DBN</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E5%BF%B5%E7%BD%91%E7%BB%9C/">深度信念网络</a><a class="post-meta__tags" href="/tags/GAN/">GAN</a><a class="post-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/">生成对抗网络</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-neuralnetwork.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/d48d8e79.html" title="TensorFlow技术"><img class="cover" src="/img/cover-tensor-graph.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">TensorFlow技术</div></div><div class="info-2"><div class="info-item-1">TensorFlow 是一个开源的深度学习框架，由 Google Brain 团队开发，并于 2015 年正式发布。TensorFlow 被广泛应用于各种深度学习任务，如图像识别、自然语言处理、语音识别等。它能够处理大规模的多维数据，并支持在多种硬件平台上运行，如 CPU、GPU 和 TPU（Tensor Processing Unit）。TensorFlow 在 Python 中的使用非常广泛，因为 Python 是机器学习和数据科学领域的主流编程语言。 一. TensorFlow 基础概念与术语1. 张量（Tensor）张量是 TensorFlow 的核心数据结构。它是一个多维数组，用来表示数据。张量的维度（也称为“阶”或“秩”，Rank）可以是任意的，从标量（0 阶张量）到高维张量。张量可以看作是泛化了的标量、向量和矩阵。它们在 TensorFlow 中以 tf.Tensor 对象的形式存在，主要特性包括：  阶（Rank）：张量的维度数，例如标量是 0 阶，向量是 1 阶，矩阵是 2 阶，三维数组是 3...</div></div></div></a><a class="pagination-related" href="/posts/8123fe3c.html" title="神经网络技术的关键组件"><img class="cover" src="/img/cover-neuralnetwork.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">神经网络技术的关键组件</div></div><div class="info-2"><div class="info-item-1">在深度学习的广阔天地里，神经网络如同一座复杂而精密的城堡，而梯度下降、损失函数和激活函数则是这座城堡中不可或缺的基石。今天，我们将一起踏上这场优化之旅，揭开它们神秘的面纱。 一、梯度下降(Gradient Descent)：寻找最优解的导航仪梯度，简单来说，就是函数在某一点上变化最快的方向。想象一下你站在一座山的山顶，梯度下降算法就像是告诉你如何最快地找到下山的路径。在神经网络中，这个“山”就是我们的损失函数，而“下山”则是寻找损失函数最小值的过程。梯度下降算法的核心在于，通过计算损失函数对每个参数的梯度（即偏导数），然后沿着梯度的反方向更新参数值，以期望损失函数能够逐渐减小。这个过程中，每一步的更新幅度由学习率控制，学习率过大会导致收敛不稳定，过小则会使收敛速度过慢。 二、损失函数(loss function)及代价函数：衡量模型好坏的标尺损失函数，顾名思义，就是用来衡量模型预测结果与实际结果之间差异的函数。在神经网络中，损失函数的选择至关重要，因为它直接决定了模型训练的方向和效果。 常见的损失函数包括均方误差（Mean Squared...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/8123fe3c.html" title="神经网络技术的关键组件"><img class="cover" src="/img/cover-neuralnetwork.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-16</div><div class="info-item-2">神经网络技术的关键组件</div></div><div class="info-2"><div class="info-item-1">在深度学习的广阔天地里，神经网络如同一座复杂而精密的城堡，而梯度下降、损失函数和激活函数则是这座城堡中不可或缺的基石。今天，我们将一起踏上这场优化之旅，揭开它们神秘的面纱。 一、梯度下降(Gradient Descent)：寻找最优解的导航仪梯度，简单来说，就是函数在某一点上变化最快的方向。想象一下你站在一座山的山顶，梯度下降算法就像是告诉你如何最快地找到下山的路径。在神经网络中，这个“山”就是我们的损失函数，而“下山”则是寻找损失函数最小值的过程。梯度下降算法的核心在于，通过计算损失函数对每个参数的梯度（即偏导数），然后沿着梯度的反方向更新参数值，以期望损失函数能够逐渐减小。这个过程中，每一步的更新幅度由学习率控制，学习率过大会导致收敛不稳定，过小则会使收敛速度过慢。 二、损失函数(loss function)及代价函数：衡量模型好坏的标尺损失函数，顾名思义，就是用来衡量模型预测结果与实际结果之间差异的函数。在神经网络中，损失函数的选择至关重要，因为它直接决定了模型训练的方向和效果。 常见的损失函数包括均方误差（Mean Squared...</div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">55</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">184</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">AI-X安全</span><span class="card-category-list-count">11</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/SSL%E8%AF%81%E4%B9%A6%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">SSL证书安全</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">安全相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83/"><span class="card-category-list-name">攻防演练</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E9%82%AE%E4%BB%B6%E7%BD%91%E5%85%B3/"><span class="card-category-list-name">邮件网关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">隧道技术</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/"><span class="card-category-list-name">AI-X建站</span><span class="card-category-list-count">8</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/Hexo%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Hexo技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">浏览器技术</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"><span class="card-category-list-name">版本控制</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">16</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/"><span class="card-category-list-name">AI大模型</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器学习</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">深度学习</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">神经网络</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">编程开发</span><span class="card-category-list-count">5</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">5</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%B4%A2%E7%A8%8E%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">财税相关</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">15</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix/"><span class="card-category-list-name">Linux/Unix</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7-%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/"><span class="card-category-list-name">运维工具/专业应用</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">神经网络概念与术语</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8E%E7%A5%9E%E7%BB%8F%E5%85%83"><span class="toc-number">1.1.</span> <span class="toc-text">感知机与神经元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.2.</span> <span class="toc-text">前馈神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-CNN"><span class="toc-number">1.3.</span> <span class="toc-text">卷积神经网络 CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CNN%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="toc-number">1.3.1.</span> <span class="toc-text">CNN的由来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%B7%E7%A7%AF%E6%A0%B8-filter"><span class="toc-number">1.3.2.</span> <span class="toc-text">什么是卷积核(filter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E6%A0%B8%E4%B8%8E%E8%BE%93%E5%85%A5%E5%B1%82%E7%9A%84Channel"><span class="toc-number">1.3.3.</span> <span class="toc-text">卷积核与输入层的Channel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E6%A0%B8%E6%98%AF%E5%A6%82%E4%BD%95%E8%B7%9F%E8%BE%93%E5%85%A5%E5%81%9A%E8%AE%A1%E7%AE%97%E7%9A%84%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9Apadding"><span class="toc-number">1.3.4.</span> <span class="toc-text">卷积核是如何跟输入做计算的，为什么要做padding?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%90%E9%87%87%E6%A0%B7%EF%BC%8C%E6%B1%A0%E5%8C%96-pooling"><span class="toc-number">1.3.5.</span> <span class="toc-text">什么是子采样，池化(pooling)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFdropout%EF%BC%8C%E5%AE%83%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="toc-number">1.3.6.</span> <span class="toc-text">什么是dropout，它有什么作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pytorch%E5%AE%9E%E7%8E%B0CNN%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.7.</span> <span class="toc-text">pytorch实现CNN示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-RNN"><span class="toc-number">1.4.</span> <span class="toc-text">循环神经网络(RNN)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E4%BF%A1%E5%BF%B5%E7%BD%91%E7%BB%9C"><span class="toc-number">1.5.</span> <span class="toc-text">深度信念网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C"><span class="toc-number">1.6.</span> <span class="toc-text">生成对抗网络</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/dd457ab5.html" title="大数据平台与数据采集技术"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大数据平台与数据采集技术"></a><div class="content"><a class="title" href="/posts/dd457ab5.html" title="大数据平台与数据采集技术">大数据平台与数据采集技术</a><time datetime="2024-12-08T18:19:55.000Z" title="发表于 2024-12-08 18:19:55">2024-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/5d5d5dcc.html" title="实时大数据处理Storm、Kafka、Flume和Flink的结合项目"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="实时大数据处理Storm、Kafka、Flume和Flink的结合项目"></a><div class="content"><a class="title" href="/posts/5d5d5dcc.html" title="实时大数据处理Storm、Kafka、Flume和Flink的结合项目">实时大数据处理Storm、Kafka、Flume和Flink的结合项目</a><time datetime="2024-12-08T16:45:08.000Z" title="发表于 2024-12-08 16:45:08">2024-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ecac6aa8.html" title="警惕和防范勒索Ransomware软件攻击"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="警惕和防范勒索Ransomware软件攻击"></a><div class="content"><a class="title" href="/posts/ecac6aa8.html" title="警惕和防范勒索Ransomware软件攻击">警惕和防范勒索Ransomware软件攻击</a><time datetime="2024-12-08T00:34:18.000Z" title="发表于 2024-12-08 00:34:18">2024-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7230c1bd.html" title="数学：贝叶斯定理的直观证明"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数学：贝叶斯定理的直观证明"></a><div class="content"><a class="title" href="/posts/7230c1bd.html" title="数学：贝叶斯定理的直观证明">数学：贝叶斯定理的直观证明</a><time datetime="2024-12-07T23:38:03.000Z" title="发表于 2024-12-07 23:38:03">2024-12-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/132f47aa.html" title="大数据处理之数据管道技术-Pipeline"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大数据处理之数据管道技术-Pipeline"></a><div class="content"><a class="title" href="/posts/132f47aa.html" title="大数据处理之数据管道技术-Pipeline">大数据处理之数据管道技术-Pipeline</a><time datetime="2024-12-07T23:05:34.000Z" title="发表于 2024-12-07 23:05:34">2024-12-07</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>(() => {
+  const panguFn = () => {
+    if (typeof pangu === 'object') pangu.autoSpacingPage()
+    else {
+      btf.getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+        .then(() => {
+          pangu.autoSpacingPage()
+        })
+    }
+  }
+
+  const panguInit = () => {
+    if (false){
+      GLOBAL_CONFIG_SITE.isPost && panguFn()
+    } else {
+      panguFn()
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', panguInit, 'pangu')
+  document.addEventListener('DOMContentLoaded', panguInit)
+})()</script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'f5effb71779aae203ca40f9499484734'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-01</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt="">常见WEB身份验证与授权机制</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/VPNtypes.JPG" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-02</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt="">Transformers之Attention注意力机制</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-29</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt="">英语单词归类记忆</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-neuralnetwork.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt="">神经网络技术</a><div class="blog-slider__text">这篇文章介绍了神经网络技术，包括神经网络概念与术语，感知机与神经元，前馈神经网络，卷积神经网络，循环神经网络，深度信念网络，以及生成对抗网络。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-23</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt="">标点符号的英文说法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-xca.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt="">XCA密钥及证书管理工具</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-tensor-graph.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt="">TensorFlow技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/ssl-certificate.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt="">SSL安全证书</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-virtual-history.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-15</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt="">Kubernetes容器编排及虚拟化技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-gitversion.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt="">Git版本控制主分原理</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script>
+  <script data-pjax src="https://cdn-js.moeworld.top/gh/Zfour/hexo-github-calendar@1.16/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://calendar.qianxu.run/api?user=ukhxl";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><!-- hexo injector body_end end --></body></html>
