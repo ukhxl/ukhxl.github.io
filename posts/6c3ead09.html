@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI大模型技术 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="AI大模型技术">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/6c3ead09.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-aibigmodels.png">
+<meta property="article:published_time" content="2024-11-20T08:33:23.000Z">
+<meta property="article:modified_time" content="2024-12-11T03:51:16.915Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="AI大模型">
+<meta property="article:tag" content="大语言模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-aibigmodels.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/6c3ead09.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI大模型技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-12-11 03:51:16',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">193</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/schedule/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">AI大模型技术</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/schedule/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">AI大模型技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-20T08:33:23.000Z" title="发表于 2024-11-20 08:33:23">2024-11-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-11T03:51:16.915Z" title="更新于 2024-12-11 03:51:16">2024-12-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/">AI-X开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/">AI大模型</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/background.jpg);"></div><article class="post-content" id="article-container"><h1 id="AI大模型术语"><a href="#AI大模型术语" class="headerlink" title="AI大模型术语"></a>AI大模型术语</h1><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>参数是指模型的大小，一般来说参数越大，模型的能力越强。大模型的参数单位一般用“B”来表示，1B代表10亿参数。<br>模型基本都会按照“名称”+“版本”+“参数”的形式分类。<br>参数的单位基本都是“B”，但是因为有些模型不是通用大模型，而只是适用于某些领域的小模型，所以参数量会比较小，单位为“K”或“M”。<br>单位包括：K（千）、M（百万）、B（十亿）、T（万亿）。</p>
+<h3 id="token"><a href="#token" class="headerlink" title="token"></a>token</h3><p>token是大模型处理数据的最小单位，比如一个字、一个词、一个像素、一段音轨等。对于大模型的提供方已经内置分词功能，或者说大模型本身就有分词能力，形成token,token相对于TensorFlow于Tensor张量。</p>
+<h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>一段话的周围信息就是上下文，例如连续问大模型两个问题，这两个问题及回答互为上下文。相当于卷积神经网络中卷的概念，有相关性和连续性。</p>
+<h3 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h3><p>是指可以处理多种类型的数据，比如纯文字、图片、文档等，而单一模态的模型是指只能处理文字或图片或声音的模型。</p>
+<h3 id="温度"><a href="#温度" class="headerlink" title="温度"></a>温度</h3><p>是一个调整模型回复的随机性的值，值越大随机性越高，回复越有创造性；值越小随机性越小，回复越重复老套。<br>这个名词来源于英语单词temperature，可以将其翻译为温度、热度等。在使用模型时，默认系统温度值即可；如果在回复中感觉到模型的回复会重复，这时就可以提高温度值，如果感觉到模型回复漫无边际，就可以降低温度值，下图为智谱清言对于温度的介绍。</p>
+<h3 id="向量值（词向量）"><a href="#向量值（词向量）" class="headerlink" title="向量值（词向量）"></a>向量值（词向量）</h3><p>向量是用来描述token在高维世界的特征，数学领域中的向量是一个的数字列表，在一维空间中，位置可以用（x）表示；在二维空间中，则用（x, y,）表示。以此类推，三维空间（x, y, z），四维空间（x1,x2,x3,x4）……</p>
+<p>如果道单选题，题目给出了海豚、马、兔子、骆驼这四种动物，让我们挑选出不一样的一种动物，应该怎么选？<br><img src="/posts/6c3ead09/4animals.jpg" alt="alt text"><br>我希望你的答案是海豚，因为海豚生活在海里，其他动物生活在陆地上。当然你要非说是骆驼，因为体型大；非说是兔子，因为兔子钻洞；非说是马，因为速度快，那我也没办法。毕竟人就是通过各种各样的特征去了解事物的，总能找到那个不一样的特征。</p>
+<p>那怎么让计算机知道这些特征从而理解世界呢？我们可以将这些特征提取出来，如果提取1个特征，比如是不是陆地生物；如果提取两个特征，比如体型的大小。<br><img src="/posts/6c3ead09/2features.jpg" alt="alt text"><br>只有“陆地生物”这一个特征的时候，越是符合这个特征则越靠近右侧，为了方便知道其位置，可以给一个坐标。如果增加“体型”这个特征的时候，那么每一个动物也就拥有了二维坐标。如果继续增加特征呢，那每个动物就会拥有三维坐标、四维坐标、五维坐标……</p>
+<p><strong>用图像肯定不方便表示，计算机中也不可能放一张无限维度的坐标图，但是计算机中可以存储每个动物的坐标位置，每一个数字就是对应了一个特征的值，通过动物之间数字的对比就可以知道每个动物之间的差异及内涵。</strong><br><img src="/posts/6c3ead09/morefeatures.jpg" alt="alt text"><br>那计算机是怎么知道这些特征和数值大小的呢？可以靠计算机学习，让神经网络学习大量资料后，让计算机去区分每一个token的特征和特征的值。</p>
+<h1 id="大语言模型（LLM）"><a href="#大语言模型（LLM）" class="headerlink" title="大语言模型（LLM）"></a>大语言模型（LLM）</h1><h3 id="为什么叫大语言模型？"><a href="#为什么叫大语言模型？" class="headerlink" title="为什么叫大语言模型？"></a>为什么叫大语言模型？</h3><p>能听懂人话并且和人沟通的模型，叫做大语言模型。<br>大语言模型主要是处理语言的，处理什么数据就叫什么模型，除了语言模型还有处理视觉、音频、生成数据等其他作用的模型。<br>如果有人开发出了画原型图的模型，也可以叫它“原型图模型”。<br>多模态模型也就是综合了语言模型、视觉模型等多种模型能力的大模型。因为每一种模型的作用是不相同的，为了让大模型的能力更强更方便使用，所以产生了多模态大模型，也就是即可以听懂人话，也可以看懂图片是什么意思。</p>
+<h3 id="为什么大模型能够听懂人话？"><a href="#为什么大模型能够听懂人话？" class="headerlink" title="为什么大模型能够听懂人话？"></a>为什么大模型能够听懂人话？</h3><p>我们并不确定计算机理解人类的语言还是概率运算的结果。<br>我们可以教会鹦鹉说“你好”，那我们可以说鹦鹉听懂了人类的语言吗？不可以，因为我们明确的科学的可以知道鹦鹉只是重复音节。<br>大模型则是通过了大量的文本训练，学会了语言中的各种沟通方式、文字与文字之间的排列规则、语法的结构。通过这一系列的规则运算，给人一种可以听懂人话的感觉。</p>
+<p><strong>要了解大模型是怎么变得这么厉害的，那就需要从头开始说了。</strong></p>
+<p>最早有关人工智能的概念来源于图灵，他在《计算机器与智能》的论文里提出了“<strong>图灵测试</strong>”，什么是图灵测试呢？就是让一台机器和人对话，如果这个人没法辨别和他对话的是机器还是真人，那么就可以说这台机器具备了智能。</p>
+<p>为了使机器能够通过图灵测试，研究人员开始研究人类语言。因为人是地球上拥有最高智慧的物种，而语言是人类沟通过程中最重要工具，更是智能的表现形式。</p>
+<p>具体怎么研究语言呢？最直接的方式就是从语言的规则下手。比如n-gram模型，就是根据人类的语言习惯，通过前面的字来预测后面字的方式让计算机实现语言功能的，而且现在的大模型也是站在n-gram模型的肩膀上发展出来的，了解n-gram模型就能够很清楚的知道现在的大模型的实现逻辑。</p>
+<p>1、<strong>入门级模型：n-gram模型</strong></p>
+<p>n-gram模型前面的N是指用几个词来预测下一个词；如果我们用前面的两个词来预测下一个词，这就叫做2-gram；如果用前面的三个词来预测下一个词，这就叫做3-gram。</p>
+<p>为了能够理解n-gram模型，我们可以举个例子。</p>
+<p>有一个数据集，里面只有两句话。</p>
+<p>我们需要先将这两句话拆分token，也就是“我”“喜欢”“吃”“苹果”“香蕉”。</p>
+<p>根据概率推算，“我”后面必然会跟着“喜欢”两个字，概率是100%；那么当我们输入“我”这个汉字的时候，系统就会根据概率，输出“喜欢”这个词，可见下图。<br><img src="/posts/6c3ead09/iloveapple.jpg" alt="alt text"><br>如果规定模型持续运行直到生成一句话，那么模型就会根据概率生成“我喜欢吃苹果”或者“我喜欢吃香蕉”，因为“苹果”和“香蕉”两个词的概率都是50%，那么系统会随机生成。</p>
+<p>但是n-gram模型也有很多缺陷，因为n-gram模型是先假设每一个词都是互相独立存在，彼此没有关系的。但词语和文字却是有实际意义的，所以就导致模型没法理解上下文，没办法解决句子中的逻辑关系。如果出现了新词语，也没法理解其用法，纯粹是概率计算。</p>
+<p>直到后来，出现了神经网络技术。</p>
+<p>2、<strong>大模型核心角色-神经网络</strong></p>
+<p>神经网络是通过模仿大脑处理信息的方式而产生的计算模型，是为了解决图像识别和逻辑运算的。</p>
+<p>神经网络的设计灵感来源于人脑的结构，每个神经元代表一个基本的计算单元，单个神经元实际上是一串代码，用来处理简单的数学运算。尽管单个神经元的功能相对简单，但当大量这样的神经元连接起来形成网络后，整个网络就能够去处理复杂的任务。</p>
+<p>经典的神经网络可以分为三层结构，输入层、隐藏层、输出层，每一层都是由一堆神经元组成。<br><img src="/posts/6c3ead09/NNetwork.jpg" alt="alt text"></p>
+<ul>
+<li>输入层：接收原始数据，将原始数据经过预处理后传递给隐藏层。</li>
+<li>隐藏层：通过线性加权求和、激活函数、权重等一系列运算，将结果传递给输出层。</li>
+<li>输出层：处理接收到的数据并输出结果，将结果反馈给用户。<br>总结一下就是，每个神经元作为一个计算单元，通过对输入数据进行加权求和并应用激活函数来提取有用的特征，然后将处理后的信息传递到网络的下一层。在网络的输出层，对于分类任务，神经元可以输出表示不同类别的概率值。</li>
+</ul>
+<p>具体到图像识别任务，图像是由像素构成的，每个像素都有其特定的色值。以数字“6”为例，我们可以给计算机大量数字6的图片，计算机会将图像分解为像素，然后将颜色转换成色值，并分析这些色值的分布规律。<br><img src="/posts/6c3ead09/nn6.jpg" alt="alt text"><br>最终，当模型遇到新的、未见过的数字6图片时，它能够基于已学到的规则将其识别出来。如果给神经网络提供大量高质量且标注准确的数据，那么神经网络就可以拥有解释图像信息的能力。</p>
+<p>虽然神经网络这么厉害，但因为早期的硬件限制，导致发展并不顺利。前面我们可以得知，神经网络是通过大量神经元构成的，而每个神经元只负责简单的运算，这种方式要求硬件能提供强大的并行处理能力，以同时执行这些大量的简单运算任务。但当时训练神经网络只能依靠CPU且性能还有限。</p>
+<p>随着计算机硬件技术的发展，特别是GPU的引入，这才让神经网络的硬件环境得到改善。硬件技术的发展让研究人员能够去设计和训练更复杂的神经网络结构，比如卷积神经网络、循环神经网络、注意力机制、预训练等。而现在的大模型都是基于神经网络架构的，可以说没有硬件的发展、没有神经网络的发展，就没有目前的大模型。</p>
+<p>而Transformer架构是神经网络中最主流的，当前的大语言模型几乎都是基于Transformer架构搭建的。</p>
+<p>3、<strong>主流架构-Transformer架构</strong></p>
+<p>Transformer架构是特别适用于<strong>自然语言处理的神经网络模型。</strong></p>
+<p>Transformer架构能够如此厉害，在于Transformer架构能够通过<strong>向量数据、自注意力机制、神经网络等能力，高效地处理和理解自然语言</strong>。</p>
+<ul>
+<li><p>向量数据：每个token被转换为了高维向量，通过token的向量值，可以知道词汇本身的语义信息、特征，还能分析出token与token之间的复杂关系。</p>
+</li>
+<li><p>自注意力机制：输入到神经网络的每一个token都可以与其他token发生联系，并且通过“权重”来区分链接过程中的重要程度，这样可以让大模型解决上下文关联问题，避免提问第二个问题的时候忘记第一个问题。</p>
+</li>
+<li><p>神经网络的能力：通过全新的神经网络结构，不仅能捕捉局部特征，还能理解全局信息，从而支持更深层次的语言理解和生成任务。</p>
+</li>
+</ul>
+<p>国外的openai、谷歌、微软，到国内的阿里、腾讯、清华的团队等，都是基于或借鉴Transformer架构开发的大模型。<br><img src="/posts/6c3ead09/transformer.png" alt="alt text"></p>
+<p><a target="_blank" rel="noopener" href="https://bbycroft.net/llm%EF%BC%8C%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AALLM%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BD%91%E7%AB%99%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%B8%85%E6%A5%9A%E7%9A%84%E7%9C%8B%E5%88%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%AF%8F%E4%B8%80%E6%AD%A5%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%BB%86%E8%8A%82%E3%80%82">https://bbycroft.net/llm，这是一个LLM可视化网站，可以清楚的看到大模型每一步的工作细节。</a></p>
+<h1 id="大模型实践"><a href="#大模型实践" class="headerlink" title="大模型实践"></a>大模型实践</h1><h3 id="提示词工程"><a href="#提示词工程" class="headerlink" title="提示词工程"></a>提示词工程</h3><p>提示词功能的作用在于通过设定提示，让大模型的回答更加精准。</p>
+<p>大模型训练时并不会针对特定领域，是为广泛问题进行设计的。而提示词工程（Prompt Engineering）也叫上下文提示，目的是希望大模型在回答问题时，可以得知前因后果，聚焦用户的特定需求。</p>
+<p>也就是无论形式如何，只要能够让大模型得知你的需求就是提示词，只要让大模型给你想要的答案就是好的提示词，哪怕你问的是“1+1等于几？”。</p>
+<p>比如你让大模型扮演某个角色，你可以告诉大模型：“你要扮演鲁迅，回答的风格要与鲁迅的作品类似”。那么大模型就会扮演鲁迅且通过鲁迅的说话风格回答你的问题。<br><img src="/posts/6c3ead09/tongyi-lusun.png" alt="alt text"><br>而在创建智能体时，也会让用户填写智能体的设定，这个设定就起到了提示词的功能。<br><img src="/posts/6c3ead09/agentsetting.jpg" alt="alt text"><br>针对复杂问题，为了从大型语言模型中获得高质量的回答，我们需要提供更加详尽的问题描述。在2023年11月，新加坡举办了首届提示词功能大赛，冠军Sheila Tao撰写了一篇文章，探讨了她对提示词的理解，并介绍了CO-STAR框架的应用方法。<br><img src="/posts/6c3ead09/co-star.png" alt="alt text"><br>工作原理如下：<br>-（C）背景：提供任务的背景信息</p>
+<p>这有助于 LLM 了解正在讨论的具体场景，确保其回应是相关的。</p>
+<p>-（O）目标：明确你希望 LLM 执行的任务是什么</p>
+<p>明确你的目标有助于 LLM 集中精力实现该特定目标。</p>
+<p>-（S）风格：指定您希望 LLM 使用的写作风格</p>
+<p>这可能是某个名人的写作风格，也可能是某个行业的某个专家，比如商业分析师或 CEO。这将指导 LLM 以符合您需求的方式和措辞进行回复。</p>
+<p>-（T）语气：设定回应的态度</p>
+<p>这确保 LLM 的回应与预期的情绪或情感背景产生共鸣。例如正式、幽默、富有同理心等。</p>
+<p>-（A）受众：确定回复针对的对象</p>
+<p>根据受众（例如某个领域的专家、初学者、儿童等）定制 LLM 的回应，确保它在您需要的背景下是适当且易于理解的。</p>
+<p>-（R）回复：提供回复格式</p>
+<p>这可确保 LLM 输出的格式与您执行下游任务所需的格式完全一致。示例包括列表、JSON、专业报告等。对于大多数以编程方式处理 LLM 响应以进行下游操作的 LLM 应用程序而言，JSON 输出格式是理想的选择。</p>
+<p>如果我们希望大模型可以帮产品经历写一份年终总结，就可以按照CO-STAR框架编写提示词。</p>
+<ul>
+<li><p>背景：我是“XXXXX”公司的产品经理，负责XXXXXX应用。在过去的一年中，我们实现了多项功能升级，并且用户基数有了显著增长。</p>
+</li>
+<li><p>目标：编写一份全面的年终总结报告，概述本年度的关键成就、遇到的主要挑战及解决策略，并简要介绍下一年的战略规划。</p>
+</li>
+<li><p>风格：采用清晰、专业的商务写作风格，类似于业界公认的产品经理或公司领导人的表达方式。</p>
+</li>
+<li><p>语气：正式而积极，体现对团队努力的认可以及对未来发展的乐观态度。</p>
+</li>
+<li><p>受众：这份报告将提交给公司的高级管理层以及我的直接上司，并会在内部分享给整个产品团队。</p>
+</li>
+<li><p>回复：请按照标准的年终总结格式提供文档，包括封面页、目录、引言、年度回顾、主要成就、面临的挑战与解决方案、未来展望等部分。文档需保持专业性，重点突出。</p>
+</li>
+</ul>
+<p>如果不会写提示词怎么办？没关系，可以复制文中的工作原理，把写提示词的工作交给大模型。</p>
+<p>虽然可以通过CO-STAR框架中说明了提示词该怎么写，但我们的重点并不在于如何编写提示词，而在于让大模型给出我们满意的答案。</p>
+<h3 id="知识库"><a href="#知识库" class="headerlink" title="知识库"></a>知识库</h3><p><strong>知识库就是资料库，目的就是为大模型处理问题提供必要背景知识</strong>。</p>
+<p>虽然大模型擅长处理广泛领域的常见问题，但在面对特定领域内深入且专业的问题时存在局限性，而知识库提供了特定领域的信息，帮助其解决特定问题。</p>
+<p>如果希望大模型帮助企业优化供应链管理，那么大模型就需要知道供应商信息、库存水平、物流数据、采购数据等信息。如果希望大模型能够帮助系统应用，那么大模型就需要知道项目管理流程、技术文档、操作说明书等信息。而这些信息就需要存放到知识库，作为大模型的知识储备。</p>
+<p>这里需要注意，大模型和知识库是两种不同的技术，只是针对于特殊问题需要知识库提供特定信息。</p>
+<p>所有的数据都需要存储在服务器上，常见的数据库类型包括关系型数据库、非关系型数据库，这些数据库可以有效地存储和管理结构化与非结构化数据。然而对于大模型来说，这些传统的存储方式并无本质区别，它们更像是文件夹，用于存储和检索信息。</p>
+<p>并不是知识库的数据就需要向量存储，只是需要处理相似性任务的时候，需要用到向量数据库。<br><img src="/posts/6c3ead09/kblib.png" alt="alt text"></p>
+<p>前面提到大模型时也有提到，大模型的本质是概率计算，通过token与token之间向量值的对比来生成数据，这种基于向量的计算方式使得大模型能够理解和处理复杂的模式和关系。只要任务需要用到数据与数据的相似性对比，那么就需要用到向量数据库，可见第一部分的向量词。</p>
+<h3 id="微调"><a href="#微调" class="headerlink" title="微调"></a>微调</h3><p>微调就是让通用的大模型，更加适用于某个特定项目。<br>如果大模型是一个大学生，知识库相当于公司资料，而微调工作就相当于入职培训，培训其如何与客户继续沟通。<br>听起来微调似乎很高深，但其实大模型厂商都会提供对应的微调功能，我们可以通过平台提供的微调模板，了解微调是什么。<br><img src="/posts/6c3ead09/microtune.png" alt="alt text"><br>微调的目的是通过使用实际案例来优化大模型的表现能力，使其更符合特定应用场景的需求。无论是像ChatGPT还是通义这样的大模型，都是采用一问一答的形式进行。<br>通过提供企业自身的实际案例，微调过程可以让大模型学习到更加精准和符合企业需求的回复方式，从而使通用的大模型能够高度适配企业的具体业务场景。这样不仅提升了模型的实用性，还增强了其在特定领域中的表现力和准确性。</p>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/6c3ead09.html">https://www.ai-x.co.uk/posts/6c3ead09.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/">AI大模型</a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/">大语言模型</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-aibigmodels.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/828c82db.html" title="Kali Linux攻防技术"><img class="cover" src="/img/cover-kali.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Kali Linux攻防技术</div></div><div class="info-2"><div class="info-item-1">Kali网络攻击手段DDos攻击 DDoS攻击可以分为流量攻击和资源耗尽攻击两类。  流量攻击通过发送大量的无效或高流量的数据包来拥塞带宽或网络资源； 资源耗尽攻击则通过占用目标系统资源（如CPU、内存、连接数等）来达到拒绝服务的目的。   DDOS攻击（流量很大，伪造IP）通常是网络层和传输层，攻击对象是IP，涉及协议主要是IP，UDP和TCP，通常消耗的是网络带宽 CC攻击CC攻击（流量不大，真实IP）通常是应用层攻击，攻击对象是网页，涉及的协议主要是HTTP，HTTPS，消耗的是服务器的CPU资源（通过请求大量调用CPU的资源，例如查询数据库） ARP欺骗Kali社会工程学攻击（setoolkit）钓鱼网站二维码钓鱼邮件远程木马持续完善中</div></div></div></a><a class="pagination-related" href="/posts/b83094c1.html" title="MVC、MVP、MVVM、MVVM-C和VIPER构建应用的设计模式"><img class="cover" src="/img/cover-mvcarch.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">MVC、MVP、MVVM、MVVM-C和VIPER构建应用的设计模式</div></div><div class="info-2"><div class="info-item-1">MVC、MVP、MVVM、MVVM-C和VIPER架构模式是用于构建应用程序的几种流行设计模式。 MVC (Model-View-Controller)： 这是最古老的模式，大约有50年的历史。它将应用程序分为三个主要部分：模型（数据）、视图（用户界面）和控制器（业务逻辑）。 MVP (Model-View-Presenter)： 与MVC类似，但将控制器替换为呈现器，以进一步分离视图和业务逻辑。 MVVM (Model-View-ViewModel)： 特别适用于数据绑定，将视图和模型之间的逻辑封装在视图模型中，有助于提高测试性和可维护性。 MVVM-C (Model-View-ViewModel-Coordinator)： 在MVVM的基础上增加了协调器，用于处理视图之间的导航和通信。 VIPER (View-Interactor-Presenter-Entity-Router)： 这是一种更为复杂的模式，它将应用程序分解为五个部分，每个部分都有明确的职责，以提高模块化和可测试性。  MVC控制器 MVC控制器的概念，我们项目中常见的就是MVC控制器，MVC...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/bbe00818.html" title="大语言模型优化技术之-RAG模型和HyDE模型"><img class="cover" src="/img/defaultcover-top.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-27</div><div class="info-item-2">大语言模型优化技术之-RAG模型和HyDE模型</div></div><div class="info-2"><div class="info-item-1">👋大型语言模型（LLMs）的基本工作原理 1、RAG模型: 接收用户查询后，会编码查询信息。 然后在向量数据库中检索相关的文档。 最后利用查询信息和检索到的文档内容来生成响应。  2、HyDE模型: 同样接收用户查询后，也会对查询进行编码。 但不同于RAG直接检索文档，HyDE会利用编码后的查询生成一段”假设性文本”作为补充上下文。 然后将查询和生成的假设性文本一起输入到下游的学习模型中。 最终基于查询和生成的假设性文本，输出响应。  RAG模型依赖于实际检索到的相关文档，而HyDE模型则自主生成了一段假设性文本作为补充上下文。这使得HyDE可以更好地理解和回应用户的查询，不受实际检索结果的限制。 参考文献或转载相关：</div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">193</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">AI-X安全</span><span class="card-category-list-count">12</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/SSL%E8%AF%81%E4%B9%A6%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">SSL证书安全</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">安全相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83/"><span class="card-category-list-name">攻防演练</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E9%82%AE%E4%BB%B6%E7%BD%91%E5%85%B3/"><span class="card-category-list-name">邮件网关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%AE%89%E5%85%A8/%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">隧道技术</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/"><span class="card-category-list-name">AI-X建站</span><span class="card-category-list-count">8</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/Hexo%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Hexo技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">浏览器技术</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BB%BA%E7%AB%99/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"><span class="card-category-list-name">版本控制</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">16</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/"><span class="card-category-list-name">AI大模型</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器学习</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">深度学习</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">神经网络</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">编程开发</span><span class="card-category-list-count">5</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">5</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%B4%A2%E7%A8%8E%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">财税相关</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">18</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90/"><span class="card-category-list-name">Linux/Unix/开源</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AI%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">AI大模型术语</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.0.1.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#token"><span class="toc-number">1.0.2.</span> <span class="toc-text">token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.0.3.</span> <span class="toc-text">上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81"><span class="toc-number">1.0.4.</span> <span class="toc-text">多模态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%A9%E5%BA%A6"><span class="toc-number">1.0.5.</span> <span class="toc-text">温度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%80%BC%EF%BC%88%E8%AF%8D%E5%90%91%E9%87%8F%EF%BC%89"><span class="toc-number">1.0.6.</span> <span class="toc-text">向量值（词向量）</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">大语言模型（LLM）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AB%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="toc-number">2.0.1.</span> <span class="toc-text">为什么叫大语言模型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%83%BD%E5%A4%9F%E5%90%AC%E6%87%82%E4%BA%BA%E8%AF%9D%EF%BC%9F"><span class="toc-number">2.0.2.</span> <span class="toc-text">为什么大模型能够听懂人话？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.</span> <span class="toc-text">大模型实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B"><span class="toc-number">3.0.1.</span> <span class="toc-text">提示词工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%BA%93"><span class="toc-number">3.0.2.</span> <span class="toc-text">知识库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E8%B0%83"><span class="toc-number">3.0.3.</span> <span class="toc-text">微调</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3795084d.html" title="常见的网络抓包工具-wireshark使用"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常见的网络抓包工具-wireshark使用"></a><div class="content"><a class="title" href="/posts/3795084d.html" title="常见的网络抓包工具-wireshark使用">常见的网络抓包工具-wireshark使用</a><time datetime="2024-12-11T03:09:41.000Z" title="发表于 2024-12-11 03:09:41">2024-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/39a31504.html" title="常见的网络诊断工具-nslookup使用"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常见的网络诊断工具-nslookup使用"></a><div class="content"><a class="title" href="/posts/39a31504.html" title="常见的网络诊断工具-nslookup使用">常见的网络诊断工具-nslookup使用</a><time datetime="2024-12-10T11:12:49.000Z" title="发表于 2024-12-10 11:12:49">2024-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c0ba9542.html" title="Kubernetes容器故障排除思路分析"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kubernetes容器故障排除思路分析"></a><div class="content"><a class="title" href="/posts/c0ba9542.html" title="Kubernetes容器故障排除思路分析">Kubernetes容器故障排除思路分析</a><time datetime="2024-12-09T22:10:02.000Z" title="发表于 2024-12-09 22:10:02">2024-12-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/59ac274e.html" title="微软Windows域控的Kerberos认证技术"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="微软Windows域控的Kerberos认证技术"></a><div class="content"><a class="title" href="/posts/59ac274e.html" title="微软Windows域控的Kerberos认证技术">微软Windows域控的Kerberos认证技术</a><time datetime="2024-12-09T19:51:34.000Z" title="发表于 2024-12-09 19:51:34">2024-12-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/dd457ab5.html" title="大数据平台与数据采集技术"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大数据平台与数据采集技术"></a><div class="content"><a class="title" href="/posts/dd457ab5.html" title="大数据平台与数据采集技术">大数据平台与数据采集技术</a><time datetime="2024-12-08T18:19:55.000Z" title="发表于 2024-12-08 18:19:55">2024-12-08</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>(() => {
+  const panguFn = () => {
+    if (typeof pangu === 'object') pangu.autoSpacingPage()
+    else {
+      btf.getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+        .then(() => {
+          pangu.autoSpacingPage()
+        })
+    }
+  }
+
+  const panguInit = () => {
+    if (false){
+      GLOBAL_CONFIG_SITE.isPost && panguFn()
+    } else {
+      panguFn()
+    }
+  }
+
+  btf.addGlobalFn('pjaxComplete', panguInit, 'pangu')
+  document.addEventListener('DOMContentLoaded', panguInit)
+})()</script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'e7f031cd931c93a8cebfff1624cebf1c'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-01</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt="">常见WEB身份验证与授权机制</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/cb9f8d70.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/VPNtypes.JPG" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-02</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt="">Transformers之Attention注意力机制</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/837b6442.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-29</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt="">英语单词归类记忆</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/ec9368c4.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-neuralnetwork.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt="">神经网络技术</a><div class="blog-slider__text">这篇文章介绍了神经网络技术，包括神经网络概念与术语，感知机与神经元，前馈神经网络，卷积神经网络，循环神经网络，深度信念网络，以及生成对抗网络。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/d94b3039.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-23</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt="">标点符号的英文说法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/e25c34b.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/defaultcover-top.jpeg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-xca.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt="">XCA密钥及证书管理工具</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/5bd5b09b.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-tensor-graph.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt="">TensorFlow技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/d48d8e79.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/ssl-certificate.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt="">SSL安全证书</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/bba57572.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-virtual-history.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-15</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt="">Kubernetes容器编排及虚拟化技术</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/eca4c864.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-gitversion.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt="">Git版本控制主分原理</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/6fad9699.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script>
+  <script data-pjax src="https://cdn-js.moeworld.top/gh/Zfour/hexo-github-calendar@1.16/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://calendar.qianxu.run/api?user=ukhxl";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><!-- hexo injector body_end end --></body></html>
