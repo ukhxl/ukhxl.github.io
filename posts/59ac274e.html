@@ -1,0 +1,614 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>微软Windows域控的Kerberos认证技术 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="微软Windows域控的Kerberos认证技术">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/59ac274e.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-kerberos-cover.jpg">
+<meta property="article:published_time" content="2024-12-09T19:51:34.000Z">
+<meta property="article:modified_time" content="2025-02-10T13:46:06.892Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="Kerberos">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="Authentication">
+<meta property="article:tag" content="Authorization">
+<meta property="article:tag" content="Accounting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-kerberos-cover.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/59ac274e.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '微软Windows域控的Kerberos认证技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-10 13:46:06',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">378</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-kerberos.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">微软Windows域控的Kerberos认证技术</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">微软Windows域控的Kerberos认证技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-09T19:51:34.000Z" title="发表于 2024-12-09 19:51:34">2024-12-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-10T13:46:06.892Z" title="更新于 2025-02-10 13:46:06">2025-02-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E8%BF%90%E7%BB%B4/">AI-X运维</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/">安全/认证/演练技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-kerberos.jpg);"></div><article class="post-content" id="article-container"><h1 id="一、Kerberos概述"><a href="#一、Kerberos概述" class="headerlink" title="一、Kerberos概述"></a>一、Kerberos概述</h1><p>Kerberos是为TCP&#x2F;IP网络系统设计的可信的第三方认证协议，用于身份认证。网络上的Keberos服务基于<strong>DES对称加密算法</strong>，但也可以用其他算法替代。因此，Keberos是一个在许多系统中获得广泛应用的认证协议。Keberos最初是美国麻省理工学院（MIT）为Athena项目开发的。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.kerberos.org/">https://www.kerberos.org/</a><br>官方文档：<a target="_blank" rel="noopener" href="http://web.mit.edu/kerberos/krb5-current/doc/">http://web.mit.edu/kerberos/krb5-current/doc/</a></p>
+<h2 id="1）应用场景"><a href="#1）应用场景" class="headerlink" title="1）应用场景"></a>1）应用场景</h2><p>Kerberos采用客户端&#x2F;服务器（CS）结构与DES加密技术，并且能够进行相互认证，即客户端和服务器端均可对对方进行身份认证，是一种应用对称密钥体制进行密钥管理的系统。可以用于防止窃听、防止replay攻击、保护数据完整性等场合。</p>
+<h2 id="2）功能特性"><a href="#2）功能特性" class="headerlink" title="2）功能特性"></a>2）功能特性</h2><p>安全性<br>Kerberos提供双向认证，不仅Server可以对Client 进行认证，Client也能对Server进行认证。Server对Client认证成功之后，通过返回Client发送的时间戳，向Client提供验证自己身份的手段。</p>
+<p>可靠性<br>认证服务是其他服务的基础，服务认证过程有助于提升整个系统的可用性和高可靠性。</p>
+<p>可扩展性<br>KDC（秘钥分配中心）是秘钥体系的重要部分，旨在减少密钥体制所固有的交换密钥时所面临的风险。用户可以根据需要扩展多个KDC。</p>
+<p>开放性<br>Kerberos已经成为计算机领域一个被广泛接受的标准，所以使用Kerberos可以轻松实现不同平台之间的互操作。</p>
+<h1 id="二、Kerberos中的核心概念"><a href="#二、Kerberos中的核心概念" class="headerlink" title="二、Kerberos中的核心概念"></a>二、Kerberos中的核心概念</h1><p>Kerberos中有以下一些概念需要了解：</p>
+<ul>
+<li>KDC：密钥分发巾心，负责管理发放票据，记录授权。</li>
+<li>Realm： Kerberos管理领域的标识。</li>
+<li>principal：Kerberos 下的用户可以称为 Principal，当每添加一个用户或服务的时候都需要向kdc添加一条principal, principal的形式为：主名称&#x2F;实例名@领域名。</li>
+<li>主名称：主名称可以是用户名或服务名，表示是用于提供各种网络服务(如hdfs、yam,、hive） 的主体。</li>
+<li>实例名：实例名简单理解为主机名。</li>
+<li>keytab文件：存储了用户的加密密码。常用这种方式认证。</li>
+</ul>
+<h2 id="1）用户principal"><a href="#1）用户principal" class="headerlink" title="1）用户principal"></a>1）用户principal</h2><p>用户principal的形式：<br>例如：<a href="mailto:&#97;&#x64;&#x6d;&#x69;&#110;&#x69;&#115;&#116;&#x72;&#97;&#x74;&#x6f;&#x72;&#64;&#x61;&#105;&#45;&#x78;&#46;&#99;&#111;&#x2e;&#x75;&#x6b;">&#97;&#x64;&#x6d;&#x69;&#110;&#x69;&#115;&#116;&#x72;&#97;&#x74;&#x6f;&#x72;&#64;&#x61;&#105;&#45;&#x78;&#46;&#99;&#111;&#x2e;&#x75;&#x6b;</a><br>Name[&#x2F;Instance]@REALM<br>其中Instance是可选 的，通常用于更好地限定用户的类型。比如，一个管理员用户通常会有admin instance，即Name&#x2F;admin@REALM。</p>
+<figure class="highlight plaintext"><figcaption><span>一些principal的例子：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pippo@EXAMPLE.COM </span><br><span class="line">admin/admin@EXAMPLE.COM</span><br><span class="line">cnicetoupp/admin@EXAMPLE.COM</span><br></pre></td></tr></table></figure>
+<h2 id="2）服务principal"><a href="#2）服务principal" class="headerlink" title="2）服务principal"></a>2）服务principal</h2><p>用户principal的形式：<br>Service&#x2F;Hostname@REALM<br>第一部分是service的名字，比如imap， AFS， ftp. 通常’host’这个名字被用于指明对一台机器的通用的访问(telnent， rsh， ssh)。<br>第二个component是提供这个服务的机器的全限定域名(FQDN)。这个component跟DNS对应用服务器的IP地址进行逆向解析后得到的主机名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">imap/hadoop-node1@EXAMPLE.COM</span><br><span class="line">host/hadoop-node1@EXAMPLE.COM</span><br><span class="line">afs/hadoop-node1@EXAMPLE.COM</span><br></pre></td></tr></table></figure>
+<h2 id="3）Ticket"><a href="#3）Ticket" class="headerlink" title="3）Ticket"></a>3）Ticket</h2><p>Ticket分两种：</p>
+<ul>
+<li>Ticket Granting Ticket，TGT：这是KDC中的Authentication Server(简称AS)产生的，TGT是向Ticket Granting Server(TGS)用于表明自己真实身份的东西。</li>
+<li>Service Ticket：这是KDC中的Ticket Granting Server(简称TGS)产生的，Service Ticket 是用于向应用服务器表明自己身份的东西</li>
+</ul>
+<h1 id="三、Kerberos架构与工作原理"><a href="#三、Kerberos架构与工作原理" class="headerlink" title="三、Kerberos架构与工作原理"></a>三、Kerberos架构与工作原理</h1><p><strong>AS_REQ</strong> 是在初始化一个用户（kinit）的时候发出的用户认证请求，这个请求是发给KDC中的Authentication Server (AS)；<br><strong>AS_REP</strong> 是AS回复给client的信息，其中包括TGT (用TGS secret key加密过的) and the session key (用发请求的用户的secret key加密过的);<br><strong>TGS_REQ</strong> 是client为了一个service ticket向Ticket Granting Server (TGS)的信息. 其中包括上一条信息中获得的TGT (用TGS secret key加密过的) ，一个客户端产生的一个authenticator(用session key加密过的).<br><strong>TGS_REP</strong> 是TGS回复给TGS_REQ的信息. 其中包括service ticket（用appservice的secret key加密过），和 一个TGS产生的service sessinon key（之前AS产生的一条session key给加密过的）<br><strong>AP_REQ</strong> 是一条客户端发给appserver的访问服务的请求，其中包括service ticket和一个authenticator（使用TGS产生的service session key 加密过的）<br><strong>AP_REP</strong> 是appserver回复给client的一条信息，证明这个appserver确实是客户端希望访问的server。不过这条信息也不一定总是要回复的。比如当客户端和appserver需要相互认证的时候，客户端向appserver发出请求，这个时候就不需要回复信息。<br><img src="/posts/59ac274e/AS-TGS-AP.jpeg" alt="alt text"><br><img src="/posts/59ac274e/Kerberos%20realm.jpeg" alt="alt text"><br>Kerberos认证时序图：<br><img src="/posts/59ac274e/kerberos-time-sequence.jpeg" alt="alt text"></p>
+<h1 id="四、Kerberos安装"><a href="#四、Kerberos安装" class="headerlink" title="四、Kerberos安装"></a>四、Kerberos安装</h1><p>官方文档：<a target="_blank" rel="noopener" href="https://kerberos.org/dist/index.html">https://kerberos.org/dist/index.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">192.168.0.113 hadoop-node1 server.kerberos.com</span><br><span class="line">192.168.0.114 hadoop-node2 client1.kerberos.com</span><br><span class="line">192.168.0.115 hadoop-node3 client2.kerberos.com</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>域</th>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hadoop-node1</td>
+<td>server.kerberos.com</td>
+<td>192.168.0.113</td>
+<td>KDC(Kerberos Server、kadmin)</td>
+</tr>
+<tr>
+<td>hadoop-node2</td>
+<td>client1.kerberos.com</td>
+<td>192.168.0.114</td>
+<td>Kerberos Client</td>
+</tr>
+<tr>
+<td>hadoop-node3</td>
+<td>client1.kerberos.com</td>
+<td>192.168.0.115</td>
+<td>Kerberos Client</td>
+</tr>
+</tbody></table>
+<h2 id="1）Kerberos-Server-安装"><a href="#1）Kerberos-Server-安装" class="headerlink" title="1）Kerberos Server 安装"></a>1）Kerberos Server 安装</h2><p>在hadoop-node1节点上执行如下命令安装Kerberos Server</p>
+<h3 id="1、yum安装"><a href="#1、yum安装" class="headerlink" title="1、yum安装"></a>1、yum安装</h3><ul>
+<li>krb5-server：Kerberos服务端程序，KDC所在节点。</li>
+<li>krb5-workstation： 包含一些基本Kerberos程序，比如(kinit, klist, kdestroy,kpasswd)，使用Kerberos的所有节点都应该部署。</li>
+<li>krb5-libs：包含Kerberos程序的各种支持类库等。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install krb5-server  krb5-workstation krb5-libs</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2、配置-krb5-conf"><a href="#2、配置-krb5-conf" class="headerlink" title="2、配置 krb5.conf"></a>2、配置 krb5.conf</h3><figure class="highlight plaintext"><figcaption><span>： 客户端根据该文件中的信息取访问KDC</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># To opt out of the system crypto-policies configuration of krb5, remove the</span><br><span class="line"># symlink at /etc/krb5.conf.d/crypto-policies which will not be recreated.</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">#Kerberos守护进程的日志记录方式。换句话说，表示 server 端的日志的打印位置。</span><br><span class="line">[logging]</span><br><span class="line"> #默认的krb5libs.log日志文件存放路径</span><br><span class="line"> default = FILE:/var/log/krb5libs.log</span><br><span class="line"> #默认的krb5kdc.log日志文件存放路径</span><br><span class="line"> kdc = FILE:/var/log/krb5kdc.log</span><br><span class="line"> #默认的kadmind.log日志文件存放路径</span><br><span class="line"> admin_server = FILE:/var/log/kadmind.log</span><br><span class="line"></span><br><span class="line">#Kerberos使用的默认值，当进行身份验证而未指定Kerberos域时，则使用default_realm参数指定的Kerberos域。即每种连接的默认配置，需要注意以下几个关键的配置：</span><br><span class="line">[libdefaults]</span><br><span class="line"> #DNS查找域名，我们可以理解为DNS的正向解析，该功能我没有去验证过，默认禁用。（我猜测该功能和domain_realm配置有关）</span><br><span class="line"> dns_lookup_realm = false</span><br><span class="line"> # 凭证生效的时限，设置为24h。</span><br><span class="line"> ticket_lifetime = 24h</span><br><span class="line"> # 凭证最长可以被延期的时限，一般为7天。当凭证过期之后，对安全认证的服务的后续访问则会失败。</span><br><span class="line"> renew_lifetime = 7d</span><br><span class="line"> # 如果此参数被设置为true，则可以转发票据，这意味着如果具有TGT的用户登陆到远程系统，则KDC可以颁发新的TGT，而不需要用户再次进行身份验证。</span><br><span class="line"> forwardable = true</span><br><span class="line"> # 我理解是和dns_lookup_realm相反，即反向解析技术，该功能我也没有去验证过，默认禁用即可。</span><br><span class="line"> rdns = false</span><br><span class="line"> # 在KDC中配置pkinit的位置，该参数的具体功能我没有做进一步验证。</span><br><span class="line"> pkinit_anchors = /etc/pki/tls/certs/ca-bundle.crt</span><br><span class="line"> #设置 Kerberos 应用程序的默认领域。如果您有多个领域，只需向 [realms] 节添加其他的语句。其中默认EXAMPLE.COM可以为任意名字,推荐为大写，这里我改成了HADOOP.COM。必须跟要配置的realm的名称一致。</span><br><span class="line"> default_realm = HADOOP.COM</span><br><span class="line"> # 顾名思义，默认的缓存名称，不推荐使用该参数。</span><br><span class="line"> # default_ccache_name = KEYRING:persistent:%&#123;uid&#125;</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line"> HADOOP.COM = &#123;</span><br><span class="line">  # kdc服务器地址。格式  [主机名或域名]:端口， 默认端口是88，默认端口可不写</span><br><span class="line">  kdc = server.kerberos.com:88</span><br><span class="line">  #  # admin服务地址 格式 [主机名或域名]:端口， 默认端口749，默认端口可不写</span><br><span class="line">  admin_server = server.kerberos.com:749</span><br><span class="line">  # 代表默认的域名，设置Server主机所对应的域名</span><br><span class="line">  default_domain = kerberos.com</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">#指定DNS域名和Kerberos域名之间映射关系。指定服务器的FQDN，对应的domain_realm值决定了主机所属的域。</span><br><span class="line">[domain_realm]</span><br><span class="line"> .kerberos.com = HADOOP.COM</span><br><span class="line">  kerberos.com = HADOOP.COM</span><br><span class="line"></span><br><span class="line">#kdc的配置信息。即指定kdc.conf的位置。</span><br><span class="line">[kdc]</span><br><span class="line"> # kdc的配置文件路径，默认没有配置，如果是默认路径，可以不写</span><br><span class="line"> profile = /var/kerberos/krb5kdc/kdc.conf</span><br></pre></td></tr></table></figure>
+<h3 id="3、配置-kdc-conf"><a href="#3、配置-kdc-conf" class="headerlink" title="3、配置 kdc.conf"></a>3、配置 kdc.conf</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[kdcdefaults]</span><br><span class="line"> #指定KDC的默认端口</span><br><span class="line"> kdc_ports = 88</span><br><span class="line"> # 指定KDC的TCP协议默认端口。</span><br><span class="line"> kdc_tcp_ports = 88</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line"> #该部分列出每个领域的配置。</span><br><span class="line"> HADOOP.COM = &#123;</span><br><span class="line">  #和 supported_enctypes 默认使用 aes256-cts。由于，JAVA 使用 aes256-cts 验证方式需要安装额外的 jar 包（后面再做说明）。推荐不使用，并且删除 aes256-cts。（建议注释掉，默认也是注释掉的）</span><br><span class="line">  #master_key_type = aes256-cts</span><br><span class="line">  #标注了 admin 的用户权限的文件，若文件不存在，需要用户自己创建。即该参数允许为具有对Kerberos数据库的管理访问权限的UPN指定ACL。</span><br><span class="line">  acl_file = /var/kerberos/krb5kdc/kadm5.acl</span><br><span class="line">   #该参数指向包含潜在可猜测或可破解密码的文件。</span><br><span class="line">  dict_file = /usr/share/dict/words</span><br><span class="line">  #KDC 进行校验的 keytab。</span><br><span class="line">  admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab</span><br><span class="line">  # ticket 的默认生命周期为24h</span><br><span class="line">  max_file = 24h</span><br><span class="line">  # #该参数指定在多长时间内可重获取票据，默认为0</span><br><span class="line">  max_renewable_life = 7d</span><br><span class="line">  #指定此KDC支持的各种加密类型。</span><br><span class="line">  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4、配置-kadm5-acl"><a href="#4、配置-kadm5-acl" class="headerlink" title="4、配置 kadm5.acl"></a>4、配置 kadm5.acl</h3><p>&#x2F;var&#x2F;kerberos&#x2F;krb5kdc&#x2F;kadm5.acl：权限相关配置</p>
+<p>其中前一个号是通配符，表示像名为“abc&#x2F;admin”或“xxx&#x2F;admin”的人都可以使用此工具（远程或本地）管理kerberos数据库，后一个跟权限有关，*表示所有权限。HADOOP.COM是上面配置的realm。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/admin@HADOOP.COM     *</span><br></pre></td></tr></table></figure>
+<p>Kerberos kadmind 使用该文件来管理对 Kerberos 数据库的访问权限。对于影响 principa 的操作，ACL 文件还控制哪些 principa 可以对哪些其他 principa 进行操作。文件格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">principal  permissions  [target_principal  [restrictions] ]</span><br></pre></td></tr></table></figure>
+<p>相关参数说明：</p>
+<ul>
+<li>principal：设置该 principal 的权限；principal 的每个部分都可以使用 *。</li>
+<li>permissions： 权限，指定匹配特定条目的主体可以执行或不可以执行的操作 。如果字符是大写，则不允许该操作。如果字符是小写，则允许该操作。有如下一些权限：a：[不]允许添加主体或策略。d：[不]允许删除主体或策略。m：[不]允许修改主体或策略。c：[不]允许更改主体的口令。i：[不]允许查询 Kerberos 数据库。l：[不]允许列出 Kerberos 数据库中的主体或策略。x 或 *：允许所有权限。</li>
+<li>target_principal：目标 principal，目标 principal 的每个部分都可以使用 *。【可选】</li>
+<li>restrictions：针对权限的一些补充限制，如：限制创建的 principal 的票据最长时效。【可选】<br>【示例】<br>kadm5.acl 文件中的以下项授予 HADOOP.COM 领域中包含 admin 实例的任何主体对 Kerberos 数据库的所有权限：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/admin@HADOOP.COM     *</span><br></pre></td></tr></table></figure>
+kadm5.acl 文件中的以下项授予 <a href="mailto:&#x74;&#x65;&#x73;&#x74;&#x40;&#69;&#88;&#x41;&#x4d;&#80;&#76;&#x45;&#x2e;&#x43;&#79;&#x4d;">&#x74;&#x65;&#x73;&#x74;&#x40;&#69;&#88;&#x41;&#x4d;&#80;&#76;&#x45;&#x2e;&#x43;&#79;&#x4d;</a> 主体添加、列出和查询包含 root 实例的任何主体的权限。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test@EXAMPLE.COM ali */root@EXAMPLE.COM</span><br></pre></td></tr></table></figure>
+kadm5.acl 文件中的以下项不授予 <a href="mailto:&#x74;&#101;&#x73;&#x74;&#x40;&#x45;&#88;&#65;&#x4d;&#80;&#76;&#x45;&#46;&#x43;&#x4f;&#77;">&#x74;&#101;&#x73;&#x74;&#x40;&#x45;&#88;&#65;&#x4d;&#80;&#76;&#x45;&#46;&#x43;&#x4f;&#77;</a> 主体添加、列出和查询包含 root 实例的任何主体的权限。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test@EXAMPLE.COM ALI */root@EXAMPLE.COM</span><br></pre></td></tr></table></figure>
+详细说明可参考官网文档：<a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_files/kadm5_acl.html">https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_files/kadm5_acl.html</a></li>
+</ul>
+<h3 id="5、初始化KDC数据库"><a href="#5、初始化KDC数据库" class="headerlink" title="5、初始化KDC数据库"></a>5、初始化KDC数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kdb5_util create -r HADOOP.COM -s</span><br><span class="line">$ ll -a /var/kerberos/krb5kdc/</span><br><span class="line">-s：表示生成 stash file，并在其中存储 master server key（krb5kdc）</span><br><span class="line">-r：指定 realm name</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/59ac274e/kdb-init.jpeg" alt="alt text"><br>kerberos数据库创建完之后，默认会创建以下5个文件（kdc.conf、kadm5.acl除外的其他几个），Kerberos 数据库的目录为：&#x2F;var&#x2F;kerberos&#x2F;krb5kdc，如果需要重建数据库，可删除这五个文件重新执行上面的命令创建。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm /var/kerberos/krb5kdc/.k5.HADOOP.COM /var/kerberos/krb5kdc/principal* -f</span><br></pre></td></tr></table></figure>
+<h3 id="6、启停-Kerberos-服务"><a href="#6、启停-Kerberos-服务" class="headerlink" title="6、启停 Kerberos 服务"></a>6、启停 Kerberos 服务</h3><p>启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl start krb5kdc kadmin</span><br><span class="line"># 查看服务状态</span><br><span class="line">$ systemctl status krb5kdc kadmin</span><br></pre></td></tr></table></figure>
+<p>停止：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl stop krb5kdc kadmin</span><br></pre></td></tr></table></figure>
+<h3 id="7、kadmin-local"><a href="#7、kadmin-local" class="headerlink" title="7、kadmin.local"></a>7、kadmin.local</h3><p>Kerberos 服务机器上可以使用 kadmin.local 来执行各种管理的操作。进入 kadmin.local，不需要输入密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kadmin.local</span><br></pre></td></tr></table></figure>
+<p>常用操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add_principal, addprinc, ank</td>
+<td>增加 principal</td>
+<td>add_principal -randkey <a href="mailto:&#x74;&#101;&#115;&#116;&#64;&#72;&#x41;&#x44;&#x4f;&#x4f;&#x50;&#46;&#67;&#x4f;&#x4d;">&#x74;&#101;&#115;&#116;&#64;&#72;&#x41;&#x44;&#x4f;&#x4f;&#x50;&#46;&#67;&#x4f;&#x4d;</a></td>
+</tr>
+<tr>
+<td>cpw</td>
+<td>修改密码</td>
+<td>cpw <a href="mailto:&#x74;&#101;&#x73;&#116;&#x40;&#72;&#65;&#x44;&#x4f;&#x4f;&#80;&#x2e;&#67;&#x4f;&#x4d;">&#x74;&#101;&#x73;&#116;&#x40;&#72;&#65;&#x44;&#x4f;&#x4f;&#80;&#x2e;&#67;&#x4f;&#x4d;</a></td>
+</tr>
+<tr>
+<td>delete_principal, delprinc</td>
+<td>删除 principal</td>
+<td>delete_principal <a href="mailto:&#116;&#101;&#x73;&#x74;&#64;&#x48;&#x41;&#x44;&#79;&#79;&#80;&#x2e;&#67;&#79;&#x4d;">&#116;&#101;&#x73;&#x74;&#64;&#x48;&#x41;&#x44;&#79;&#79;&#80;&#x2e;&#67;&#79;&#x4d;</a></td>
+</tr>
+<tr>
+<td>modify_principal, modprinc</td>
+<td>修改 principal</td>
+<td>modify_principal <a href="mailto:&#x74;&#x65;&#115;&#116;&#x40;&#x48;&#65;&#x44;&#x4f;&#x4f;&#x50;&#46;&#x43;&#x4f;&#77;">&#x74;&#x65;&#115;&#116;&#x40;&#x48;&#65;&#x44;&#x4f;&#x4f;&#x50;&#46;&#x43;&#x4f;&#77;</a></td>
+</tr>
+<tr>
+<td>rename_principal, renprinc</td>
+<td>重命名 principal</td>
+<td>rename_principal <a href="mailto:&#x74;&#x65;&#115;&#116;&#64;&#72;&#x41;&#x44;&#x4f;&#x4f;&#x50;&#46;&#x43;&#x4f;&#77;">&#x74;&#x65;&#115;&#116;&#64;&#72;&#x41;&#x44;&#x4f;&#x4f;&#x50;&#46;&#x43;&#x4f;&#77;</a> <a href="mailto:&#x74;&#101;&#x73;&#116;&#50;&#64;&#65;&#x42;&#x43;&#x2e;&#x43;&#x4f;&#77;">&#x74;&#101;&#x73;&#116;&#50;&#64;&#65;&#x42;&#x43;&#x2e;&#x43;&#x4f;&#77;</a></td>
+</tr>
+<tr>
+<td>get_principal, getprinc</td>
+<td>获取 principal</td>
+<td>get_principal <a href="mailto:&#x74;&#101;&#115;&#x74;&#x40;&#72;&#65;&#68;&#x4f;&#x4f;&#80;&#46;&#67;&#79;&#77;">&#x74;&#101;&#115;&#x74;&#x40;&#72;&#65;&#68;&#x4f;&#x4f;&#80;&#46;&#67;&#79;&#77;</a></td>
+</tr>
+<tr>
+<td>list_principals, listprincs, get_principals, getprincs</td>
+<td>显示所有 principal</td>
+<td>listprincs</td>
+</tr>
+<tr>
+<td>ktadd, xst</td>
+<td>导出条目到 keytab</td>
+<td>xst -k &#x2F;root&#x2F;test.keytab <a href="mailto:&#116;&#x65;&#x73;&#x74;&#64;&#x48;&#65;&#x44;&#x4f;&#x4f;&#x50;&#x2e;&#67;&#79;&#77;">&#116;&#x65;&#x73;&#x74;&#64;&#x48;&#65;&#x44;&#x4f;&#x4f;&#x50;&#x2e;&#67;&#79;&#77;</a></td>
+</tr>
+<tr>
+<td>?</td>
+<td>查看帮助</td>
+<td>?</td>
+</tr>
+</tbody></table>
+<p><img src="/posts/59ac274e/kerberos-chw.jpeg" alt="alt text"><br>【温馨提示】-randkey是密码是随机的，-nokey密码不随机【默认】，得手动输入密码。<br>【示例】</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">addprinc -randkey hdfs/admin</span><br><span class="line">addprinc -pw 123456 hdfs/admin</span><br><span class="line">addprinc hdfs/admin</span><br><span class="line">输入密码：123456</span><br></pre></td></tr></table></figure>
+<h2 id="2）Kerberos-Client-安装"><a href="#2）Kerberos-Client-安装" class="headerlink" title="2）Kerberos Client 安装"></a>2）Kerberos Client 安装</h2><p>在hadoop-node2和hadoop-node3节点上安装client</p>
+<ul>
+<li>krb5-workstation： 包含一些基本Kerberos程序，比如(kinit, klist, kdestroy,kpasswd)，使用Kerberos的所有节点都应该部署。</li>
+<li>krb5-devel：包含编译Kerberos程序的头文件和一些类库。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install krb5-devel krb5-workstation -y</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>配置 krb5.conf<br>【温馨提示】&#x2F;etc&#x2F;krb5.conf ： 客户端根据该文件中的信息取访问KDC</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># To opt out of the system crypto-policies configuration of krb5, remove the</span><br><span class="line"># symlink at /etc/krb5.conf.d/crypto-policies which will not be recreated.</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">#Kerberos守护进程的日志记录方式。换句话说，表示 server 端的日志的打印位置。</span><br><span class="line">[logging]</span><br><span class="line"> #默认的krb5libs.log日志文件存放路径</span><br><span class="line"> default = FILE:/var/log/krb5libs.log</span><br><span class="line"> #默认的krb5kdc.log日志文件存放路径</span><br><span class="line"> kdc = FILE:/var/log/krb5kdc.log</span><br><span class="line"> #默认的kadmind.log日志文件存放路径</span><br><span class="line"> admin_server = FILE:/var/log/kadmind.log</span><br><span class="line"></span><br><span class="line">#Kerberos使用的默认值，当进行身份验证而未指定Kerberos域时，则使用default_realm参数指定的Kerberos域。即每种连接的默认配置，需要注意以下几个关键的配置：</span><br><span class="line">[libdefaults]</span><br><span class="line"> #DNS查找域名，我们可以理解为DNS的正向解析，该功能我没有去验证过，默认禁用。（我猜测该功能和domain_realm配置有关）</span><br><span class="line"> dns_lookup_realm = false</span><br><span class="line"> # 凭证生效的时限，设置为24h。</span><br><span class="line"> ticket_lifetime = 24h</span><br><span class="line"> # 凭证最长可以被延期的时限，一般为7天。当凭证过期之后，对安全认证的服务的后续访问则会失败。</span><br><span class="line"> renew_lifetime = 7d</span><br><span class="line"> # 如果此参数被设置为true，则可以转发票据，这意味着如果具有TGT的用户登陆到远程系统，则KDC可以颁发新的TGT，而不需要用户再次进行身份验证。</span><br><span class="line"> forwardable = true</span><br><span class="line"> # 我理解是和dns_lookup_realm相反，即反向解析技术，该功能我也没有去验证过，默认禁用即可。</span><br><span class="line"> rdns = false</span><br><span class="line"> # 在KDC中配置pkinit的位置，该参数的具体功能我没有做进一步验证。</span><br><span class="line"> pkinit_anchors = /etc/pki/tls/certs/ca-bundle.crt</span><br><span class="line"> #设置 Kerberos 应用程序的默认领域。如果您有多个领域，只需向 [realms] 节添加其他的语句。其中默认EXAMPLE.COM可以为任意名字,推荐为大写，这里我改成了HADOOP.COM。必须跟要配置的realm的名称一致。</span><br><span class="line"> default_realm = HADOOP.COM</span><br><span class="line"> # 顾名思义，默认的缓存名称，不推荐使用该参数。</span><br><span class="line"> default_ccache_name = KEYRING:persistent:%&#123;uid&#125;</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line"> HADOOP.COM = &#123;</span><br><span class="line">  # kdc服务器地址。格式  [主机名或域名]:端口， 默认端口是88，默认端口可不写</span><br><span class="line">  kdc = server.kerberos.com:88</span><br><span class="line">  #  # admin服务地址 格式 [主机名或域名]:端口， 默认端口749，默认端口可不写</span><br><span class="line">  admin_server = server.kerberos.com:749</span><br><span class="line">  # 代表默认的域名，设置Server主机所对应的域名</span><br><span class="line">  default_domain = kerberos.com</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">#指定DNS域名和Kerberos域名之间映射关系。指定服务器的FQDN，对应的domain_realm值决定了主机所属的域。</span><br><span class="line">[domain_realm]</span><br><span class="line"> .kerberos.com = HADOOP.COM</span><br><span class="line">  kerberos.com = HADOOP.COM</span><br></pre></td></tr></table></figure>
+<p>测试验证连接server</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 默认用户是root/admin@HADOOP.COM，发现在数据库里没有这个用户，可以先在server端创建该用户：add_principal root/admin@HADOOP.COM</span><br><span class="line"></span><br><span class="line">$ kadmin</span><br><span class="line">输入密码：123456</span><br></pre></td></tr></table></figure>
+<p>指定用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kadmin -p test@HADOOP.COM</span><br></pre></td></tr></table></figure>
+<h2 id="3）基本命令操作"><a href="#3）基本命令操作" class="headerlink" title="3）基本命令操作"></a>3）基本命令操作</h2><h3 id="1、kadmin（数据库管理）"><a href="#1、kadmin（数据库管理）" class="headerlink" title="1、kadmin（数据库管理）"></a>1、kadmin（数据库管理）</h3><p>Kerberos 客户端机器上可以使用 kadmin 来执行各种管理的操作，服务端可以使用kadmin和kadmin.local命令。需先在 Kerbers Server 上创建登录的 principal，默认为 {当前用户}&#x2F;admin@realm。</p>
+<p>管理KDC数据库有两种方式：</p>
+<ul>
+<li>一种直接在KDC（server端）直接执行，可以不需要输入密码就可以登录【命令：kadmin.local】</li>
+<li>一种则是客户端命令，需要输入密码【命令：kadmin】，在server端和client端都可以使用。<br>创建用户，注意自己设置的密码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 交互式</span><br><span class="line">$ kadmin.local</span><br><span class="line"></span><br><span class="line">add_principal root/admin</span><br><span class="line"></span><br><span class="line"># 非交互式</span><br><span class="line">$ kadmin.local -q &quot;add_principal root/admin&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2、kinit-在客户端认证用户"><a href="#2、kinit-在客户端认证用户" class="headerlink" title="2、kinit(在客户端认证用户)"></a>2、kinit(在客户端认证用户)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kinit root/admin@HADOOP.COM</span><br><span class="line"># 查看当前的认证用户</span><br><span class="line">$ klist</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/59ac274e/kerberos-kinit.jpeg" alt="alt text"></p>
+<h3 id="3、导出keytab认证文件"><a href="#3、导出keytab认证文件" class="headerlink" title="3、导出keytab认证文件"></a>3、导出keytab认证文件</h3><p>使用xst命令或者ktadd命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 非交互式</span><br><span class="line">$ kadmin.local -q &quot;ktadd -norandkey -k /root/root.keytab root/admin&quot;</span><br><span class="line"></span><br><span class="line"># 交互式</span><br><span class="line">$ kadmin.local</span><br><span class="line"></span><br><span class="line">ktadd -norandkey -k /root/root.keytab root/admin</span><br><span class="line">或xst -k /root/v.keytab root/admin</span><br><span class="line">或xst -norandkey -k /root/root.keytab root/admin</span><br></pre></td></tr></table></figure>
+<p>其中 &#x2F;root&#x2F;root.keytab为自己指定的路径与文件名，以.keytab结尾；root&#x2F;admin为之前创建的凭证用户<br><img src="/posts/59ac274e/keytab.jpeg" alt="alt text"></p>
+<p>查看密钥文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ klist -kt /root/root.keytab</span><br></pre></td></tr></table></figure>
+<h3 id="4、kdestroy-删除当前的认证缓存"><a href="#4、kdestroy-删除当前的认证缓存" class="headerlink" title="4、kdestroy(删除当前的认证缓存)"></a>4、kdestroy(删除当前的认证缓存)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kdestroy</span><br></pre></td></tr></table></figure>
+<h3 id="5、用户认证（登录）"><a href="#5、用户认证（登录）" class="headerlink" title="5、用户认证（登录）"></a>5、用户认证（登录）</h3><p><strong>基于密码认证</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ klist</span><br><span class="line">$ kinit root/admin</span><br><span class="line">输入密码：123456</span><br><span class="line"></span><br><span class="line">$ klist</span><br></pre></td></tr></table></figure>
+<p><strong>基于密钥认证（keytab）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 删除当前用户认证</span><br><span class="line">$ kdestroy</span><br><span class="line"></span><br><span class="line"># 拿到上面生成的keytab文件</span><br><span class="line">$ klist</span><br><span class="line">$ kinit -kt /root/root.keytab root/admin</span><br><span class="line">$ klist</span><br></pre></td></tr></table></figure>
+<p><img src="/posts/59ac274e/keytab-authenticate.jpeg" alt="alt text"><br>常见的基础操作就到这里了，更多操作命令，可以查看官方文档和查看帮助。</p>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/59ac274e.html">https://www.ai-x.co.uk/posts/59ac274e.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Kerberos/">Kerberos</a><a class="post-meta__tags" href="/tags/windows/">windows</a><a class="post-meta__tags" href="/tags/Authentication/">Authentication</a><a class="post-meta__tags" href="/tags/Authorization/">Authorization</a><a class="post-meta__tags" href="/tags/Accounting/">Accounting</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-kerberos-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/dd457ab5.html" title="大数据平台与数据采集技术"><img class="cover" src="/img/cover-bigdata-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">大数据平台与数据采集技术</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/c0ba9542.html" title="Kubernetes容器故障排除思路分析"><img class="cover" src="/img/cover-k8s.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Kubernetes容器故障排除思路分析</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">123</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">378</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">27</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">18</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">52</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Kerberos%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、Kerberos概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">1）应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">2）功能特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Kerberos%E4%B8%AD%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">二、Kerberos中的核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89%E7%94%A8%E6%88%B7principal"><span class="toc-number">2.1.</span> <span class="toc-text">1）用户principal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E6%9C%8D%E5%8A%A1principal"><span class="toc-number">2.2.</span> <span class="toc-text">2）服务principal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89Ticket"><span class="toc-number">2.3.</span> <span class="toc-text">3）Ticket</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Kerberos%E6%9E%B6%E6%9E%84%E4%B8%8E%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">三、Kerberos架构与工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Kerberos%E5%AE%89%E8%A3%85"><span class="toc-number">4.</span> <span class="toc-text">四、Kerberos安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89Kerberos-Server-%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">1）Kerberos Server 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81yum%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.1.</span> <span class="toc-text">1、yum安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AE-krb5-conf"><span class="toc-number">4.1.2.</span> <span class="toc-text">2、配置 krb5.conf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E9%85%8D%E7%BD%AE-kdc-conf"><span class="toc-number">4.1.3.</span> <span class="toc-text">3、配置 kdc.conf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AE-kadm5-acl"><span class="toc-number">4.1.4.</span> <span class="toc-text">4、配置 kadm5.acl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96KDC%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.1.5.</span> <span class="toc-text">5、初始化KDC数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%90%AF%E5%81%9C-Kerberos-%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.1.6.</span> <span class="toc-text">6、启停 Kerberos 服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81kadmin-local"><span class="toc-number">4.1.7.</span> <span class="toc-text">7、kadmin.local</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89Kerberos-Client-%E5%AE%89%E8%A3%85"><span class="toc-number">4.2.</span> <span class="toc-text">2）Kerberos Client 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text">3）基本命令操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81kadmin%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%EF%BC%89"><span class="toc-number">4.3.1.</span> <span class="toc-text">1、kadmin（数据库管理）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81kinit-%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81%E7%94%A8%E6%88%B7"><span class="toc-number">4.3.2.</span> <span class="toc-text">2、kinit(在客户端认证用户)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%AF%BC%E5%87%BAkeytab%E8%AE%A4%E8%AF%81%E6%96%87%E4%BB%B6"><span class="toc-number">4.3.3.</span> <span class="toc-text">3、导出keytab认证文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81kdestroy-%E5%88%A0%E9%99%A4%E5%BD%93%E5%89%8D%E7%9A%84%E8%AE%A4%E8%AF%81%E7%BC%93%E5%AD%98"><span class="toc-number">4.3.4.</span> <span class="toc-text">4、kdestroy(删除当前的认证缓存)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%89"><span class="toc-number">4.3.5.</span> <span class="toc-text">5、用户认证（登录）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/43d0243a.html" title="中国古今术数体系概述"><img src="/img/cover-ancient.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="中国古今术数体系概述"></a><div class="content"><a class="title" href="/posts/43d0243a.html" title="中国古今术数体系概述">中国古今术数体系概述</a><time datetime="2025-02-03T08:35:51.000Z" title="发表于 2025-02-03 08:35:51">2025-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/5409d40e.html" title="H.323和SIP协议的技术比较"><img src="/img/cover-H323-SIP-COVER.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="H.323和SIP协议的技术比较"></a><div class="content"><a class="title" href="/posts/5409d40e.html" title="H.323和SIP协议的技术比较">H.323和SIP协议的技术比较</a><time datetime="2025-02-02T15:48:32.000Z" title="发表于 2025-02-02 15:48:32">2025-02-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/5aa1b166.html" title="ELFK企业级日志系统架构技术-ELFK（Elasticsearch、Filebeat、Kafka、Logstash、Kibana）"><img src="/img/cover-elfkstack-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ELFK企业级日志系统架构技术-ELFK（Elasticsearch、Filebeat、Kafka、Logstash、Kibana）"></a><div class="content"><a class="title" href="/posts/5aa1b166.html" title="ELFK企业级日志系统架构技术-ELFK（Elasticsearch、Filebeat、Kafka、Logstash、Kibana）">ELFK企业级日志系统架构技术-ELFK（Elasticsearch、Filebeat、Kafka、Logstash、Kibana）</a><time datetime="2025-01-31T14:07:31.000Z" title="发表于 2025-01-31 14:07:31">2025-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/54d9214c.html" title="Prometheus监控系统及架构原理"><img src="/img/cover-prometheus-cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prometheus监控系统及架构原理"></a><div class="content"><a class="title" href="/posts/54d9214c.html" title="Prometheus监控系统及架构原理">Prometheus监控系统及架构原理</a><time datetime="2025-01-31T12:58:26.000Z" title="发表于 2025-01-31 12:58:26">2025-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/60f8d801.html" title="Docker容器技术之Dockerfile以From scratch创建镜像"><img src="/img/docker-scratch.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker容器技术之Dockerfile以From scratch创建镜像"></a><div class="content"><a class="title" href="/posts/60f8d801.html" title="Docker容器技术之Dockerfile以From scratch创建镜像">Docker容器技术之Dockerfile以From scratch创建镜像</a><time datetime="2025-01-31T10:36:58.000Z" title="发表于 2025-01-31 10:36:58">2025-01-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '1f65cc4c61c429ae410972762ea997f4'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (52)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (18)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (8)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (27)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
