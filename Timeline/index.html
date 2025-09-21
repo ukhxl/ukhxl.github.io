@@ -1,0 +1,825 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>留痕 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="AI-X 站点 来自于头脑风暴2025 蛇来迎大运  Template  09-22 IPSEC技术：IKE的安全关联SA 09-21 mklink &#x2F;J 的用法。mklink 是 Windows 命令行工具，用于创建符号链接。&#x2F;J 参数用于创建目录连接（junction），这是一种特殊类型的符号链接，可以链接到目录。例如，mklink &#x2F;J C:\链接目录 C:\目">
+<meta property="og:type" content="website">
+<meta property="og:title" content="留痕">
+<meta property="og:url" content="https://www.ai-x.co.uk/Timeline/index.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:description" content="AI-X 站点 来自于头脑风暴2025 蛇来迎大运  Template  09-22 IPSEC技术：IKE的安全关联SA 09-21 mklink &#x2F;J 的用法。mklink 是 Windows 命令行工具，用于创建符号链接。&#x2F;J 参数用于创建目录连接（junction），这是一种特殊类型的符号链接，可以链接到目录。例如，mklink &#x2F;J C:\链接目录 C:\目">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/aixlog.png">
+<meta property="article:published_time" content="2024-11-01T19:04:39.000Z">
+<meta property="article:modified_time" content="2025-09-21T18:54:57.063Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="AI-X,ai-x,K8S容器,docker,container,Hexo,butterfly,证书,certificate,SSL,VPN,Python,算法,数据结构,vCenter,虚拟化,ESA,邮件网关,网络安全,数据安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/aixlog.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/Timeline/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '留痕',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-09-21 18:54:57',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page type-timeline" id="body-wrap"><header class="not-home-page fixed" id="page-header" style="background-image: url(/img/defaultcover-top.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">留痕</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="top-img" style="background-image: url(/img/defaultcover-top.jpeg);"></div><div id="article-container"><h1 id="AI-X-站点-来自于头脑风暴"><a href="#AI-X-站点-来自于头脑风暴" class="headerlink" title="AI-X 站点 来自于头脑风暴"></a>AI-X 站点 来自于头脑风暴</h1><div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2025 蛇来迎大运</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> Template</p>
+</div></div><div class="timeline-item-content"></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 09-22</p>
+</div></div><div class="timeline-item-content"><p>IPSEC技术：IKE的安全关联SA</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>09-21</p>
+</div></div><div class="timeline-item-content"><p>mklink &#x2F;J 的用法。<br>mklink 是 Windows 命令行工具，用于创建符号链接。&#x2F;J 参数用于创建目录连接（junction），这是一种特殊类型的符号链接，可以链接到目录。<br>例如，mklink &#x2F;J C:\链接目录 C:\目标目录会在 C 盘创建一个名为“链接目录”的目录，指向 C 盘上的“目标目录”。这样做的好处是，你可以通过“链接目录”访问“目标目录”的内容，而实际上内容存储在“目标目录”中。<br>这对于整理文件、解决软件对目录路径的依赖性等情况很有用。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 08-12</p>
+</div></div><div class="timeline-item-content"><p><strong>1.路由策略</strong>：路由策略是为了改变网络流量所经过的途径而修改路由信息的技术，主要通过改变路由属性（包括可达性）来实现。<br><strong>操作对象：路由条目</strong><br><strong>2.策略路由</strong>：策略路由是一种比基于目标网络进行路由更加灵活的数据包路由转发机制。应用了策略路由，路由器将通过路由图决定如何对需要路由的数据包进行处理，路由图决定了一个数据包的下一跳转发路由器。<br><strong>操作对象：数据包</strong></p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 08-11</p>
+</div></div><div class="timeline-item-content"><p> <strong>高级交换技术：VXLAN与EVPN</strong><br>EVPN（Ethernet Virtual Private Network）是一种用于二层网络互联的VPN技术。EVPN技术采用类似于BGP&#x2F;MPLS IP VPN的机制，在BGP协议的基础上定义了一种新的NLRI（Network Layer Reachability Information，网络层可达信息）即EVPN NLRI，EVPN NLRI定义了几种新的BGP EVPN路由类型，用于处在二层网络的不同站点之间的MAC地址学习和发布。</p>
+<p>原有的VXLAN实现方案没有控制平面，是通过数据平面的流量泛洪进行VTEP发现和主机信息（包括IP地址、MAC地址、VNI、网关VTEP IP地址）学习的，这种方式导致数据中心网络存在很多泛洪流量。为了解决这一问题，VXLAN引入了EVPN作为控制平面，通过在VTEP之间交换BGP EVPN路由实现VTEP的自动发现、主机信息相互通告等特性，从而避免了不必要的数据流量泛洪。</p>
+<p>综上所述，EVPN通过扩展BGP协议新定义了几种BGP EVPN路由，这些BGP EVPN路由可以用于传递VTEP地址和主机信息，因此EVPN应用于VXLAN网络中，可以使VTEP发现和主机信息学习从数据平面转移到控制平面。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 08-10</p>
+</div></div><div class="timeline-item-content"><p>有人在问选择和努力哪个重要？<br>有句话叫：三百六十行，行行出状元。也就是三百六十行都可以选择，同时三百六十行都能出状元。<br>两个都重要，即有选择的红利，也有努力的红利。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 07-24</p>
+</div></div><div class="timeline-item-content"><p>Docker相当于沙盒系统</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 04-26</p>
+</div></div><div class="timeline-item-content"><p>Docker相当于沙盒系统</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 04-17</p>
+</div></div><div class="timeline-item-content"><p>Matter<br>动词<br>1、意为“要紧，事关紧要，重要”<br>2、it doesn’t matter没关系<br>名词<br>1、 important matters，意为“重要的事情”<br>2、 it’s just&#x2F;only a matter of time (before …)，意为“早晚的事；只是时间问题”等，a matter of 什么什么的事等</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 04-14</p>
+</div></div><div class="timeline-item-content"><p>除法运算符（&#x2F;）<br>整除运算符（&#x2F;&#x2F;）<br>乘法运算符（*）<br>幂运算符（**）<br>取模运算符（%）</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 04-07</p>
+</div></div><div class="timeline-item-content"><p>UiPath是公司代码库里的一个专业术语</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-26</p>
+</div></div><div class="timeline-item-content"><p>思想体系：<br>道法术器<br>熵管守谋局<br>财侣法地</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-22</p>
+</div></div><div class="timeline-item-content"><p><strong>Engagement</strong></p>
+<ol>
+<li><p>词义同 engage 大体相同。但还有更加具体的“一次约会”、“一次战斗”、“<strong>一件待办事项</strong>”、“一宗应聘工作”等新添的词义。用于这些具体词义时，engagement 是可数名词。</p>
+</li>
+<li><p>engagement（可数名词）与 appointment 都是“约会”。但是<strong>engagement 是熟人或朋友之间的约会</strong>。<br>He had an engagement at a restaurant downtown at eight.<br>他八点钟在城里一家饭馆有个约会。<br>appointment 则是较为正式的“约见”，通常一方是官方或上级，或者是要安排日程的医生、律师等。</p>
+</li>
+<li><p>engagement（不可数名词）在美国的对外政策中是个出现率较高的用语，常常与 confrontation（对抗）相对而言，意思是不要一刀两断，拒绝来往，而是要来往，但又在来往中有斗争（动词 engage 本来就有对敌作战的一条重要词义），所以，这个 engagement 的内涵很复杂，中文不易充分表达，暂时译为“接触”，比较口语可以说是“<strong>打交道</strong>”。</p>
+</li>
+</ol>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-21</p>
+</div></div><div class="timeline-item-content"><p><strong>Hacks</strong><br>有一個口語常用的表達方式 可以當「竅門」「秘訣」「妙招」的意思</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-12</p>
+</div></div><div class="timeline-item-content"><p>You need to have a clear niche<br>你需要有一个明确的定位</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-15</p>
+</div></div><div class="timeline-item-content"><p><strong>March 15</strong><br>你说的话，你的潜意识就要去证明你说的话是对的</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-09</p>
+</div></div><div class="timeline-item-content"><p><strong>March 9</strong></p>
+<p>The question isn’t who’s going to let me; it’s who is going to stop me.</p>
+<p>要问的不是谁会允许我，而是谁能阻止我。——安·兰德</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-08</p>
+</div></div><div class="timeline-item-content"><p><strong>“欲速则不达”</strong>。当你一个月看30本书，到头来可能一本也无法理解，这便是快即是慢。因此，我们不如看一本书，花一个月来进行深入学习，你会发现收获的更多。并不是高速的学习就能带来高效的成果，<strong>很多越是能够展示自我能力的事情，就越需要我们下足慢功夫</strong>。只有足够的积累，才能厚积薄发！以慢为快，方能始终！</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-07</p>
+</div></div><div class="timeline-item-content"><p>复利思维</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-06</p>
+</div></div><div class="timeline-item-content"><p>既要细致入微，又要宏观把握<br>慢下来，深入微</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 03-02</p>
+</div></div><div class="timeline-item-content"><p>小手段<br>大权力<br>都是利益和利用的关系</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 02-27</p>
+</div></div><div class="timeline-item-content"><p>累加<br>累积<br>累循环<br>微分、偏微分、复合函数<br>导数、偏导数、梯度、散度、旋度、拉普拉斯算子<br>标量、向量、张量、矩阵<br>指数、对数、三角函数、双曲函数、复数、复变函数</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 02-19</p>
+</div></div><div class="timeline-item-content"><p>人生建议：先上车，再调整姿势</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 02-16</p>
+</div></div><div class="timeline-item-content"><p>“长生十六字诀”，即“一吸便提，气气归脐，一提便咽，水火相见。”作者称其为“至简至易之妙诀也。”此十六字诀是水火相济养生法。其养生理论是中医学上的肾命水火说。“一吸便提（即提肛门），气气归脐”，就是用提肛导引之法，来补肾命火；“一提便咽”（即吞咽津液），以滋肾水，这样，肾命“水火相见”，如此导引补水配火，调补肾之阴阳，水火相济，使身体保持平衡状态。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 02-01</p>
+</div></div><div class="timeline-item-content"><p>对于初级程序员来说，编程最大的难点在于代码实现。<br>对于经验丰富的中高级程序员(4-10年的写代码履历)，编程最大的难点在于复杂的需求梳理。<br>对于国内大部分程序员来说，编程的难点不在于写代码，而在于明确需求。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-31 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>熵（Entropy），用以度量一个系统“内在的混乱程度”<br>熵增的条件有两个：封闭系统＋无外力做功。<br>熵减的可应对策略：开放系统+引入外力。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-30 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>丹核<br>意识驱动和观察者</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-29 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>docker run<br>❏ -i选项表示使用交互模式，始终保持输入流开放；<br>❏ -t选项表示分配一个伪终端，一般两个参数结合时使用-it，即可在容器中利用打开的伪终端进行交互操作；</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-28 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>docker info<br>docker version<br>结合使用</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-28 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>主动宾，方地时，用到极致</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-27 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>道德经是道家版的易经说明书，易传是儒家版的易经说明书</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-26 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>在 JavaScript 开发中，this、self、window、top 是四个常用的概念，它们在不同的上下文中有着不同的用途和含义</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-25 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>思想上的融合与变通很重要，是质变并进而引发一系列的变化。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-24 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>起局、断局、破局</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-23 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>生命的进化就是基因的复制，可复制的基因就是进化的基本单位</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-22 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>虽然Django和Vue.js都是Web开发框架，但它们的重点不同。<br>Django更加关注服务器端的应用程序逻辑和数据处理，而Vue.js则更加关注客户端的用户界面和交互。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-21 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>Spring: Spring是为Java语言设计的框架。Java是一门非常流行的编程语言，具有广泛的应用领域和良好的生态系统。<br>Django: Django是为Python语言设计的框架。Python也是一门非常流行的编程语言，具有简洁易读的语法和强大的标准库。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-20 Happy Lunar New Year</p>
+</div></div><div class="timeline-item-content"><p>成阴聚阳谓之创生</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-19 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>aruba clearpass import vm 需要扫描网卡：system network-refresh 并重新启动 VM</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-18 Happy New Year</p>
+</div></div><div class="timeline-item-content"><table>
+<thead>
+<tr>
+<th>Date&amp;Time</th>
+<th>Event-Content</th>
+<th>DuringTime</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025-01-18</td>
+<td>Clearpass Cluster</td>
+<td>1Days</td>
+<td>NY</td>
+</tr>
+<tr>
+<td>2024-12-21</td>
+<td>Clearpass Cluster</td>
+<td>1Days</td>
+<td>NY</td>
+</tr>
+<tr>
+<td>2024-12-20</td>
+<td>Install Hard Disk</td>
+<td>2Hours</td>
+<td>NY</td>
+</tr>
+<tr>
+<td>2024-10-25</td>
+<td>HW Storage Pan</td>
+<td>1Days</td>
+<td>NY</td>
+</tr>
+<tr>
+<td>2024-10-05</td>
+<td>Clearpass  Faulty</td>
+<td>1Days</td>
+<td>NY</td>
+</tr>
+</tbody></table>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-17 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>心理建设</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-14 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>反者道之动：动为推动&#x2F;演变、不确定性、变易、改变、Change.<br>弱者道之用：用为捕获&#x2F;普及、有确定性、不易、建立、Establish.</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-13 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>精气神要收敛，内聚，不外放。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-04 Happy New Year</p>
+</div></div><div class="timeline-item-content"><table>
+<thead>
+<tr>
+<th>语言</th>
+<th>开发领域</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C&#x2F;C++语言</td>
+<td>系统软件&#x2F;数据库软件等</td>
+</tr>
+<tr>
+<td>Java&#x2F;JavaScript</td>
+<td>企业应用级软件等</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>数据处理及系统运维等</td>
+</tr>
+<tr>
+<td>。。。</td>
+<td>。。。</td>
+</tr>
+</tbody></table>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-03 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>声明式编程 vs 命令式编程<br>面向对象编程 vs 面向过程编程<br>ACL中Permit和Deny永远是一对</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-02 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>在阅读的过程中感到吃力，可以选择性地放弃细节，先了解一个大概，做到心里有数就好。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 01-01 Happy New Year</p>
+</div></div><div class="timeline-item-content"><p>mysql数据页-索引页</p>
+</div></div></div>
+
+<div class="timeline blue"><div class="timeline-item headline"><div class="timeline-item-title"><div class="item-circle"><p>2024 龙年大吉</p>
+</div></div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-31</p>
+</div></div><div class="timeline-item-content"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*&amp;a=25指针的理解</span><br></pre></td></tr></table></figure>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-30</p>
+</div></div><div class="timeline-item-content"><p>注册～项目~运营</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-29</p>
+</div></div><div class="timeline-item-content"><p>Maven中的坐标由以下3部分构成：<br>groupId,代表组信息，通常是公司或者组织<br>artifactId是项目在组内的唯一标识<br>version代表项目的版本</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-28</p>
+</div></div><div class="timeline-item-content"><p>外表决定了我是否愿意去了解你的内在，而内在决定了我会不会一票否决你的外表</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-26</p>
+</div></div><div class="timeline-item-content"><p>十进制单位：以10为进位;二进制单位：以2为进位,单位对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>。。。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>个</td>
+<td>十</td>
+<td>百</td>
+<td>千</td>
+<td>个（万）</td>
+<td>十（万）</td>
+<td>百（万）</td>
+<td>千（万）</td>
+<td>个（亿）</td>
+<td>十（亿）</td>
+<td>百（亿）</td>
+<td>千（亿）</td>
+<td>个（万亿）</td>
+<td>十（万亿）</td>
+<td>百（万亿）</td>
+<td>千（万亿）</td>
+<td>。。。</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>8</td>
+<td>16</td>
+<td>32</td>
+<td>64</td>
+<td>128</td>
+<td>256</td>
+<td>512</td>
+<td>1024</td>
+<td>2048</td>
+<td>4096</td>
+<td>8192</td>
+<td>16384</td>
+<td>32768</td>
+<td>。。。</td>
+</tr>
+</tbody></table>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-18</p>
+</div></div><div class="timeline-item-content"><p>基于持续运营与项目思维</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-17</p>
+</div></div><div class="timeline-item-content"><p>Operation is critical to your height</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-16</p>
+</div></div><div class="timeline-item-content"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pangu:</span><br><span class="line">  enable: true</span><br><span class="line">  # Specify the field to use pangu (site or post)</span><br><span class="line">  field: post</span><br></pre></td></tr></table></figure>
+<p>如果field中修改为site会引起归档页面中的页码出现问题</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-15</p>
+</div></div><div class="timeline-item-content"><p>Spring Boot之所以使用Maven的工程结构，是因为它们都遵循“约定优于配置”的设计哲学。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-14</p>
+</div></div><div class="timeline-item-content"><p> Maven整合了所有的Jar包，Spring Boot整合了所有的框架。它的核心设计思想是∶约定优于配置，Spring Boot所有开发细节都是依据此思想进行实现的。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-13</p>
+</div></div><div class="timeline-item-content"><p>空胸实腹，意守脊髓</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-10</p>
+</div></div><div class="timeline-item-content"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">联想的LKMS特性激活网站</span><br><span class="line">https://fod.lenovo.com/lkms/angular/app/pages/index.htm#/welcome</span><br><span class="line">IT硬件升级网站</span><br><span class="line">https://www.mrmemory.co.uk/</span><br></pre></td></tr></table></figure>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-09</p>
+</div></div><div class="timeline-item-content"><p>Zookeeper所需的三个端口：<br>2181：对客户端提供服务<br>2888：集群内节点通信使用<br>3888：选举leader使用</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-08</p>
+</div></div><div class="timeline-item-content"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Run export TZ=&#x27;UTC&#x27;</span><br><span class="line">npm ERR! code E404</span><br><span class="line">npm ERR! 404 Not Found - GET https://registry.npmjs.org/hexo - Not found</span><br><span class="line">npm ERR! 404 </span><br><span class="line">npm ERR! 404  &#x27;hexo@*&#x27; is not in this registry.</span><br><span class="line">npm ERR! 404 </span><br><span class="line">npm ERR! 404 Note that you can also install from a</span><br><span class="line">npm ERR! 404 tarball, folder, http url, or git url.</span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!     /home/runner/.npm/_logs/2024-12-08T18_52_36_190Z-debug-0.log</span><br><span class="line">Error: Process completed with exit code 1.</span><br></pre></td></tr></table></figure>
+<p><strong>解决办法，加上–save参数，执行npm install -g hexo-cli hexo –save成功。</strong></p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-08</p>
+</div></div><div class="timeline-item-content"><p>🎯 HTTP协议的演进：从1.0到3.0的飞跃<br>  📚 HTTP 1.0：每个请求都需要独立的TCP连接。<br>  🔗 HTTP 1.1：引入持久连接，但存在HOL阻塞问题<br>  🚀 HTTP 2.0：通过多路复用解决应用层HOL阻塞。<br>  🌐 HTTP 3.0：使用QUIC协议，彻底消除HOL阻塞<br>✏️HOL阻塞是网络通信中，队列中的第一个请求受阻导致后续请求无法处理的现象。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 12-03</p>
+</div></div><div class="timeline-item-content"><p>在windows下查看动态TCP&#x2F;UDP的端口范围</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">`netsh int ipv4 show dynamicport tcp`</span><br><span class="line">Protocol tcp Dynamic Port Range</span><br><span class="line">---------------------------------</span><br><span class="line">Start Port      : 49152</span><br><span class="line">Number of Ports : 16384</span><br><span class="line">`netsh int ipv4 show dynamicport`</span><br><span class="line">Protocol udp Dynamic Port Range</span><br><span class="line">---------------------------------</span><br><span class="line">Start Port      : 49152</span><br><span class="line">Number of Ports : 16384</span><br></pre></td></tr></table></figure>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-30</p>
+</div></div><div class="timeline-item-content"><ul>
+<li>预期管理</li>
+<li>非预期管理</li>
+</ul>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-30</p>
+</div></div><div class="timeline-item-content"><p>在计算机领域有许多伟大的设计理念和思想，例如：<br>在 Unix 中，一切皆文件。<br>在面向对象的编程语言中，一切皆对象。<br>关系数据库同样也有自己的设计思想：在 SQL 中，一切皆关系。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-29</p>
+</div></div><div class="timeline-item-content"><p>导数是由derivative翻译过来的，derivative本身是衍生物、导出物的意思。<br>中文“导数”正是取此意思，以表示它是由另一函数导出的函数，而另外那个自然就是它的“原函数”。<br>故“原函数”与“导函数”正好是一对</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-28</p>
+</div></div><div class="timeline-item-content"><p>《史记》和《资治通鉴》最大的区别是什么？<br>如果只用一句话来概括，《史记》是文学家笔下的历史，《资治通鉴》是政治家笔下的历史。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-25</p>
+</div></div><div class="timeline-item-content"><p>程序入口——游戏入口——王国入口的思维及NPC ESG场景</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-22</p>
+</div></div><div class="timeline-item-content"><p>所有的思考多用生活场景来辅助理解</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-21</p>
+</div></div><div class="timeline-item-content"><p>编程协同-编程NPC  辅助理解</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-20</p>
+</div></div><div class="timeline-item-content"><p>多值的数据结构：如数组</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-19</p>
+</div></div><div class="timeline-item-content"><p>Markdown的引用语法</p>
+<blockquote>
+<p>** 侠客行 **</p>
+<ul>
+<li>赵客缦胡缨，吴钩霜雪明</li>
+<li>银鞍照白马，飒沓如流星</li>
+<li>十步杀一人，千里不留行</li>
+<li>事了拂衣去，深藏身与名</li>
+</ul>
+<blockquote>
+<p>** 唐·李白 **</p>
+</blockquote>
+</blockquote>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-19</p>
+</div></div><div class="timeline-item-content"><blockquote>
+<p>苏遮慕还教苏梦枕两句话</p>
+<ul>
+<li>一是要重仁义，这样才能聚民心</li>
+<li>二是懂权力，江湖中的生死多由刀剑决定，但坐在楼主这个位置上，生死就由权力决定。</li>
+</ul>
+</blockquote>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-19</p>
+</div></div><div class="timeline-item-content"><p>Python代码中：判断缩进，首先要区分物理行和逻辑行，缩进是针对逻辑行的。<br>  物理行：代码编辑器中显示的代码，每一行内容是一个物理行。<br>  逻辑行：Python解释器对代码进行解释，一个语句是一个逻辑行。<br>  1、使用”;”号将两个或多个逻辑行合并成一个物理行。<br>  2、使用”&quot;号连接两个物理行。<br>  3、字典、列表等变量赋值语句，是可以直接书写为多个物理行的。
+ </p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-18</p>
+</div></div><div class="timeline-item-content"><p>计算机的处理过程与生活中的人类形为极其的相似，如卷积核和池化对局部扫描和处理，展平与全连接相当于局部处理后的全局处理。卷积与相邻的时间或空间有连续性等，有助于于卷和积的理解：卷代表连续性，积代表累加的结果。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-16</p>
+</div></div><div class="timeline-item-content"><p>categories-chart 的 data-parent&#x3D;”true” 属性表示 有子分类 时以旭日图显示分类，其他 无子分类 或 设置为false 或 不设置该属性 或 设置为其他非true属性 情况都以饼状图显示分类。当前设置为false</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-16</p>
+</div></div><div class="timeline-item-content"><p>看到了1*1的卷积核妙用</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-11</p>
+</div></div><div class="timeline-item-content"><p>查看windows共享文件夹的权限：</p>
+<ul>
+<li>Get-ChildItem X:\ShareFolders\ | Get-Acl |fl &gt; x:\output.txt</li>
+</ul>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-11</p>
+</div></div><div class="timeline-item-content"><p>abbrlink的生成与日期格式有关联，所以日期格式不能出错–小知识</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-11</p>
+</div></div><div class="timeline-item-content"><p>git reset –hard<br>git push -f</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-11</p>
+</div></div><div class="timeline-item-content"><p>更新了Github 日历及人生倒计时功能</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p> 11-10</p>
+</div></div><div class="timeline-item-content"><p>关注网络安全，关注内存安全<br>  内存安全是代码安全的一部分，不是全部。代码安全问题是个系统工程，不是靠某种银弹就能立即解决的。培训、语言、工具等等都是解决方案的一部分。</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>11-10</p>
+</div></div><div class="timeline-item-content"><p>配置chartS统计中，参考：<a target="_blank" rel="noopener" href="https://blog.guole.fun/posts/18158/">https://blog.guole.fun/posts/18158/</a></p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>11-09</p>
+</div></div><div class="timeline-item-content"><p>增加了时间轴功能</p>
+</div></div><div class="timeline-item"><div class="timeline-item-title"><div class="item-circle"><p>11-08</p>
+</div></div><div class="timeline-item-content"><p>增加了留言评论功能</p>
+</div></div></div>
+
+
+</div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Citrix Virtual Apps and Desktops 虚拟化解决方案"></a><div class="content"><a class="title" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案">Citrix Virtual Apps and Desktops 虚拟化解决方案</a><time datetime="2025-09-21T18:05:38.000Z" title="发表于 2025-09-21 18:05:38">2025-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术"><img src="/img/cover-deepseekAI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入揭秘 DeepSeek 核心技术"></a><div class="content"><a class="title" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术">深入揭秘 DeepSeek 核心技术</a><time datetime="2025-03-08T18:53:17.000Z" title="发表于 2025-03-08 18:53:17">2025-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览"><img src="/img/cover-aibigmodels.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI大模型九大核心技术总览"></a><div class="content"><a class="title" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览">AI大模型九大核心技术总览</a><time datetime="2025-02-25T22:28:11.000Z" title="发表于 2025-02-25 22:28:11">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS"><img src="/img/cover-swift.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨境支付中绕不开的SWIFT、CIPS、CHIPS"></a><div class="content"><a class="title" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS">跨境支付中绕不开的SWIFT、CIPS、CHIPS</a><time datetime="2025-02-23T09:59:26.000Z" title="发表于 2025-02-23 09:59:26">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img src="/img/cover-javacore2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"></a><div class="content"><a class="title" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</a><time datetime="2025-02-19T22:06:59.000Z" title="发表于 2025-02-19 22:06:59">2025-02-19</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">56</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">28</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">19</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Pipeline/" style="font-size: 1.1em; color: #999">Pipeline</a> <a href="/tags/%E7%8E%84%E7%A9%BA%E9%A3%9E%E6%98%9F/" style="font-size: 1.1em; color: #999">玄空飞星</a> <a href="/tags/swift/" style="font-size: 1.1em; color: #999">swift</a> <a href="/tags/English/" style="font-size: 1.1em; color: #999">English</a> <a href="/tags/SRM/" style="font-size: 1.1em; color: #999">SRM</a> <a href="/tags/SD-WAN/" style="font-size: 1.1em; color: #999">SD-WAN</a> <a href="/tags/Delivery-Controller/" style="font-size: 1.1em; color: #999">Delivery Controller</a> <a href="/tags/%E5%91%A8%E6%98%93%E5%85%AB%E5%8D%A6/" style="font-size: 1.1em; color: #999">周易八卦</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.1em; color: #999">虚拟化</a> <a href="/tags/DOM/" style="font-size: 1.3em; color: #99a1ac">DOM</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E5%BF%B5%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">深度信念网络</a> <a href="/tags/CERTIFICATE/" style="font-size: 1.1em; color: #999">CERTIFICATE</a> <a href="/tags/PKCS-7/" style="font-size: 1.1em; color: #999">PKCS#7</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">机器学习</a> <a href="/tags/LVS/" style="font-size: 1.5em; color: #99a9bf">LVS</a> <a href="/tags/VxLAN/" style="font-size: 1.1em; color: #999">VxLAN</a> <a href="/tags/Polycom/" style="font-size: 1.1em; color: #999">Polycom</a> <a href="/tags/Test-NetConnection/" style="font-size: 1.1em; color: #999">Test-NetConnection</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" style="font-size: 1.1em; color: #999">数据采集</a> <a href="/tags/WMS/" style="font-size: 1.1em; color: #999">WMS</a> <a href="/tags/lsblk/" style="font-size: 1.1em; color: #999">lsblk</a> <a href="/tags/MC/" style="font-size: 1.1em; color: #999">MC</a> <a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.3em; color: #99a1ac">架构</a> <a href="/tags/AI%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 1.1em; color: #999">AI智能体</a> <a href="/tags/tcpdump/" style="font-size: 1.1em; color: #999">tcpdump</a> <a href="/tags/RocketMQ/" style="font-size: 1.1em; color: #999">RocketMQ</a> <a href="/tags/WLAN/" style="font-size: 1.1em; color: #999">WLAN</a> <a href="/tags/Wireless/" style="font-size: 1.1em; color: #999">Wireless</a> <a href="/tags/%E8%AF%B4%E5%8D%A6%E4%BC%A0/" style="font-size: 1.1em; color: #999">说卦传</a> <a href="/tags/Object/" style="font-size: 1.1em; color: #999">Object</a> <a href="/tags/BGP/" style="font-size: 1.1em; color: #999">BGP</a> <a href="/tags/RNN/" style="font-size: 1.1em; color: #999">RNN</a> <a href="/tags/Scribe/" style="font-size: 1.1em; color: #999">Scribe</a> <a href="/tags/HyDE/" style="font-size: 1.1em; color: #999">HyDE</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E6%8A%80%E6%9C%AF/" style="font-size: 1.1em; color: #999">软件定义技术</a> <a href="/tags/dockerfile/" style="font-size: 1.1em; color: #999">dockerfile</a> <a href="/tags/%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7/" style="font-size: 1.3em; color: #99a1ac">抓包工具</a> <a href="/tags/%E5%89%8A%E5%B3%B0%E5%A1%AB%E8%B0%B7/" style="font-size: 1.3em; color: #99a1ac">削峰填谷</a> <a href="/tags/GAN/" style="font-size: 1.1em; color: #999">GAN</a> <a href="/tags/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">监督学习</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/09/">
+          <span class="card-archive-list-date">九月 2025</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/03/">
+          <span class="card-archive-list-date">三月 2025</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/02/">
+          <span class="card-archive-list-date">二月 2025</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/01/">
+          <span class="card-archive-list-date">一月 2025</span>
+          <span class="card-archive-list-count">21</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/12/">
+          <span class="card-archive-list-date">十二月 2024</span>
+          <span class="card-archive-list-count">61</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/11/">
+          <span class="card-archive-list-date">十一月 2024</span>
+          <span class="card-archive-list-count">39</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">128</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">374.4k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastpushdate="2025-09-21T18:55:20.260Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '4461a1b8c92aaacd8f73ff997c169c02'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (56)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (19)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

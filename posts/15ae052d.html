@@ -1,0 +1,484 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C&amp;C++编程之CPU眼里的C&amp;C++内容学习 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="C&amp;C++编程之CPU眼里的C&amp;C++内容学习">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/15ae052d.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-cpu-c-cover.png">
+<meta property="article:published_time" content="2025-01-01T20:52:23.000Z">
+<meta property="article:modified_time" content="2025-09-21T18:54:57.105Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="CPU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-cpu-c-cover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/15ae052d.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'C&C++编程之CPU眼里的C&C++内容学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-21 18:54:57',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-cpu-c.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">C&amp;C++编程之CPU眼里的C&amp;C++内容学习</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">C&amp;C++编程之CPU眼里的C&amp;C++内容学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-01T20:52:23.000Z" title="发表于 2025-01-01 20:52:23">2025-01-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-21T18:54:57.105Z" title="更新于 2025-09-21 18:54:57">2025-09-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/">AI-X开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/">编程/开发技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">8.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-cpu-c.png);"></div><article class="post-content" id="article-container"><p><strong>C&amp;C++编程之CPU眼里的C&amp;C++内容简介</strong><br>从CPU的视角，多角度地揭秘编程语言背后的运行原理和设计之美。<br>全书共6章:<br>    第1章：介绍本书所使用到的主要工具和一些需要心里有数的预备知识；<br>    第2章：解析最简单、常用的基础语法，帮助读者适应本书的节奏；<br>    第3章：为进阶知识，会从CPU、操作系统的角度，深入分析函数的工作原理和实现细节；<br>    第4章：解析经典的C语法，背后的实现逻辑，并介绍“面向对象”的编程思想及优缺点；<br>    第5章：讨论跟操作系统强相关的软件技术，会将所有章节的内容贯穿起来，初步形成一个现代操作系统的运作模型；<br>    第6章：我们会讨论一些经典的面试、笔试题，跟读者一起分享工作、学习、求职中的苦与乐。</p>
+<h1 id="第1章-预备知识"><a href="#第1章-预备知识" class="headerlink" title="第1章 预备知识"></a>第1章 预备知识</h1><h2 id="1-1-工具介绍"><a href="#1-1-工具介绍" class="headerlink" title="1.1 工具介绍"></a>1.1 工具介绍</h2><p>Compiler Explorer反编译工具</p>
+<h2 id="1-2-CPU眼里的程序运行"><a href="#1-2-CPU眼里的程序运行" class="headerlink" title="1.2 CPU眼里的程序运行"></a>1.2 CPU眼里的程序运行</h2><p>程序执行时读入到内存的位置<br><img src="/posts/15ae052d/album_temp_1735935981.png"><br><img src="/posts/15ae052d/album_temp_1735936659.png"></p>
+<h2 id="1-3-CPU眼里的汇编语言"><a href="#1-3-CPU眼里的汇编语言" class="headerlink" title="1.3 CPU眼里的汇编语言"></a>1.3 CPU眼里的汇编语言</h2><p>CPU的初始状态，所有的寄存器初始值都是0x100。<br>其中寄存器rax，一般用来存放数值，有点类似C语言的普通变量；而寄存器rbp，rsp，一般用来存放内存地址，有点类似C语言的指针变量<br>有些机构给出的结论显示：CPU的内存读写，占据了CPU 90%的工作负荷。<br>这也是为什么苹果的M系列CPU，在没有显著提高CPU核心频率的情况下，也能产生秒杀同类的炸裂性能，因为它着重优化了CPU读、写内存的效率。<br><strong>总结</strong><br>(1)虽然完整的CPU寄存器和指令集比较庞大。但编译器只会用到很小的一部分，而且使用的套路也很单一。一旦克服恐惧心理，就很容易掌握。<br>(2)C&#x2F;C++语言对应的汇编指令存在大量的类似“指针”的操作，我们也叫它寄存器间接寻址。夸张地说“指针”不仅是C语言的灵魂，也是汇编语言的灵魂。<br>(3)相比于精简指令集，复杂指令集对程序员而言，更加接近C语言。在那个只有汇编语言的年代，复杂指令集，十分有助于提高编程效率。</p>
+<h1 id="第2章-基础语法"><a href="#第2章-基础语法" class="headerlink" title="第2章 基础语法"></a>第2章 基础语法</h1><h2 id="2-1-CPU眼里的main函数"><a href="#2-1-CPU眼里的main函数" class="headerlink" title="2.1 CPU眼里的main函数"></a>2.1 CPU眼里的main函数</h2><p>链接错误，找不到main函数！让我们修改一下编译选项，通过设置-efunc给它指定一个程序起点，即函数func,编译通过，运行也成功</p>
+<h2 id="2-2-CPU眼里的变量"><a href="#2-2-CPU眼里的变量" class="headerlink" title="2.2 CPU眼里的变量"></a>2.2 CPU眼里的变量</h2><p>一般来说，无论是什么型号的内存，它们的“金手指”连接线都存在两类重要的信号线：数据信号线和地址信号线。顾名思义，数据信号线用来在计算机和内存之间传递数据信息。<br><img src="/posts/15ae052d/album_temp_1735937855.png"><br>如上图所示，右边是内存的存储单元，用来存放各种数据；左边则是用来指示其存储单元位置的内存地址。</p>
+<h2 id="2-3-CPU眼里的goto、if-else"><a href="#2-3-CPU眼里的goto、if-else" class="headerlink" title="2.3 CPU眼里的goto、if else"></a>2.3 CPU眼里的goto、if else</h2><p><strong>总结</strong><br>(1)程序在需要跳转的时候，往往都存在一个goto语句，虽然代码上看不到goto，但编译器已经生成了goto对应的CPU指令。<br>(2)goto作为代码的重要技巧，有时候也有其独特的优势，完全禁止程序员使用，或许有点武断。<br>(3)只有真正明白goto的意义和风险，我们才可以对其充分利用，扬长避短</p>
+<h2 id="2-4-CPU眼里的指针变量"><a href="#2-4-CPU眼里的指针变量" class="headerlink" title="2.4 CPU眼里的指针变量"></a>2.4 CPU眼里的指针变量</h2><p>提出问题<br>指针变量<br>指针*操作<br>好了，知道了指针变量是用来记录内存地址的。那么得到内存地址后，下一步会做什么？毫无疑问，当然是疯狂、自由地内存读写。夸张地说，如果不是为了实现内存的自由读写，指针就没有存在的必要。<br>指针±操作<br><strong>总结</strong></p>
+<ul>
+<li>普通变量，通过变量名称（内存地址的别名），来避免程序员直接读、写内存；</li>
+<li>指针变量，则反其道而行之，需要获得明确的内存地址，让程序通过*操作，直接去读、写内存。</li>
+</ul>
+<h2 id="2-5-CPU眼里的指针本质和风险"><a href="#2-5-CPU眼里的指针本质和风险" class="headerlink" title="2.5 CPU眼里的指针本质和风险"></a>2.5 CPU眼里的指针本质和风险</h2><p>提出问题<br>代码分析<br>最熟悉的变量读、写，其本质还是等同于对变量地址的指针<em>操作。正如变量的定义所言，变量不过是内存地址的别名。<br>指针的风险<br>所以，暴露任何数据、函数的内存地址，都是巨大的风险！因为这些地址，都可以用来做违规、不受控的指针</em>、-&gt;操作。或许这也是大家对指针又爱又恨的原因吧！而当今比较流行的编程语言C#、Java、JavaScript、Python、Rust，干脆就禁用内存地址和指针了。<br><strong>总结</strong><br>(1)指针操作(*、-&gt;)不是指针变量的专利，普通变量，甚至立即数，也可以做指针操作。夸张地说：所有变量、对象的读、写操作，都是基于指针来实现的。<br>(2)计算机的世界里面，万物皆有地址，所以，万物皆可指针。<br>热点问题</p>
+<h2 id="2-6-CPU眼里的数组"><a href="#2-6-CPU眼里的数组" class="headerlink" title="2.6 CPU眼里的数组"></a>2.6 CPU眼里的数组</h2><p>提出问题<br>一维数组<br>多维数组<br>所以，无论数组是一维的还是多维的，都是一段连续的一维内存。<br><img src="/posts/15ae052d/album_temp_1735940678.png"><br><strong>总结</strong><br>(1)数组是一段连续的内存，除了常规读、写数组元素的方法；也会用指针来表示数组，并用指针的*操作来读、写数组元素。<br>(2)传递数组参数，本质上是传递指针，所以，在函数内改变数组的值，也会改变函数外数组的值。<br>(3)多维数组本质上还是一维数组，只是索引的方式不同，应用的场景不同，特别是3D领域，用多维数组编程，会给开发者带来诸多方便</p>
+<h2 id="2-7-CPU眼里的数组越界"><a href="#2-7-CPU眼里的数组越界" class="headerlink" title="2.7 CPU眼里的数组越界"></a>2.7 CPU眼里的数组越界</h2><p><strong>总结</strong><br>(1)数组向高端地址越界（内卷），会修改堆栈中的关键数据，程序往往会立刻崩溃(segmentation fault)；同时，这也容易被黑客利用，用来执行事前准备好的恶意代码。<br>(2)明枪易躲，暗箭难防！数组向低端地址越界（拓展），程序往往不会马上崩溃。可一旦与其他函数变量冲突时，其诡异行为绝对超出你的想象。所以，无论哪种越界，都要积极避免</p>
+<h2 id="2-8-CPU眼里的引用"><a href="#2-8-CPU眼里的引用" class="headerlink" title="2.8 CPU眼里的引用"></a>2.8 CPU眼里的引用</h2><p><strong>总结</strong><br>(1)“引用变量”也是变量，在底层实现上面，跟“指针变量”完全相同。<br>(2)“引用变量”也被称为某个变量的别名，这非常形象。但似乎很难解释为什么在函数func4中改变r的值，会同时改变外部变量a的值。但如果你把“引用”当作“指针”看待的话，这个问题就迎刃而解了。</p>
+<h2 id="2-9-CPU眼里的i-与-i"><a href="#2-9-CPU眼里的i-与-i" class="headerlink" title="2.9 CPU眼里的i++与++i"></a>2.9 CPU眼里的i++与++i</h2><p>提出问题<br>代码分析<br>差异分析<br><img src="/posts/15ae052d/album_temp_1735941351.png"><br><strong>总结</strong><br>(1)对于简单数据类型(int、short、char、long)，前加(++i)和后加(i++)几乎没有效率上的差异，在不同的编译环境下，前加(++i)可能会略快，但优势可以忽略不计。<br>(2)对于复杂数据结构，特别是class，后加(i++)需要构建临时对象，会放大后加(i++)的劣势。所以，对象的++运算，首选前加(++i)</p>
+<h2 id="2-10-代码陷阱类型转换"><a href="#2-10-代码陷阱类型转换" class="headerlink" title="2.10 代码陷阱类型转换"></a>2.10 代码陷阱类型转换</h2><p>提出问题<br>代码分析<br>解决办法<br>编程轶事</p>
+<h1 id="第3章-函数原理"><a href="#第3章-函数原理" class="headerlink" title="第3章 函数原理"></a>第3章 函数原理</h1><p>函数本身也是非常成功的软件技术，它在占用很少内存的情况下，实现了程序的高效跳转和原路返回，以及分配临时变量，也叫“栈”变量</p>
+<h2 id="3-1-CPU眼里的参数传递"><a href="#3-1-CPU眼里的参数传递" class="headerlink" title="3.1 CPU眼里的参数传递"></a>3.1 CPU眼里的参数传递</h2><p>提出问题<br>代码分析<br>传值：变量值，不可改<br>传指针：变量值，可改<br>传引用vs传指针<br><strong>总结</strong><br>(1)在CPU眼里，没有传值、传指针的概念，或许它们唯一的区别只是传递的数值、意义略有不同。需要注意的是，传递指针是在传递某个内存地址的值，它是内存的身份ID，十分敏感，需要相当慎重。<br>(2)传递参数，就是在给CPU寄存器赋值，CPU寄存器是“主调函数”向“被调函数”输入参数的载体。<br>(3)如果传递的参数比较复杂，例如传递对象，仅仅靠有限的CPU寄存器就不行了，而往往会使用堆栈，但无论使用哪种载体，其工作原理都是完全一致的，都是在“主调函数”与“被调函数”之间传递信息</p>
+<h2 id="3-2-CPU眼里的函数括号"><a href="#3-2-CPU眼里的函数括号" class="headerlink" title="3.2 CPU眼里的函数括号{}"></a>3.2 CPU眼里的函数括号{}</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)操作系统会为每个任务（进程或线程）分配一段内存当作<strong>任务“堆栈”</strong>；CPU则提供两个寄存器esp、ebp，用来标识当前函数对“堆栈”的使用情况。随着函数的逐层调用，函数的“栈帧”会逐次堆叠，互不重合；随着函数的逐层返回，函数的“栈帧”会被就地放弃，但不会清理内存<br>(2)正括号，用来保护上层主调函数(main)的“栈帧”，并设置被调函数(func)的“栈帧”。反括号，用来放弃被调函数(func)的“栈帧”，同时，恢复主调函数(main)的“栈帧”。这样，被调函数执行完后，主调函数就能继续执行。<br>(3)寄存器ebp作为当前函数的“栈帧”基地址，配合一定的偏移，就可以读、写函数体的临时变量。如果一个变量是通过ebp寄存器间接访问的，那么它往往是临时变量，也叫“栈”变量。<br>(4)不同编译器对“栈帧”的实现方法略有不同，但思路一致，一通百通</p>
+<h2 id="3-3-CPU眼里的调用和返回"><a href="#3-3-CPU眼里的调用和返回" class="headerlink" title="3.3 CPU眼里的调用和返回"></a>3.3 CPU眼里的调用和返回</h2><p>提出问题<br>代码分析<br>热点问题<br><strong>总结</strong><br>(1)主调函数，在调用函数时，会把返回地址偷偷存放在“堆栈”中。<br>(2)被调函数返回时，会从“堆栈”中取出返回地址，引导CPU跳回到主调函数。<br>(3)不同编译器在实现函数返回上会略有不同，但殊途同归，一通百通。<br>最后，函数返回的设计方法简洁、高效；但缺点是返回地址这种关键数据离临时变量太近。容易被越界访问，导致程序意外崩溃，也为黑客攻击留下了难以弥补的窟窿。<br>所以，用C&#x2F;C++编写代码对程序员的要求很高。即便语法规则滚瓜烂熟，也难以百毒不侵；需要眼中有代码，心中有指令；强大的内功才是避坑的关键</p>
+<h2 id="3-4-CPU眼里的函数指针"><a href="#3-4-CPU眼里的函数指针" class="headerlink" title="3.4 CPU眼里的函数指针"></a>3.4 CPU眼里的函数指针</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)如2.5节“CPU眼里的指针本质和风险”所说的万物皆有地址，万物皆可指针，函数指针跟指针变量一样，都是用来存放内存地址的。指针变量往往存放着某个变量的内存首地址，而函数指针往往存放着某个函数的内存首地址。<br>当然，用普通变量存放变量或函数的地址也是可以的，但不提倡！<br>(2)普通变量因为用法、字节长度的不同，需要定义不同的变量类型。函数也不例外，因为参数、返回值的不同，也需要事先定义(typedef)相应类型的函数指针，从而帮助主调函数正确地给函数指针传递参数和获取返回值。<br>(3)传递函数指针其实就是在传递某个函数的内存首地址。谁能得到某个函数的内存地址，就能随时调用这个函数。这为编程带来了极大的便利和灵活性，例如回调函数、虚函数，都是利用函数指针来实现的。<br>(4)函数指针虽然灵活，但因为无法直接看出它在调用哪个函数，因此，函数指针会损害代码的可读性；随着函数指针的增多，程序的维护成本也会越来越高。<br>最后，无论是普通变量、指针变量，还是函数指针，它们都是变量，都是某个内存地址的别名，都是用来存放数据的。只是因为数据本身的用途不同，做了细分，透过繁华，看清本质，能减少不必要的语法记忆</p>
+<h2 id="3-5-CPU眼里的函数返回值"><a href="#3-5-CPU眼里的函数返回值" class="headerlink" title="3.5 CPU眼里的函数返回值"></a>3.5 CPU眼里的函数返回值</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)对于返回原生的数据类型(int、short、long)和指针、引用类型时，往往会使用寄存器rax，向主调函数传递返回值。<br>(2)对于返回复杂数据类型，例如结构体、类对象、数组、字符串时，则需要避免返回“栈”变量或“栈”对象。这往往需要开发者提前预留或申请(malloc&#x2F;new)内存，用于保存函数的返回结果。<br>(3)返回值问题的本质还是内存问题。“堆栈”内存中的数据是不稳定的，随时可能被某次的函数调用改写。所以，“堆栈”内存中的数据，无论是用来作返回值，还是其他用途，都是不可靠的！C&#x2F;C++默认不会对“堆栈”数据进行内存管理和垃圾回收，所以在返回数据时，需要对数据的生命周期有精确、严密的控制。相比之下，Java、C#、Python则没有这样的烦恼，这也让它们的API看上去更加易用。</p>
+<h2 id="3-6-CPU眼里的堆和栈"><a href="#3-6-CPU眼里的堆和栈" class="headerlink" title="3.6 CPU眼里的堆和栈"></a>3.6 CPU眼里的堆和栈</h2><p>提出问题<br>“栈”的分析<br>“栈”的生长方向<br>“堆”的分析<br>“堆”的生长方向<br><strong>总结</strong><br>(1)“栈”内存由操作系统分配给每个任务（线程）私用，不可共享。但由于“栈”往往得不到MMU的特殊保护，所以，这种愿望或许是难以实现的。因为只要得到某个栈变量的地址，线程A和线程B就可以相互攻击、黑化对方的“栈”。而“堆”内存，往往可以被多个任务（线程）共享，所以，保证数据的完整性就显得非常必要。<br>(2)“栈”内存的空间一般比较小，多用于存放“栈”变量、返回地址等函数的栈帧信息。但过深的函数调用或者递归调用，会有“爆栈”（也叫“堆栈”溢出、stack overflow）的风险。一般随着函数的逐层调用，函数会自动地申请“栈”内存；随着函数的逐层返回，函数也会自动地回收“栈”内存。一般情况下，不会产生内存碎片和内存泄漏。而堆的内存空间相对比较大，可用于存放较大的数据。堆内存的申请、释放，只能由程序员编写相应的代码，调用特定的函数，手动申请、释放。但随着程序的复杂，内存碎片、内存泄漏会时有发生。<br>(3)“栈”的访问效率极高，特别是申请、释放内存的操作，都被编译器高度优化。往往只需要一条CPU指令(push、pop)，改变一下CPU寄存器rsp的值，就能完成任务。而堆的申请、释放函数就会复杂许多，多次使用后还会产生内存碎片。<br>至于在没有操作系统的时候，“堆”和“栈”就需要程序员手动划分内存空间。相信做过单片机开发的同学，对此一定不陌生。</p>
+<h2 id="3-7-函数实验回溯函数调用关系"><a href="#3-7-函数实验回溯函数调用关系" class="headerlink" title="3.7 函数实验回溯函数调用关系"></a>3.7 函数实验回溯函数调用关系</h2><p>提出问题<br>代码分析<br>traceback可以将一系列的函数调用轨迹回溯出来</p>
+<h1 id="第4章-C-特性"><a href="#第4章-C-特性" class="headerlink" title="第4章 C++特性"></a>第4章 C++特性</h1><h2 id="4-1-CPU眼里的this"><a href="#4-1-CPU眼里的this" class="headerlink" title="4.1 CPU眼里的this"></a>4.1 CPU眼里的this</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)this指针不是幽灵，它不能凭空产生。它是每一个成员函数必须具备的“隐藏参数”，其实现方式跟有参数的普通函数完全一致。<br>(2)调用成员函数时，必须为成员函数传递this指针，也就是该对象本身的内存地址。不要忘了，指针的本质就是内存地址。<br>最后，阿布很欣赏this这种简洁的语法操作。但如果能大方地承认，成员函数都会有一个隐藏参数this，这样，会不会更清晰呢</p>
+<h2 id="4-2-CPU眼里的构造函数"><a href="#4-2-CPU眼里的构造函数" class="headerlink" title="4.2 CPU眼里的构造函数"></a>4.2 CPU眼里的构造函数</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)构造函数跟普通函数一样，都需要夹带一个隐形的参数：this指针。<br>(2)派生类的构造函数，还会夹带调用基类的构造函数。<br>(3)如果存在虚函数，构造函数会记录虚函数表的地址，并保存在一个隐藏的成员变量里面，随身携带，随用随取；这个隐藏的成员变量，往往位于对象的内存首地址</p>
+<h2 id="4-3-CPU眼里的虚函数"><a href="#4-3-CPU眼里的虚函数" class="headerlink" title="4.3 CPU眼里的虚函数"></a>4.3 CPU眼里的虚函数</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)虚函数在函数体的实现方面跟普通函数没有任何区别。<br>(2)虚函数的调用，需要借助类对象的隐藏变量V来完成，隐藏变量V会在构造函数中被初始化成虚函数表的内存地址。<br>当然，虚函数的实现，本质上还是通过函数指针实现的，虽然避免了程序员使用函数指针，但也让虚函数的语法规则变得相对复杂、诡异。</p>
+<h2 id="4-4-CPU眼里的多态"><a href="#4-4-CPU眼里的多态" class="headerlink" title="4.4 CPU眼里的多态"></a>4.4 CPU眼里的多态</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)多态，常会用基类指针指向派生类对象。<br>(2)多态，会利用派生类的结构特点复用基类的属性（变量&#x2F;函数）。<br>(3)多态，会利用虚函数来扩展派生类的特性。<br>最后，多态不是C++的专利，很多语言都支持多态，例如Java。与其说多态是语法规则，不如说是设计技巧。</p>
+<h2 id="4-5-CPU眼里的模板"><a href="#4-5-CPU眼里的模板" class="headerlink" title="4.5 CPU眼里的模板"></a>4.5 CPU眼里的模板</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)CPU对模板是无感的，模板本质上是编译器根据我们提供的脚本自动补充代码，涉及的数据类型越多，代码版本也就越多。<br>(2)编译器自动补充的代码对程序员是不可见的。所以，在单步调试的时候，会出现源代码无法一一对应的问题，模板的相关代码，往往只能黑盒测试，很难找到有效的调试方法。<br>(3)在对类进行模板化操作的时候，如果涉及数学、逻辑运算，由于编译器往往无法提供默认的运算符操作，就需要程序员手动为类重载这些运算符，避免可能的编译错误。<br>最后，很多情况下你是不需要亲手写模板的。相比从头写一个高风险的模板，直接使用STL （也就是标准模板库）显得更加高效、稳定、可靠。</p>
+<h2 id="4-6-CPU眼里的malloc和new"><a href="#4-6-CPU眼里的malloc和new" class="headerlink" title="4.6 CPU眼里的malloc和new"></a>4.6 CPU眼里的malloc和new</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)malloc和free都是单纯的函数，用来申请内存和归还内存。<br>(2)new包含了两个操作。第一个操作，跟malloc类似，也是申请内存；第二个操作，是对申请到的内存，也就是类A的实例对象，进行初始化，没错，就是调用类A的构造函数。至于delete操作，则正好相反。<br>(3)无论是malloc还是new，它们都是可以被重载的，特别是开发操作系统和嵌入式系统时，往往没有可以直接使用的默认函数，开发者需要根据硬件配置和具体需要，重写合适的内存分配函数。<br>最后，默认情况下，系统提供的malloc和new都会从“堆”上申请内存，但如果自己重载了malloc和new，那到底从哪里申请内存，就全靠自己把握了。</p>
+<h2 id="4-7-面向对象实践依赖反转"><a href="#4-7-面向对象实践依赖反转" class="headerlink" title="4.7 面向对象实践依赖反转"></a>4.7 面向对象实践依赖反转</h2><p>提出问题<br>GuiLite介绍<br>代码结构<br><strong>总结</strong><br>(1)面向对象和面向过程，总是你中有我，我中有你；但如果代码小于100行，面向对象就很难有发挥的空间了。<br>(2)C语言也可以实现面向对象。但会相当烦琐，会伴随大量的函数指针；相反，用C++实现面向对象，会更加优雅、简洁。这是因为编译器隐藏了这些函数指针，这也让C++语法看上去非常魔幻。<br>(3)尽量使用class，相比struct，它的优势不是一丁点儿。良好的设计，能让你有效地重塑代码结构，实现代码复用。<br>(4)为了实现灵活扩展，可以采用依赖反转原则，对关键接口进行抽象。良好的设计，能帮你稳定程序结构，用最少、最必要的代码，实现功能扩展。但每一次抽象，都是对代码可读性的伤害，所以，每次抽象，一定要切中要害，切勿随心所欲。</p>
+<h1 id="第5章-高级编程"><a href="#第5章-高级编程" class="headerlink" title="第5章 高级编程"></a>第5章 高级编程</h1><h2 id="5-1-CPU眼里的虚拟内存"><a href="#5-1-CPU眼里的虚拟内存" class="headerlink" title="5.1 CPU眼里的虚拟内存"></a>5.1 CPU眼里的虚拟内存</h2><p>提出问题<br>虚拟内存原理<br>减少内存碎片<br>简化运行条件<br>隔离进程<br>内存共享<br>SWAP<br><strong>总结</strong><br>(1)虚拟内存是操作系统和硬件MMU的结合体，为了不损失效率，往往由MMU来做虚拟内存到物理内存的地址翻译工作。相信做过FPGA的同学，实现起来问题不大。<br>(2)虚拟内存一方面简化了应用程序的开发过程，让程序员无须关心与软件功能没有直接关系的信息，例如目标机的内存环境；它也能充分地利用计算机的内存资源、硬盘资源，还实现了进程间的安全隔离；但另一方面，它也增加了操作系统的开发难度、学习成本和CPU的硬件成本。<br>(3)不是所有的计算机系统都需要虚拟内存，例如STM32单片机和嵌入式环境，它们很多是不支持虚拟内存的，甚至Linux也有无虚拟内存的版本ucLinux。</p>
+<h2 id="5-2-坐井观天的进程"><a href="#5-2-坐井观天的进程" class="headerlink" title="5.2 坐井观天的进程"></a>5.2 坐井观天的进程</h2><p>进程、线程、虚拟地址、物理地址</p>
+<h2 id="5-3-CPU眼里的地址映射"><a href="#5-3-CPU眼里的地址映射" class="headerlink" title="5.3 CPU眼里的地址映射"></a>5.3 CPU眼里的地址映射</h2><p>提出问题<br>问题分析<br><strong>总结</strong><br>(1)MMU通过程序员或者操作系统提供的页表，进行虚拟地址到物理地址的转换。该转换过程由MMU自动完成，CPU全程无感。<br>(2)每个进程，都有一张自己的页表；若它们的页表不同，则它们的进程空间是被隔离的；若页表相同或部分相同，则是在做进程间的内存共享，如图5-31所示。<br><img src="/posts/15ae052d/_posts/C&C++%E7%BC%96%E7%A8%8B%E4%B9%8BCPU%E7%9C%BC%E9%87%8C%E7%9A%84C&C++%E5%86%85%E5%AE%B9%E5%AD%A6%E4%B9%A0/album_temp_1735947823.png"><br>而线程没有独立的页表，它们共享同一个进程的页表，所以，线程之间，天生就可以内存共享。<br>(3)“分页”不仅针对物理地址，也应用于虚拟地址；它能有效地减小地址映射表的体量。页表里的值，不仅可以是真实的内存地址，也可以是硬盘上的扇区信息，这样，在内存不够用时，也可以用硬盘来补位。在内存十分珍贵、紧张的年代，这种技术无疑是革命性的。<br>当然，很多程序都不会用尽全部的内存，但一级页表却为整个内存建立映射，实在有点浪费。为了按需分配，现代操作系统往往会引进二级页表，可以用来进一步缩小页表的体量</p>
+<h2 id="5-4-CPU眼里的volatile"><a href="#5-4-CPU眼里的volatile" class="headerlink" title="5.4 CPU眼里的volatile"></a>5.4 CPU眼里的volatile</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)编译器可能对代码中的变量读、写进行适当的优化，避免没有必要的内存读、写操作，这往往会大幅度提升程序的执行效率。但编译器也是程序，只能针对特定情况做特定的优化，当程序变得复杂时，编译器也未必能完全领会程序员的意图，所以，有些时候这种优化是有害的。<br>(2)volatile关键字，就是用来避免编译器的优化操作，用来保证每次对变量的读、写都是对内存的真实操作；特别是不会让编译器把某些变量当作常量对待。<br>(3)在编译器不开优化的情况下，很多时候，是否加volatile，不会有任何差异。这也让volatile的使用场景变得十分模糊。判定volatile是否有存在的必要，往往需要查看代码对应的CPU（汇编）指令，看看它是否合乎程序员的预期。<br>最后，不得不说，随着编译器的技术进步和各大编译器之间的巨大差异，判定一个变量是否可以被优化，也没有一个统一的标准。这也让volatile成为了一个最为生僻、晦涩的语法之一。<br>而逐个分析每一个变量是否需要volatile，也非常不现实。所以，谨慎使用优化，或使用统一的编译器，并确保各个软件版本的优化等级一致，就显得非常必要</p>
+<h2 id="5-5-CPU眼里的常量"><a href="#5-5-CPU眼里的常量" class="headerlink" title="5.5 CPU眼里的常量"></a>5.5 CPU眼里的常量</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)常量并不仅仅是不能改变初值的变量，也是不允许对其二次写入的变量。除此之外，它跟普通变量一样，也是某个内存地址的别名。<br>(2)编译器可以通过对代码的解读，阻止明显的、针对常量的写操作。但由于常量跟变量一样，也只是内存地址的别名，所以程序员很容易通过指针或类型转换的方式，逃过编译器的检查。<br>(3)真正保证常量不被写入的安全阀是MMU，它能从物理上阻止对特定内存的读写。如果常量所在的内存页是不可读写的，例如read only数据段，那么写操作会被MMU阻止，并产生CPU异常。<br>但如果常量所在的内存页是可读、写的，例如函数内部定义的临时的“栈”常量，由于“堆栈”本身是可读、可写的，所以在逃过编译器检查后，“栈”常量也是可以顺利写入的.</p>
+<h2 id="5-6-CPU眼里的系统调用"><a href="#5-6-CPU眼里的系统调用" class="headerlink" title="5.6 CPU眼里的系统调用"></a>5.6 CPU眼里的系统调用</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)“系统调用”跟“函数调用”一样，都可以通过寄存器来传递参数，但会用syscall指令触发CPU异常，从而让操作系统，接管后面的功能实现。<br>(2)系统调用会引发CPU状态切换，CPU在用户态准备参数，然后切换到内核态完成功能。<br>(3)系统调用能够有效的隔离应用程序和操作系统核心，提高整个系统的安全性。<br>(4)系统调用的实现，会因为CPU指令集的不同而不同。几乎所有重要的库函数，都需要通过系统调用来实现.</p>
+<h2 id="5-7-CPU眼里的大端、小端"><a href="#5-7-CPU眼里的大端、小端" class="headerlink" title="5.7 CPU眼里的大端、小端"></a>5.7 CPU眼里的大端、小端</h2><p>提出问题<br><img src="/posts/15ae052d/album_temp_1735948292.png"><br>代码分析<br><strong>总结</strong><br>(1)CPU在从内存中读、写多字节数据(long、int、short)时，不同的模式，对数据的高、低位的解读顺序是不同的，也就是CPU的大、小端差异。<br>(2)为了克服因为大、小端差异，造成的数据解读歧义，我们可以用单字节的字符串，进行数据共享，例如在物联网中，广泛使用的JSON格式。<br>(3)今天仍然有很多设备，例如I2C、SPI设备还是会发送、接收多字节数据，开发者需要根据设备手册来确定设备是先发高位字节，还是先发低位字节。并根据自己的CPU类型，手动适配。<br>最后，大小端问题，仅仅针对于多字节的数据类型，对单字节里面的每个位(bit)是没有影响的。正因如此，我们在传递单个字节或字符的时候，并不会产生颠倒问题。</p>
+<h2 id="5-8-CPU眼里的上下文"><a href="#5-8-CPU眼里的上下文" class="headerlink" title="5.8 CPU眼里的上下文"></a>5.8 CPU眼里的上下文</h2><p><strong>总结</strong><br>(1)简单地说：上下文，就是CPU当前的寄存器信息。保存、恢复上下文的过程，就像是保存和恢复一个人的记忆，通过恢复CPU过去的记忆，让CPU回到过去的状态。<br>(2)除了中断、任务调度会强行保存、恢复上下文，程序也可以主动保存上下文。例如：通过调用sleep、mutex、semaphore主动放弃线程或进程的运行机会，迫使操作系统保存上下文。<br>(3)不同线程的代码、数据、堆栈也可以放在同一个内存颗粒上，一般来说，不同线程的代码、数据，是不会被混淆的。当然为了安全，也可以进程的形式运行，因为MMU可以实现进程间，在内存空间上的隔离。<br>最后，实际情况下，程序用到的寄存器不止我们提到的4个，需要对更多的寄存器进行保存和恢复工作。不同的操作系统、CPU在实现上下文上面，也会有所差异。</p>
+<h2 id="5-9-CPU眼里的锁"><a href="#5-9-CPU眼里的锁" class="headerlink" title="5.9 CPU眼里的锁"></a>5.9 CPU眼里的锁</h2><p><strong>总结</strong><br>(1)Mutex的本质还是Semaphore，只是可用的共享资源上限是1而已，从而变相的实现了互斥。<br>(2)加锁操作，会让当前线程消耗1份共享资源；但如果资源已经枯竭，当前线程只能就地休眠，等待资源。而死锁，优先级反转问题，也往往在这个阶段产生，需要十分慎重。<br>(3)解锁操作，会返还1份资源，并试图唤醒还在等待资源的线程。<br>如你所见，锁通过线程主动放弃运行机会的方法，来协调多线程对公路、停车场等共享资源的竞争，实现线程之间的协调，也就是我们常说的同步。<br>需要注意的是我们用“锁”保护的是资源、数据，而不是保护某个操作或者某个函数。所以，在进行“锁”操作的时候，我们要把影响范围尽量控制在一个小的范围，不要为了保护某一个变量，而锁住整个或者大片的函数。</p>
+<h1 id="第6章-面试挑战"><a href="#第6章-面试挑战" class="headerlink" title="第6章 面试挑战"></a>第6章 面试挑战</h1><h2 id="6-1-static、global以及local"><a href="#6-1-static、global以及local" class="headerlink" title="6.1 static、global以及local"></a>6.1 static、global以及local</h2><p><strong>总结</strong><br>(1)全局变量和静态变量的内存地址是固定的，但临时变量的内存地址，往往不是固定的。<br>(2)静态变量，除了作用域跟全局变量有所差异外，其存储原则、生命周期跟全局变量类似。<br>(3)无论是全局变量还是静态变量，如果它们没有被初始化，或者被初始化为0。都会被安置在未初始化数据段，一定程度上可以节省二进制文件a.out的存储空间</p>
+<h2 id="6-2-数组和双重指针"><a href="#6-2-数组和双重指针" class="headerlink" title="6.2 数组和双重指针"></a>6.2 数组和双重指针</h2><h2 id="6-3-指针为什么这么难"><a href="#6-3-指针为什么这么难" class="headerlink" title="6.3 指针为什么这么难"></a>6.3 指针为什么这么难</h2><p>提出问题<br>学习指针的困境<br><strong>指针的普通性和特殊性</strong><br><strong>多重指针</strong><br><strong>数组、指针的混用</strong></p>
+<h2 id="6-4-auto的工作原理"><a href="#6-4-auto的工作原理" class="headerlink" title="6.4 auto的工作原理"></a>6.4 auto的工作原理</h2><p>提出问题<br>代码分析<br><strong>总结</strong><br>(1)auto在一定程度上，会简化程序代码，增加代码的可读性。<br>(2)auto在一定程度上，可以减少代码对数据类型的依赖，从而提高代码的稳定性和重构效率、扩展效率。<br>(3)过度使用auto，也可能适得其反，因为auto并不能提供足够的类型信息，当推理过程过于复杂时，反而会损失代码的可读性。如果只是简单地用auto定义一个有初值的变量，请放心使用auto。但如果用auto替代指针和引用类型时，就可能产生一些非预期的错误，需要谨慎使用。<br>最后，弱类型和强类型哪个更为合理也颇有争议。虽然弱类型有很多问题，但其良好的易用性仍然让JavaScript年年可以轻松登顶编程语言排行榜。而号称专门用来改善JavaScript的弱类型缺点的TypeScript，尽管跟JavaScript完全兼容，但影响力远远不如JavaScript</p>
+<h2 id="6-5-thread-local的工作原理"><a href="#6-5-thread-local的工作原理" class="headerlink" title="6.5 thread_local的工作原理"></a>6.5 thread_local的工作原理</h2><p><strong>总结</strong><br>(1)操作系统在创建线程的时候，除了会给每个线程创建函数“堆栈”，还会划出一部分区域来存储一个或多个thread_local变量。<br>(2)类似于用寄存器esp来标识线程当前“堆栈”栈顶的内存地址，编译器也常用寄存器fs来标识所有thread_local变量，所在的内存首地址配合偏移量，就可以精确寻找到每一个thread_local变量。<br>这是非常聪明的设计，不仅实现起来非常简洁，而且几乎没有增加任何运行成本。<br>(3)thread_local并非没有替代方案，例如在创建线程之前，我们可以申请一段内存块，交给该线程私用。并通过参数传递的方式,将内存首地址传递给该线程的主函数</p>
+<h2 id="6-6-面试的技巧"><a href="#6-6-面试的技巧" class="headerlink" title="6.6 面试的技巧"></a>6.6 面试的技巧</h2><p>常见问题<br>应对技巧</p>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/15ae052d.html">https://www.ai-x.co.uk/posts/15ae052d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C</a><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/CPU/">CPU</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-cpu-c-cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/a0655c82.html" title="C编程之C和指针内容学习"><img class="cover" src="/img/cover-pointer-cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">C编程之C和指针内容学习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/2d7278c1.html" title="TensorFlow深度学习技术"><img class="cover" src="/img/cover-TensorFlow.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">TensorFlow深度学习技术</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/d0196c34.html" title="C++编程之C++语言的发展"><img class="cover" src="/img/cover-c++.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-22</div><div class="info-item-2">C++编程之C++语言的发展</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/a0655c82.html" title="C编程之C和指针内容学习"><img class="cover" src="/img/cover-pointer-cover.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-31</div><div class="info-item-2">C编程之C和指针内容学习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">56</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">28</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">19</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">第1章 预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 工具介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 CPU眼里的程序运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 CPU眼里的汇编语言</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">第2章 基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-CPU%E7%9C%BC%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 CPU眼里的main函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%8F%98%E9%87%8F"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 CPU眼里的变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-CPU%E7%9C%BC%E9%87%8C%E7%9A%84goto%E3%80%81if-else"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 CPU眼里的goto、if else</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 CPU眼里的指针变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%8C%87%E9%92%88%E6%9C%AC%E8%B4%A8%E5%92%8C%E9%A3%8E%E9%99%A9"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 CPU眼里的指针本质和风险</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%95%B0%E7%BB%84"><span class="toc-number">2.6.</span> <span class="toc-text">2.6 CPU眼里的数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-7-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C"><span class="toc-number">2.7.</span> <span class="toc-text">2.7 CPU眼里的数组越界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-8-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-number">2.8.</span> <span class="toc-text">2.8 CPU眼里的引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-9-CPU%E7%9C%BC%E9%87%8C%E7%9A%84i-%E4%B8%8E-i"><span class="toc-number">2.9.</span> <span class="toc-text">2.9 CPU眼里的i++与++i</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-10-%E4%BB%A3%E7%A0%81%E9%99%B7%E9%98%B1%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.10.</span> <span class="toc-text">2.10 代码陷阱类型转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC3%E7%AB%A0-%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">第3章 函数原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 CPU眼里的参数传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%87%BD%E6%95%B0%E6%8B%AC%E5%8F%B7"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 CPU眼里的函数括号{}</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E8%B0%83%E7%94%A8%E5%92%8C%E8%BF%94%E5%9B%9E"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 CPU眼里的调用和返回</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 CPU眼里的函数指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 CPU眼里的函数返回值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%A0%86%E5%92%8C%E6%A0%88"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 CPU眼里的堆和栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-7-%E5%87%BD%E6%95%B0%E5%AE%9E%E9%AA%8C%E5%9B%9E%E6%BA%AF%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 函数实验回溯函数调用关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC4%E7%AB%A0-C-%E7%89%B9%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">第4章 C++特性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-CPU%E7%9C%BC%E9%87%8C%E7%9A%84this"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 CPU眼里的this</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 CPU眼里的构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 CPU眼里的虚函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%A4%9A%E6%80%81"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 CPU眼里的多态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 CPU眼里的模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-6-CPU%E7%9C%BC%E9%87%8C%E7%9A%84malloc%E5%92%8Cnew"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 CPU眼里的malloc和new</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-7-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%AE%9E%E8%B7%B5%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC"><span class="toc-number">4.7.</span> <span class="toc-text">4.7 面向对象实践依赖反转</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC5%E7%AB%A0-%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">第5章 高级编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 CPU眼里的虚拟内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E5%9D%90%E4%BA%95%E8%A7%82%E5%A4%A9%E7%9A%84%E8%BF%9B%E7%A8%8B"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 坐井观天的进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 CPU眼里的地址映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-CPU%E7%9C%BC%E9%87%8C%E7%9A%84volatile"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 CPU眼里的volatile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%B8%B8%E9%87%8F"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CPU眼里的常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 CPU眼里的系统调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-7-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E5%A4%A7%E7%AB%AF%E3%80%81%E5%B0%8F%E7%AB%AF"><span class="toc-number">5.7.</span> <span class="toc-text">5.7 CPU眼里的大端、小端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-8-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">5.8.</span> <span class="toc-text">5.8 CPU眼里的上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-9-CPU%E7%9C%BC%E9%87%8C%E7%9A%84%E9%94%81"><span class="toc-number">5.9.</span> <span class="toc-text">5.9 CPU眼里的锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC6%E7%AB%A0-%E9%9D%A2%E8%AF%95%E6%8C%91%E6%88%98"><span class="toc-number">6.</span> <span class="toc-text">第6章 面试挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-static%E3%80%81global%E4%BB%A5%E5%8F%8Alocal"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 static、global以及local</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E6%95%B0%E7%BB%84%E5%92%8C%E5%8F%8C%E9%87%8D%E6%8C%87%E9%92%88"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 数组和双重指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E6%8C%87%E9%92%88%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E9%9A%BE"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 指针为什么这么难</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-auto%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 auto的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-thread-local%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">6.5.</span> <span class="toc-text">6.5 thread_local的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E9%9D%A2%E8%AF%95%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">6.6.</span> <span class="toc-text">6.6 面试的技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Citrix Virtual Apps and Desktops 虚拟化解决方案"></a><div class="content"><a class="title" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案">Citrix Virtual Apps and Desktops 虚拟化解决方案</a><time datetime="2025-09-21T18:05:38.000Z" title="发表于 2025-09-21 18:05:38">2025-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术"><img src="/img/cover-deepseekAI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入揭秘 DeepSeek 核心技术"></a><div class="content"><a class="title" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术">深入揭秘 DeepSeek 核心技术</a><time datetime="2025-03-08T18:53:17.000Z" title="发表于 2025-03-08 18:53:17">2025-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览"><img src="/img/cover-aibigmodels.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI大模型九大核心技术总览"></a><div class="content"><a class="title" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览">AI大模型九大核心技术总览</a><time datetime="2025-02-25T22:28:11.000Z" title="发表于 2025-02-25 22:28:11">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS"><img src="/img/cover-swift.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨境支付中绕不开的SWIFT、CIPS、CHIPS"></a><div class="content"><a class="title" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS">跨境支付中绕不开的SWIFT、CIPS、CHIPS</a><time datetime="2025-02-23T09:59:26.000Z" title="发表于 2025-02-23 09:59:26">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img src="/img/cover-javacore2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"></a><div class="content"><a class="title" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</a><time datetime="2025-02-19T22:06:59.000Z" title="发表于 2025-02-19 22:06:59">2025-02-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '045f576347ac78691452c7197f11c24c'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (56)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (19)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

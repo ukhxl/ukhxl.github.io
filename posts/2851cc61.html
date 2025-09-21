@@ -1,0 +1,605 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LVS负载均衡技术 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="LVS负载均衡技术">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/2851cc61.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-lvs.png">
+<meta property="article:published_time" content="2025-01-05T10:08:31.000Z">
+<meta property="article:modified_time" content="2025-09-21T18:54:57.235Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="LVS">
+<meta property="article:tag" content="F5">
+<meta property="article:tag" content="负载均衡">
+<meta property="article:tag" content="Netfilter">
+<meta property="article:tag" content="Iptables">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-lvs.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/2851cc61.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LVS负载均衡技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-21 18:54:57',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-lvs.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">LVS负载均衡技术</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">LVS负载均衡技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-05T10:08:31.000Z" title="发表于 2025-01-05 10:08:31">2025-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-21T18:54:57.235Z" title="更新于 2025-09-21 18:54:57">2025-09-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E8%BF%90%E7%BB%B4/">AI-X运维</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/">网络技术/软件定义</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">8.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-lvs.png);"></div><article class="post-content" id="article-container"><p><img src="/posts/2851cc61/LVS-OVERALL.jpeg" alt="alt text"><br><strong>前言</strong><br>如今，在各种互联网应用中，随着站点对硬件性能、响应速度、服务稳定性、数据可靠性等要求也越来越高，单台服务器也将难以无法承担所有的访问需求。当然了，除了使用性价比高的设备和专用负载分流设备外，还有一些其他选择来帮你解决此问题，就是搭建集群服务器通过整合多台普通的服务器设备并以同一个地址对外提供相同的服务，企业中常用的一种群集技术 —— LVS。<br><img src="/posts/2851cc61/LVS-PERFACE.png" alt="alt text"></p>
+<h1 id="一、什么是-LVS？"><a href="#一、什么是-LVS？" class="headerlink" title="一、什么是 LVS？"></a>一、什么是 LVS？</h1><p>LVS： 是Linux Virtual Server的简写，也就是Linux 虚拟服务器，是一个虚拟的服务器集群系统，本项目在1998年5月由章文嵩博士成立，是中国国内最早出现的自由软件项目之一。官方网站 ：<code>http://www.linuxvirtualserver.org</code> LVS 实际上相当于基于 IP 地址的虚拟化应用，为基于 IP 地址和内容请求分发的负载均衡提出了高效的解决方法，现在 LVS 已经是 Linux 内核标准的一部分。</p>
+<p>使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS 架构从逻辑上可分为调度层、Server 集群层和共享存储层。</p>
+<h1 id="二、为什么要用-LVS？"><a href="#二、为什么要用-LVS？" class="headerlink" title="二、为什么要用 LVS？"></a>二、为什么要用 LVS？</h1><p>在之前的 Nginx 系列中，介绍了 Nginx 负载均衡服务，那为什么还需要用 LVS 呢？</p>
+<p>随着 Internet 的爆炸性增长以及日常生活中的日益重要的作用，Internet 上的流量速度增长，以每年 100％ 以上的速度增长。服务器上的工作负载压力也迅速增加，因此服务器在短时间内将会过载，尤其是对于受欢迎的网站而言。为了克服服务器的过载压力问题，有两种解决方案。</p>
+<ul>
+<li>一种是：单服务器解决方案，即将服务器升级到性能更高的服务器，但是当请求增加时，将很快过载，因此必须再次对其进行升级，升级过程复杂且成本高；</li>
+<li>另一个是：多服务器解决方案，即在服务器集群上构建可扩展的网络服务系统。当负载增加时，可以简单地在群集中添加新服务器或更多服务器以满足不断增长的需求，而商用服务器具有最高的性能&#x2F;成本比。因此，构建用于网络服务的服务器群集系统更具可伸缩性，并且更具成本效益。</li>
+</ul>
+<p><strong>构建服务器集群的方法：</strong></p>
+<ul>
+<li><strong>基于 DNS 的负载均衡集群</strong></li>
+</ul>
+<p>DNS 负载均衡可能是构建网络服务群集的最简单方法。使用域名系统通过将域名解析为服务器的不同 IP 地址来将请求分发到不同的服务器。当 DNS 请求到达 DNS 服务器以解析域名时，DNS 服务器将基于调度策略发出服务器 IP 地址之一，然后来自客户端的请求使用相同的本地缓存名称服务器将在指定的名称解析生存时间（TTL）中发送到同一服务器。</p>
+<p>但是，由于客户端和分层 DNS 系统的缓存特性，很容易导致服务器之间的动态负载不平衡，因此服务器很难处理其峰值负载。在 DNS 服务器上不能很好地选择名称映射的 TTL 值。</p>
+<p>如果值较小，DNS 流量很高，而 DNS 服务器将成为瓶颈；如果值较大，则动态负载不平衡将变得更糟。即使 TTL 值设置为零，调度粒度也是针对每个主机的，不同用户的访问模式可能会导致动态负载不平衡，因为有些人可能从站点中拉出很多页面，而另一些人可能只浏览了几页然后转到远。而且，它不是那么可靠，当服务器节点发生故障时，将名称映射到IP地址的客户端会发现服务器已关闭。</p>
+<ul>
+<li><strong>基于分派器的负载平衡集群</strong></li>
+</ul>
+<p>分派器，也称为负载平衡器，可用于在群集中的服务器之间分配负载，以便服务器的并行服务可以在单个IP地址上显示为虚拟服务，并且最终用户可以像单个服务器一样进行交互不知道群集中的所有服务器。与基于DNS的负载平衡相比，调度程序可以按精细的粒度（例如每个连接）调度请求，以实现服务器之间的更好负载平衡。一台或多台服务器发生故障时，可以掩盖故障。服务器管理变得越来越容易，管理员可以随时使一台或多台服务器投入使用或退出服务，而这不会中断最终用户的服务。</p>
+<p>负载均衡可以分为两个级别，即应用程序级别和IP级别。例如，反向代理 和pWEB是用于构建可伸缩Web服务器的应用程序级负载平衡方法。他们将HTTP请求转发到群集中的其他Web服务器，获取结果，然后将其返回给客户端。由于在应用程序级别处理HTTP请求和答复的开销很高，我相信当服务器节点数增加到5个或更多时，应用程序级别的负载均衡器将成为新的瓶颈，这取决于每个服务器的吞吐量服务器。</p>
+<p><strong>LVS 与 Nginx 功能对比</strong></p>
+<ul>
+<li>LVS 比 Nginx 具有更强的抗负载能力，性能高，对内存和 CPU 资源消耗较低；</li>
+<li>LVS 工作在网络层，具体流量由操作系统内核进行处理，Nginx 工作在应用层，可针对 HTTP 应用实施一些分流策略；</li>
+<li>LVS 安装配置较复杂，网络依赖性大，稳定性高。Nginx 安装配置较简单，网络依赖性小；</li>
+<li>LVS 不支持正则匹配处理，无法实现动静分离效果。Nginx 可实现这方面的功能；</li>
+<li>LVS 适用的协议范围广。Nginx 仅支持 HTTP、HTTPS、Email 协议，适用范围小；</li>
+</ul>
+<h1 id="三、LVS-的组成及作用"><a href="#三、LVS-的组成及作用" class="headerlink" title="三、LVS 的组成及作用"></a>三、LVS 的组成及作用</h1><p>LVS 由两部分程序组成，包括 ipvs 和 ipvsadm。<br>1、 <strong>ipvs</strong>(ip virtual server)：LVS 是基于内核态的 netfilter 框架实现的 IPVS 功能，工作在内核态。用户配置 VIP 等相关信息并传递到 IPVS 就需要用到 ipvsadm 工具。<br>2、 <strong>ipvsadm</strong>：ipvsadm 是 LVS 用户态的配套工具，可以实现 VIP 和 RS 的增删改查功能，是基于 netlink 或 raw socket 方式与内核 LVS 进行通信的，如果 LVS 类比于 netfilter，那 ipvsadm 就是类似 iptables 工具的地位。</p>
+<p><strong>作用：</strong></p>
+<ul>
+<li>主要用于多服务器的负载均衡；</li>
+<li>工作在网络层，可实现高性能，高可用的服务器集群技术；</li>
+<li>廉价，可把许多低性能的服务器组合在一起形成一个超级服务器；</li>
+<li>易用，配置简单，有多种负载均衡的方法；</li>
+<li>稳定可靠，即使在集群的服务器中某台服务器无法正常工作，也不影响整体效果；</li>
+<li>可扩展性好；</li>
+</ul>
+<h1 id="四、负载均衡的由来及所带来的好处"><a href="#四、负载均衡的由来及所带来的好处" class="headerlink" title="四、负载均衡的由来及所带来的好处"></a>四、负载均衡的由来及所带来的好处</h1><p>在业务刚起步时，一般先使用单台服务器对外进行提供服务。随着后期的业务增长，流量也越来越大。当这单台服务器的访问量越大时，服务器所承受的压力也就越大，性能也将无法满足业务需求，超出自身所指定的访问压力就会崩掉，避免发生此类事情的发生。</p>
+<p>我们将采取其他方案，将多台服务器组成集群系统从而来提高整体服务器的处理性能，使用统一入口（流量调度器）的方式通过均衡的算法进行对外提供服务，将用户大量的请求均衡地分发到后端集群不同的服务器上。因此也就有了负载均衡来分担服务器的压力。</p>
+<p>使用负载均衡给我们所带来的好处：提高系统的整体性能、提高系统的扩展性、提高系统的高可用性；</p>
+<h1 id="五、LVS-负载均衡集群的类型"><a href="#五、LVS-负载均衡集群的类型" class="headerlink" title="五、LVS 负载均衡集群的类型"></a>五、LVS 负载均衡集群的类型</h1><ul>
+<li>负载均衡群集：Load Balance Cluster，以提高应用系统的响应能力，尽可能处理更多的访问请求、减少延迟为目标，从而获得高并发、高负载的整体性能。</li>
+<li>高可用群集：High Availability Cluster，以提高应用系统的可靠性，尽可能的减少终端时间为目标、确保服务的连续性，达到高可用的容错效果。</li>
+<li>高性能运算群集：High Performance Computer Cluster，以提高应用系统的 CPU 运算速度、扩展硬件资源和分析能力为目标、从而获得相当于大型、超级计算机的高性能计算能力。</li>
+</ul>
+<h1 id="六、DNS-软硬件负载均衡的类型"><a href="#六、DNS-软硬件负载均衡的类型" class="headerlink" title="六、DNS &#x2F; 软硬件负载均衡的类型"></a>六、DNS &#x2F; 软硬件负载均衡的类型</h1><h2 id="1）DNS-实现负载均衡"><a href="#1）DNS-实现负载均衡" class="headerlink" title="1）DNS 实现负载均衡"></a>1）DNS 实现负载均衡</h2><p>一个域名通过 DNS 解析到多个 IP，每个 IP 对应不同的服务器实例，就完成了流量的调度，这也是 DNS 实现负载均衡是最简单的方式。<br>使用该方式最大的优点：实现简单，成本低，无需自己开发或维护负载均衡设备，不过存在一些缺点：服务器故障切换延迟大，升级不方便、流量调度不均衡，粒度大、流量分配策略较简单，支持的算法较少、DNS 所支持的 IP 列表有限制要求。</p>
+<h2 id="2）硬件负载均衡"><a href="#2）硬件负载均衡" class="headerlink" title="2）硬件负载均衡"></a>2）硬件负载均衡</h2><p>硬件负载均衡是通过专门的硬件设备从而来实现负载均衡功能，比如：交换机、路由器就是一个负载均衡专用的网络设备。<br>目前典型的硬件负载均衡设备有两款：F5 和 A10。不过话说，能用上这种硬件负载均衡设备的企业都不是一般的公司，反而普通业务量级小的其他企业基本用不到。<br><strong>硬件负载均衡的优点：</strong></p>
+<ul>
+<li><p>功能强大：支持各层级负载均衡及全面负载均衡算法；</p>
+</li>
+<li><p>性能强大：性能远超常见的软件负载均衡器；</p>
+</li>
+<li><p>稳定性高：硬件负载均衡，大规模使用肯定是严格测试过的；</p>
+</li>
+<li><p>安全防护：除具备负载均衡功能外，还具备防火墙、防 DDoS 攻击等安全功能；<br><strong>硬件负载均衡的缺点：</strong></p>
+</li>
+<li><p>价格昂贵；</p>
+</li>
+<li><p>可扩展性差；</p>
+</li>
+<li><p>调试维护麻烦；</p>
+</li>
+</ul>
+<h2 id="3）软件负载均衡"><a href="#3）软件负载均衡" class="headerlink" title="3）软件负载均衡"></a>3）软件负载均衡</h2><p>Nginx ：支持 4 层 &#x2F; 7 层负载均衡，支持 HTTP、E-mail 协议；<br>LVS ：纯 4 层负载均衡，运行在内核态，性能是软件负载均衡中最高的；<br>HAproxy ：是 7 层负载均衡软件，支持 7 层规则的设置，性能也不错；<br>软件负载均衡的优点：</p>
+<p>简单、灵活、便宜（直接在 Linux 操作系统上安装上述所使用的软件负载均衡，部署及维护较简单，4 层 和 7 层负载均衡可根据业务进行选择也可根据业务特点，比较方便进行扩展及定制功能）；</p>
+<h1 id="七、LVS-集群的通用体系结构"><a href="#七、LVS-集群的通用体系结构" class="headerlink" title="七、LVS 集群的通用体系结构"></a>七、LVS 集群的通用体系结构</h1><p><img src="/posts/2851cc61/LVS-7.png" alt="alt text"></p>
+<ul>
+<li><strong>第一层：负载调度器</strong>：Load Balancer，它是访问整个群集系统的唯一入口，对外使用所有服务器共有的虚拟 IP 地址，也成为群集 IP 地址。</li>
+</ul>
+<p>负载均衡器：是服务器群集系统的单个入口点，可运行 IPVS，该 IPVS 在 Linux 内核或 KTCPVS 内部实现 IP 负载均衡技术，在 Linux 内核中实现应用程序级负载平衡。使用 IPVS 时，要求所有服务器提供相同的服务和内容，负载均衡器根据指定的调度算法和每个服务器的负载将新的客户端请求转发到服务器。无论选择哪个服务器，客户端都应获得相同的结果。使用 KTCPVS 时，服务器可以具有不同的内容，负载均衡器可以根据请求的内容将请求转发到其他服务器。由于 KTCPVS 是在 Linux 内核内部实现的，因此中继数据的开销很小，因此仍可以具有较高的吞吐量。</p>
+<ul>
+<li><strong>第二层：服务器池：Server Pool</strong>，群集所提供的应用服务，比如：HTTP、FTP服务器池来承担，每个节点具有独立的真实 IP 地址，只处理调度器分发过来的客户机请求。</li>
+</ul>
+<p>服务器群集的节点可根据系统所承受的负载进行分担。当所有服务器过载时，可添加多台服务器来处理不断增加的工作负载。对于大多数 Internet 服务（例如Web），请求通常没有高度关联，并且可以在不同服务器上并行运行。因此，随着服务器群集的节点数增加，整体性能几乎可以线性扩展。</p>
+<ul>
+<li><strong>第三层：共享存储：</strong>Shared Storage，为服务器池中的所有节点提供稳定、一致的文件存储服务，确保整个群集的统一性，可使用 NAS 设备或提供 NFS （Network File System）网络文件系统共享服务的专用服务器。</li>
+</ul>
+<p>共享存储：可以是数据库系统，网络文件系统或分布式文件系统。服务器节点需要动态更新的数据应存储在基于数据的系统中，当服务器节点并行在数据库系统中读写数据时，数据库系统可以保证并发数据访问的一致性。静态数据通常保存在网络文件系统（例如 NFS 和 CIFS）中，以便可以由所有服务器节点共享数据。但是，单个网络文件系统的可伸缩性受到限制，例如，单个 NFS &#x2F; CIFS 只能支持 4 到 8 个服务器的数据访问。对于大型集群系统，分布式&#x2F;集群文件系统可以用于共享存储，例如 GPFS，Coda 和 GFS，然后共享存储也可以根据系统需求进行扩展。</p>
+<h1 id="八、LVS-负载均衡的基本原理"><a href="#八、LVS-负载均衡的基本原理" class="headerlink" title="八、LVS 负载均衡的基本原理"></a>八、LVS 负载均衡的基本原理</h1><p><strong>netfilter 的基本原理</strong></p>
+<p>在介绍 LVS 负载均衡基本原理之前，先说一下 netfilter 的基本原理。因为 LVS 是基于 Linux 内核中 netfilter 框架实现的负载均衡系统，<strong>netfilter 其实很复杂也很重要，平时说的 Linux 防火墙就是 netfilter</strong>，不过我们操作的还是 iptables，iptables 和 netfilter 是 Linux 防火墙组合工具，是一起来完成系统防护工作的。</p>
+<p>iptables 是位于用户空间，而 Netfilter 是位于内核空间。iptables 只是用户空间编写和传递规则的工具而已，真正工作的还是 netfilter。</p>
+<p><strong>两者间的区别：</strong></p>
+<p>Netfilter 是内核态的 Linux 防火墙机制，它作为一个通用、抽象的框架，提供了一整套的 hook 函数管理机制，提供数据包过滤、网络地址转换、基于协议类型的连接跟踪的功能，可在数据包流经过程中，根据规则设置若干个关卡（hook 函数）来执行相关操作，共设置了 5 个点，包括：PREROUTING、INPUT、FORWARD、OUTPUT、POSTROUTING。</p>
+<ul>
+<li><p>prerouting： 在对数据包做路由选择之前，将应用此链中的规则；</p>
+</li>
+<li><p>input： 当收到访问防火墙本机地址的数据包时，将应用此链中的规则；</p>
+</li>
+<li><p>forward： 当收到需要通过防火中转发给其他地址的数据包时，将应用此链中的规则；</p>
+</li>
+<li><p>output： 当防火墙本机向外发送数据包时，将应用此链中的规则；</p>
+</li>
+<li><p>postrouting： 在对数据包做路由选择之后，将应用此链中的规则；<br>iptable 是用户层的工具，提供命令行接口，能够向 Netfilter 中添加规则策略，从而实现报文过滤，修改等功能。关于 iPtables 相关文章可参考如下：</p>
+</li>
+<li><p>iptables 防火墙（一）- 四表&#x2F;五链、数据包匹配流程、编写 iptables 规则</p>
+</li>
+<li><p>iptables 防火墙（二）- SNAT &#x2F; DNAT 策略及应用 |（附体系思维导图）</p>
+</li>
+<li><p>iptables 防火墙（三）- 规则的导出 &#x2F; 导入、使用防火墙脚本程序 |（附体系思维导图）</p>
+</li>
+</ul>
+<p>通过下图我们可以来了解下 netfilter 的工作机制：<br><img src="/posts/2851cc61/LVS-8.png" alt="alt text"><br>当数据包通过网络接口进入时，经过链路层之后进入网络层到达PREROUTING，然后根据目标 IP 地址进行查找路由。</p>
+<p>如目标 IP 是本机，数据包会传到INPUT上，经过协议栈后根据端口将数据送到相应的应用程序；应用程序将请求处理后把响应数据包发送至OUTPUT里，最终通过POSTROUTING后发送出网络接口。</p>
+<p>如目标 IP 不是本机，并且服务器开启了FORWARD参数，这时会将数据包递送给 FORWARD，最后通过POSTROUTING后发送出网络接口。</p>
+<p><strong>LVS 的基本原理</strong><br><img src="/posts/2851cc61/LVS-82.png" alt="alt text"></p>
+<p>LVS 基于 netfilter 框架，工作在 INPUT 链上，在 INPUT 链上注册 ip_vs_in HOOK 函数，进行 IPVS 相关主流程，详细原理概述如下：</p>
+<p>1、 当客户端用户访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 网站时，用户访问请求通过层层网络，最终通过交换机进入 LVS 服务器网卡进入内核空间层。</p>
+<p>2、 进入PREROUTING后通过查找路由，确定访问目的 VIP 是本机 IP 地址的话，数据包将进入INPUT链中。</p>
+<p>3、 因为 IPVS 工作在 INPUT 链上，会根据访问的VIP和端口判断请求是否为 IPVS 服务，是的情况下，则调用注册的IPVS HOOK 函数，进行IPVS相关流程，并强制修改数据包的相关数据，并将数据包发往POSTROUTING链中。</p>
+<p>4、 POSTROUTING链收到数据包后，将根据目标 IP 地址服务器，通过路由选路，将数据包最终发送至后端真实服务器中。</p>
+<p>上面就是我们所介绍的 LVS 的工作原理，那么 LVS 负载均衡还包括三种工作模式，且每种模式工作原理都有所不同，适用于不同应用场景，其最终目的都是能实现均衡的流量调度和良好的扩展性。</p>
+<h1 id="九、LVS-负载均衡的三种工作模式"><a href="#九、LVS-负载均衡的三种工作模式" class="headerlink" title="九、LVS 负载均衡的三种工作模式"></a>九、LVS 负载均衡的三种工作模式</h1><p>群集的负载调度技术，可基于 IP、端口、内容等进行分发，其中基于 IP 的负载均衡是效率最高的。基于 IP 的负载均衡模式，常见的有地址转换（NAT）、IP 隧道（TUN）和直接路由（DR）三种工作模式。</p>
+<p><strong>地址转换</strong>：Network Address Translation，简称：NAT 模式，类似于防火墙的私有网络结构，负载调度器作为所有服务器节点的网关，作为客户机的访问入口，也是各节点回应客户机的访问出口，服务器节点使用私有 IP 地址，与负载调度器位于同一个物理网络，安全性要优于其他两种方式。<br><img src="/posts/2851cc61/LVS-83.png" alt="alt text"></p>
+<p><strong>NAT 实现原理过程</strong></p>
+<p>1、 客户端发出的请求数据包经过网络到达 LVS 网卡，数据包源 IP 为 CIP，目的 IP 为 VIP。</p>
+<p>2、然后进入 PREROUTING 链中，根据目的 IP 查找路由，确定是否为本机 IP 地址，随后将数据包转发至 INPUT 链中，源 IP 和 目的 IP 不变。</p>
+<p>3、 到达 LVS 后，通过目的 IP 和目的 PORT 查找是否为 IPVS 服务，如是 IPVS 服务，将会选择一个 RS 来作为后端服务器，数据包的目的 IP 地址将会修改为 RIP，这时并以 RIP 为目的 IP 去查找路由，确定下一跳及 PORT 信息后，数据包将会转发至 OUTPUT 链中。</p>
+<p>4、 被修改过的数据包经过 POSTROUTING 链后，到达 RS 服务器，数据包源 IP 为 CIP，目的 IP 为 RIP。</p>
+<p>5、 RS 服务器经过处理后，将会把数据包发送至用户空间的应用程序，待处理完成后，发送响应数据包，RS 服务器的默认网关为 LVS 的 IP，应用程序将会把数据包转发至下一跳 LVS 服务器，数据包源 IP 为 RIP，目的 IP 为 CIP。</p>
+<p>6、 LVS 服务器收到 RS 服务器响应的数据包后，查找路由，目的 IP 不是本机 IP并且 LVS 服务器开启了 FORWARD 模式，会将数据包转发给它，数据包不变。</p>
+<p>7、 LVS 服务器收到响应数据包后，根据目的 IP 和 目的 PORT  查找相应的服务，这时，源 IP 为 VIP，通过查找路由，确定下一跳信息并将数据包发送至网关，最终回应给客户端用户。</p>
+<p><strong>NAT 模式的优缺点：</strong></p>
+<p><strong>优点：</strong></p>
+<p>支持 Windows 操作系统；<br>支持端口映射，如 RS 服务器 PORT 与 VPORT 不一致的话，LVS 会修改目的 IP 地址和 DPORT 以支持端口映射；<br><strong>缺点：</strong></p>
+<p>RS 服务器需配置网关；<br>双向流量对 LVS 会产生较大的负载压力；<br><strong>NAT 模式的使用场景：</strong></p>
+<p>对 windows 操作系统的用户比较友好，使用 LVS ，必须选择 NAT 模式。<br><strong>IP 隧道</strong>：IP Tunnel，简称：TUN 模式，采用开放式的网络结构，负载调度器作为客户机的访问入口，各节点通过各自的 Internet 连接直接回应给客户机，而不经过负载调度器，服务器节点分散在互联网中的不同位置，有独立的公网 IP 地址，通过专用 IP 隧道与负载调度器相互通信。</p>
+<p><img src="/posts/2851cc61/LVS-84.png" alt="alt text"></p>
+<p><strong>TUN 实现原理过程</strong></p>
+<p>1、 客户端发送数据包经过网络后到 LVS 网卡，数据包源 IP 为 CIP，目的 IP 为 VIP。</p>
+<p>2、 进入 PREROUTING 链后，会根据目的 IP 去查找路由，确定是否为本机 IP，数据包将转发至 INPUT 链中，到 LVS，源 IP 和 目的 IP 不变。</p>
+<p>3、 到 LVS 后，通过目的 IP 和目的 PORT 查找是否为 IPVS 服务，如是 IPVS 服务，将会选择一个 RS 后端服务器， 源 IP 为 DIP，目标 IP 为 RIP，数据包将会转发至 OUTPUT 链中。</p>
+<p>4、 数据包根据路由信息到达 LVS 网卡，发送至路由器网关，最终到达后端服务器。</p>
+<p>5、 后端服务器收到数据包后，会拆掉最外层的 IP 地址后，会发现还有一层 IP 首部，源 IP 为 CIP，目的 IP 为 VIP，TUNL0 上配置 VIP，查找路由后判断为本机 IP 地址，将会发给用户空间层的应用程序响应后 VIP 为源 IP，CIP 为目的 IP 数据包发送至网卡，最终返回至客户端用户。</p>
+<p><strong>TUN 模式的优缺点：</strong></p>
+<p><strong>优点：</strong></p>
+<p>单臂模式，LVS 负载压力小；<br>数据包修改小，信息完整性高；<br>可跨机房；<br><strong>缺点：</strong></p>
+<p>不支持端口映射；<br>需在 RS 后端服务器安装模块及配置 VIP；<br>隧道头部 IP 地址固定，RS 后端服务器网卡可能会不均匀；<br>隧道头部的加入可能会导致分片，最终会影响服务器性能；<br><strong>TUN 模式的使用场景：</strong></p>
+<p>如对转发性要求较高且具有跨机房需求的，可选择 TUN 模式。<br><strong>直接路由：</strong>Direct Routing，简称 DR 模式，采用半开放式的网络结构，与 TUN 模式的结构类似，但各节点并不是分散在各个地方，而是与调度器位于同一个物理网络，负载调度器与各节点服务器通过本地网络连接，不需要建立专用的 IP 隧道。它是最常用的工作模式，因为它的功能性强大。<br><img src="/posts/2851cc61/LVS-85.png" alt="alt text"></p>
+<p><strong>DR 实现原理过程</strong></p>
+<p>1、 当客户端用户发送请求给 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 网站时，首先经过 DNS 解析到 IP 后并向百度服务器发送请求，数据包经过网络到百度 LVS 负载均衡服务器，这时到达 LVS 网卡时的数据包包括：源 IP 地址（客户端地址）、目的 IP 地址（百度对外服务器 IP 地址，也就是 VIP）、源 MAC 地址（CMAC &#x2F; LVS 连接路由器的 MAC 地址）、目标 MAC 地址（VMAC &#x2F; VIP 对应的 MAC 地址）。</p>
+<p>2、 数据包到达网卡后，经过链路层到达 PREROUTING 链，进行查找路由，发现目的 IP 是 LVS 的 VIP，这时就会发送至 INPUT 链中并且数据包的 IP 地址、MAC 地址、Port 都未经过修改。</p>
+<p>3、 数据包到达 INPUT 链中，LVS 会根据目的 IP 和 Port（端口）确认是否为 LVS 定义的服务，如是定义过的 VIP 服务，会根据配置的服务信息，从 RealServer 中选择一个后端服务器 RS1，然后 RS1 作为目标出方向的路由，确定下一跳信息及数据包通过具体的哪个网卡发出，最好将数据包通过 INET_HOOK 到 OUTPUT 链中。</p>
+<p>4、 数据包通过 POSTROUTING 链后，目的 MAC 地址将会修改为 RealServer 服务器 MAC 地址（RMAC）源 MAC 地址修改为 LVS 与 RS 同网段的 IP 地址的 MAC 地址（DMAC）此时，数据包将会发至 RealServer 服务器。</p>
+<p>5、 数据包到达 RealServer 服务器后，发现请求报文的 MAC 地址是自己的网卡 MAC 地址，将会接受此报文，待处理完成之后，将响应报文通过 lo 接口传送给 eth0 网卡然后向外发出。此时的源 IP 地址为 VIP，目标 IP 为 CIP，源 MAC 地址为 RS1 的 RMAC，目的 MAC 地址为下一跳路由器的 MAC 地址（CMAC），最终数据包通过 RS 相连的路由器转发给客户端。</p>
+<p><strong>DS 模式的优缺点：</strong></p>
+<p><strong>优点：</strong></p>
+<p>响应数据不经过 LVS，性能高；<br>对数据包修改小，信息完整性好；<br><strong>缺点：</strong></p>
+<p>LVS 与 RS 必须在同一个物理网络；<br>RS 上必须配置 lo 和其他内核参数；<br>不支持端口映射；<br><strong>DS 模式的使用场景：</strong></p>
+<p>对性能要求高的，可首选 DR 模式，还可透传客户端源 IP 地址。<br>NAT 模式：只需一个公网 IP 地址，是最易用的一种负载均衡模式，安全性较好。<br>TUN 模式 和 DR 模式：负载能力强大、适用范围广、节点安全性较差。</p>
+<h1 id="十、LVS-的十种负载调度算法"><a href="#十、LVS-的十种负载调度算法" class="headerlink" title="十、LVS 的十种负载调度算法"></a>十、LVS 的十种负载调度算法</h1><p><strong>轮询</strong>：Round Robin，将收到的访问请求按顺序轮流分配给群集中的各节点真实服务器中，不管服务器实际的连接数和系统负载。</p>
+<p><strong>加权轮询</strong>：Weighted Round Robin，根据真实服务器的处理能力轮流分配收到的访问请求，调度器可自动查询各节点的负载情况，并动态跳转其权重，保证处理能力强的服务器承担更多的访问量。</p>
+<p><strong>最少连接</strong>：Least Connections，根据真实服务器已建立的连接数进行分配，将收到的访问请求优先分配给连接数少的节点，如所有服务器节点性能都均衡，可采用这种方式更好的均衡负载。</p>
+<p><strong>加权最少连接</strong>：Weighted Least Connections，服务器节点的性能差异较大的情况下，可以为真实服务器自动调整权重，权重较高的节点将承担更大的活动连接负载。</p>
+<p><strong>基于局部性的最少连接：</strong>LBLC，基于局部性的最少连接调度算法用于目标 IP 负载平衡，通常在高速缓存群集中使用。如服务器处于活动状态且处于负载状态，此算法通常会将发往 IP 地址的数据包定向到其服务器。如果服务器超载（其活动连接数大于其权重），并且服务器处于半负载状态，则将加权最少连接服务器分配给该 IP 地址。</p>
+<p><strong>复杂的基于局部性的最少连接：</strong>LBLCR，具有复杂调度算法的基于位置的最少连接也用于目标IP负载平衡，通常在高速缓存群集中使用。与 LBLC 调度有以下不同：负载平衡器维护从目标到可以为目标提供服务的一组服务器节点的映射。对目标的请求将分配给目标服务器集中的最少连接节点。如果服务器集中的所有节点都超载，则它将拾取群集中的最少连接节点，并将其添加到目标服务器群中。如果在指定时间内未修改服务器集群，则从服务器集群中删除负载最大的节点，以避免高度负载。</p>
+<p><strong>目标地址散列调度算法：</strong>DH，该算法是根据目标 IP 地址通过散列函数将目标 IP 与服务器建立映射关系，出现服务器不可用或负载过高的情况下，发往该目标 IP 的请求会固定发给该服务器。</p>
+<p><strong>源地址散列调度算法：</strong>SH，与目标地址散列调度算法类似，但它是根据源地址散列算法进行静态分配固定的服务器资源。</p>
+<p><strong>最短延迟调度</strong>：SED，最短的预期延迟调度算法将网络连接分配给具有最短的预期延迟的服务器。如果将请求发送到第 i 个服务器，则预期的延迟时间为（Ci +1）&#x2F; Ui，其中 Ci 是第 i 个服务器上的连接数，而 Ui 是第 i 个服务器的固定服务速率（权重） 。</p>
+<p><strong>永不排队调度：</strong>NQ，从不队列调度算法采用两速模型。当有空闲服务器可用时，请求会发送到空闲服务器，而不是等待快速响应的服务器。如果没有可用的空闲服务器，则请求将被发送到服务器，以使其预期延迟最小化（最短预期延迟调度算法）。</p>
+<h1 id="十一、LVS-涉及相关的术语及说明"><a href="#十一、LVS-涉及相关的术语及说明" class="headerlink" title="十一、LVS 涉及相关的术语及说明"></a>十一、LVS 涉及相关的术语及说明</h1><p>上述内容中涉及到很多术语或缩写，这里简单解释下具体的含义，便于理解。</p>
+<p>DS： Director Server，前端负载均衡节点服务器。<br>RS： Real Server，后端真实服务器。<br>CIP： Client IP，客户端 IP 地址。<br>VIP： Virtual IP，负载均衡对外提供访问的 IP 地址，一般负载均衡 IP 都会通过 Virtual IP 实现高可用。<br>RIP： RealServer IP，负载均衡后端的真实服务器 IP 地址。<br>DIP： Director IP，负载均衡与后端服务器通信的 IP 地址。<br>CMAC： 客户端 MAC 地址，LVS 连接的路由器的 MAC 地址。<br>VMAC： 负载均衡 LVS 的 VIP 对应的 MAC 地址。<br>DMAC： 负载均衡 LVS 的 DIP 对应的 MAC 地址。<br>RMAC： 后端真实服务器的 RIP 地址对应的 MAC 地址。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>回顾下，通过本文你可学习到什么是 LVS、为什么要用 LVS、LVS 的组成及作用、负载均衡的由来及所带来的好处、LVS 负载均衡集群的类型（负载均衡集群、高可用集群、高性能运算集群）、DNS 实现负载均衡 &#x2F; 硬件和软件的负载均衡 、LVS 负载均衡的通用体系结构（负载调度器、服务器池、共享存储）、LVS 负载均衡的基本原理及基于netfilter 的基本原理和工作机制、LVS 负载均衡的三种工作模式（NAT、TUN、DR）LVS 十种负载均衡调度算法（RR、WRR、LC、WLC、LBLC、LBLCR、DH、SH、SED、NQ）以及相关涉及到的 LVS 术语及说明等</p>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1><p>Reference<br><a target="_blank" rel="noopener" href="http://www.linuxvirtualserver.org/">http://www.linuxvirtualserver.org/</a><br><a target="_blank" rel="noopener" href="http://www.linuxvirtualserver.org/how.html">http://www.linuxvirtualserver.org/how.html</a><br><a target="_blank" rel="noopener" href="http://www.linuxvirtualserver.org/Documents.html">http://www.linuxvirtualserver.org/Documents.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/2851cc61.html">https://www.ai-x.co.uk/posts/2851cc61.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Nginx/">Nginx</a><a class="post-meta__tags" href="/tags/LVS/">LVS</a><a class="post-meta__tags" href="/tags/F5/">F5</a><a class="post-meta__tags" href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a><a class="post-meta__tags" href="/tags/Netfilter/">Netfilter</a><a class="post-meta__tags" href="/tags/Iptables/">Iptables</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-lvs.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/2384a18d.html" title="AI Agent智能体基础认识"><img class="cover" src="/img/cover-aiagents.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">AI Agent智能体基础认识</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/97f9b76f.html" title="英语失眠相关的说法"><img class="cover" src="/img/cover-top-expand.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">英语失眠相关的说法</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img class="cover" src="/img/cover-javacore2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-19</div><div class="info-item-2">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/dd6fbad0.html" title="Java编程之Java高并发核心编程学习之第1-4章IO基础"><img class="cover" src="/img/cover-java-high-concurrent.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-27</div><div class="info-item-2">Java编程之Java高并发核心编程学习之第1-4章IO基础</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/e2d91bb3.html" title="Java编程之Java高并发核心编程学习之第13-15章ZooKeeper-Redis-CrazyIM"><img class="cover" src="/img/cover-java-high-concurrent.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-28</div><div class="info-item-2">Java编程之Java高并发核心编程学习之第13-15章ZooKeeper-Redis-CrazyIM</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/43482e24.html" title="Java编程之Java高并发核心编程学习之第5-8章Netty技术"><img class="cover" src="/img/cover-java-high-concurrent.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-27</div><div class="info-item-2">Java编程之Java高并发核心编程学习之第5-8章Netty技术</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/d1ee0423.html" title="Java编程之Java高并发核心编程学习之第9-12章Netty网络实现"><img class="cover" src="/img/cover-java-high-concurrent.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-28</div><div class="info-item-2">Java编程之Java高并发核心编程学习之第9-12章Netty网络实现</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/a1bb3bec.html" title="Nginx特性及负载均衡模式及配置"><img class="cover" src="/img/cover-nginx-cover.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-04</div><div class="info-item-2">Nginx特性及负载均衡模式及配置</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">56</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">28</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">19</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-LVS%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 LVS？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-LVS%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">二、为什么要用 LVS？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81LVS-%E7%9A%84%E7%BB%84%E6%88%90%E5%8F%8A%E4%BD%9C%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">三、LVS 的组成及作用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E7%94%B1%E6%9D%A5%E5%8F%8A%E6%89%80%E5%B8%A6%E6%9D%A5%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">4.</span> <span class="toc-text">四、负载均衡的由来及所带来的好处</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81LVS-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%9B%86%E7%BE%A4%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.</span> <span class="toc-text">五、LVS 负载均衡集群的类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81DNS-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.</span> <span class="toc-text">六、DNS &#x2F; 软硬件负载均衡的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%EF%BC%89DNS-%E5%AE%9E%E7%8E%B0%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">6.1.</span> <span class="toc-text">1）DNS 实现负载均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%EF%BC%89%E7%A1%AC%E4%BB%B6%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">6.2.</span> <span class="toc-text">2）硬件负载均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%EF%BC%89%E8%BD%AF%E4%BB%B6%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">6.3.</span> <span class="toc-text">3）软件负载均衡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81LVS-%E9%9B%86%E7%BE%A4%E7%9A%84%E9%80%9A%E7%94%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">7.</span> <span class="toc-text">七、LVS 集群的通用体系结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81LVS-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">八、LVS 负载均衡的基本原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E3%80%81LVS-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E4%B8%89%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">9.</span> <span class="toc-text">九、LVS 负载均衡的三种工作模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E3%80%81LVS-%E7%9A%84%E5%8D%81%E7%A7%8D%E8%B4%9F%E8%BD%BD%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">10.</span> <span class="toc-text">十、LVS 的十种负载调度算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81LVS-%E6%B6%89%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9A%84%E6%9C%AF%E8%AF%AD%E5%8F%8A%E8%AF%B4%E6%98%8E"><span class="toc-number">11.</span> <span class="toc-text">十一、LVS 涉及相关的术语及说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">12.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">13.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Citrix Virtual Apps and Desktops 虚拟化解决方案"></a><div class="content"><a class="title" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案">Citrix Virtual Apps and Desktops 虚拟化解决方案</a><time datetime="2025-09-21T18:05:38.000Z" title="发表于 2025-09-21 18:05:38">2025-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术"><img src="/img/cover-deepseekAI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入揭秘 DeepSeek 核心技术"></a><div class="content"><a class="title" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术">深入揭秘 DeepSeek 核心技术</a><time datetime="2025-03-08T18:53:17.000Z" title="发表于 2025-03-08 18:53:17">2025-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览"><img src="/img/cover-aibigmodels.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI大模型九大核心技术总览"></a><div class="content"><a class="title" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览">AI大模型九大核心技术总览</a><time datetime="2025-02-25T22:28:11.000Z" title="发表于 2025-02-25 22:28:11">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS"><img src="/img/cover-swift.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨境支付中绕不开的SWIFT、CIPS、CHIPS"></a><div class="content"><a class="title" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS">跨境支付中绕不开的SWIFT、CIPS、CHIPS</a><time datetime="2025-02-23T09:59:26.000Z" title="发表于 2025-02-23 09:59:26">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img src="/img/cover-javacore2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"></a><div class="content"><a class="title" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</a><time datetime="2025-02-19T22:06:59.000Z" title="发表于 2025-02-19 22:06:59">2025-02-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '0d109830ac90c9870a5e091c18e13cca'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (56)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (19)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

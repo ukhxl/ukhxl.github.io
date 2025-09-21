@@ -1,0 +1,533 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java编程之JDK及Java虚拟机 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="Java编程之JDK及Java虚拟机">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/37dc559b.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-java-virtual-machine.png">
+<meta property="article:published_time" content="2024-12-14T09:56:11.000Z">
+<meta property="article:modified_time" content="2025-09-21T18:54:57.161Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="Java虚拟机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-java-virtual-machine.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/37dc559b.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java编程之JDK及Java虚拟机',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-21 18:54:57',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-java-virtual-machine.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">Java编程之JDK及Java虚拟机</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Java编程之JDK及Java虚拟机</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-14T09:56:11.000Z" title="发表于 2024-12-14 09:56:11">2024-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-21T18:54:57.161Z" title="更新于 2025-09-21 18:54:57">2025-09-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/">AI-X开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/">编程/开发技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-java-virtual-machine.png);"></div><article class="post-content" id="article-container"><h1 id="一、Java-虚拟机是什么"><a href="#一、Java-虚拟机是什么" class="headerlink" title="一、Java 虚拟机是什么"></a>一、Java 虚拟机是什么</h1><p><code>Java 虚拟机</code> 简称 <code>JVM (Java Virtual Machine)</code>，它是支撑 Java 语言的基石，是运行 Java 应用程序的关键，同时也是实现 Java 语言平台无关性的核心组成部分。</p>
+<p>Java 虚拟机听名字就知道是一个虚拟机，可以简单认为它是一台抽象的计算机，是对真实的计算机进行的组成进行了模拟，它拥有着自己的指令集以及各种运行时内存区域，不同的区域实现不同的功能，比如堆、栈、程序计数器等。</p>
+<p>并且，Java 虚拟机还拥有 <code>一次编译到处运行</code>、<code>自动内存关联</code> 和 <code>自动垃圾回收</code> 等特性。</p>
+<h1 id="二、为什么需要了解-Java-虚拟机"><a href="#二、为什么需要了解-Java-虚拟机" class="headerlink" title="二、为什么需要了解 Java 虚拟机"></a>二、为什么需要了解 Java 虚拟机</h1><p>目前 Java 语言可以说是世界上使用率最高的语言之一，Java 开发者拥有着众多的数量，然而大部分开发者在使用 Java 语言开发过程中比较注重于基本语法和开源工具的使用，而并不太关注于 Java 底层的实现原理。</p>
+<p>那么说到这里，相信每个人都想过一个问题，那就是学习 Java 虚拟机有必要么？这点笔者不好回答，这个必要性其实跟开发者的环境有关，如果你是一个整天忙碌于编写业务，无暇顾及这些底层知识，使用现有的知识便足以解决开发过程中遇到的问题，那么确实，说实在话必要性不是很大。</p>
+<p>但是如果笔者认为，学习一门语言，尤其是想学好一门语言，不能只知其然而不知其所以然，而且我们在日常 Java 编码过程中，无时无刻都在跟 Java 虚拟机打交道，比如:</p>
+<ul>
+<li>启动 IDE 工具，那么这时候工具也需要 Java 环境，运行在 Java 虚拟机中；</li>
+<li>通过 Maven、Gradel 等工具对 Java 代码编译过程中，同样需要使用 Java 虚拟机执行任务；</li>
+<li>运行 Java 应用；</li>
+<li>….</li>
+</ul>
+<p>所以，我们 Java 开发者时时刻刻都在与 Java 虚拟机打交道，如果不懂其概念，那么在和同事讨论问题过程中，人家提到 JVM 内存划分，新生代和老年代，以及 GC 垃圾回收等等，听的一脸懵逼~</p>
+<p>再谈一些实际情况，笔者在过往的面试过程中，所面过的大部分公司中的面试官，几乎都对 Java 虚拟机的相关内容比较感兴趣，有的面试官可能会简单问些概念，但是有的甚至能夺命 N 连问，所以如果对 Java 虚拟机相关知识没有了解，很可能会丧失市场竞争力，尤其是中国 Java 开发者人数众多，竞争压力大，而且还比较卷，所以，如果别人了解这些内容而你不了解，你咋能竞争过别人呢？</p>
+<p>总之来说，学习并了解 Java 虚拟机对我们 Java 开发者来说是非常有必要的，毕竟 Java 虚拟机是 Java 语言运行的基石。</p>
+<h1 id="三、Java-JDK-的迭代历史"><a href="#三、Java-JDK-的迭代历史" class="headerlink" title="三、Java JDK 的迭代历史"></a>三、Java JDK 的迭代历史</h1><p>了解 Java 虚拟机那肯定先了解 JDK 各个版本的迭代过程，每个版本的 JDK 都有各自的变化，了解这些他们的历史更有助于我们对其知根知底。</p>
+<p>这里本人简单汇总了下 JDK 各个版本的变化(资料收集于网络):</p>
+<p><strong>JDK 1.0 ~ JDK 1.4:</strong></p>
+<ul>
+<li>1995 年 Java (原名Oak) 诞生，并且在 SunWorld 大会上正式发表了 Java 1.0 版本。</li>
+<li>1996 年 JDK 1.0 发布，提供了纯解释执行的 Java 虚拟机实现 Sun Classic VM。</li>
+<li>1997 年 JDK 1.1 发布，虚拟机没有做变更，依然使用 Sun Classic VM 作为默认的虚拟机。</li>
+<li>1998 年 JDK 1.2 发布，提供了运行在 Solaris 平台的 Exact VM 虚拟机，但此时还是用 Sun Classic VM 作为默认的 Java 虚拟机。</li>
+<li>2000 年 JDK 1.3 发布，默认的 Java 虚拟机由 Sun Classic VM 改为 Sun HotSopt VM，而 Sun Classic VM 则作为备用虚拟机。</li>
+<li>2002 年 JDK 1.4 发布，Sun Classic VM 退出商用虚拟机舞台，直接使用 Sun HotSpot VM 作为默认虚拟机一直到现在，并且新增了正则表达式、异常链、NIO、日志类、XML 解析器等功能。</li>
+</ul>
+<p><strong>JDK 5 ~ JDK 17:</strong></p>
+<ul>
+<li>2004 年 JDK 5 发布，Sun 公司从这个版本开始放弃了 JDK 1.x 的命名方式，将产品版本号修改成了 JDK x 这种命名。并且在 Java 语法易用性上做出了非常大的改进，自动装箱、泛型、动态注解、枚举、可变长参数、遍历循环（foreach循环）等语法特性都是在 JDK 5 中加入的。除此之外，还改进了 Java 的内存模型，以及提供了 java.util.concurrent 并发包等。</li>
+<li>2006 年 JDK 6 发布，并且 Sun 公司还把 Java 开源了，创建了 OpenJDK 项目，OpenJDK 和 JDK 的代码基本一致。这个版本对 Java 虚拟机内部做了大量改进，包括锁与同步、垃圾收集、类加载等方面的实现都有相当多的改动。</li>
+<li>2011 年 JDK 7 发布，并且在发布前 Sun 公司被 Oracle 收购，提供了新的 G1 垃圾收集器。</li>
+<li>2014 年 JDK 8 发布，提供了 Lambda 表达式，并且彻底移除了 HotSpot 的永久代，使用元空间替代。</li>
+<li>2017 年 JDK 9 发布，支持 Jigsaw 模块和 Java Shell 等一些新工具，并且 Oracle 宣布每 6 个月发布一个版本，有些版本会被划为长期支持 (LTS) 版，并且只有 LTS 版的 JDK 才能够获得为期 3 年的支持和更新，普通版的 JDK 就只有短短六个月的生命周期。JDK 8、JDK 11 和 JDK 17 属于最近的 LTS 版。</li>
+<li>2018 年 3 月 JDK 10 发布，这版本的主要研发目标是内部重构，诸如统一源仓库、统一垃圾收集器接口、统一即时编译器接口。</li>
+<li>2018 年 9 月 JDK 11 发布，该版本是一个 TLS 版本，提供了新的 ZGC 垃圾收集器。</li>
+<li>2019 年 3 月 JDK 12 发布，改进了 Switch 表达式，并且提供了新的 Shenandoah 垃圾收集器。</li>
+<li>2019 年 9 月 JDK 13 发布，继续改进了 Switch 表达式，并且对现有的字符串文本进行了优化，提供了”””xxxx”””这种文本块用法等。</li>
+<li>2020 年 3 月 JDK 14 发布，确定了 Switch 表达式，新增了 instanceof 模式匹配和记录类型 (record)，并且删除了 CMS 垃圾回收器。</li>
+<li>2020 年 9 月 JDK 15 发布，新增了封闭类、隐藏类，并且准备禁用和废除偏向锁，优化了集合，以及标记 ZGC 和 Shenandoah 可以在生产环境使用。</li>
+<li>2021 年 3 月 JDK 16 发布，确定了 record 和 instanceof 模式匹配等功能，提供了 jpackage 打包工具，可用于打包独立的 Java 应用程序。</li>
+<li>2022 年 9 月 JDK 17 发布，该版本是一个 TLS 版本，增强 TreeMap，弃用 Socket 实现工厂机制，新增 javadoc 工具，统一日志支持异步日志刷新等。</li>
+</ul>
+<p><img src="/posts/37dc559b/jvm-jdk-history.png" alt="alt text"></p>
+<h1 id="四、Java-虚拟机发展史与种类"><a href="#四、Java-虚拟机发展史与种类" class="headerlink" title="四、Java 虚拟机发展史与种类"></a>四、Java 虚拟机发展史与种类</h1><p>我们再看一下 Java 虚拟机的发展史，以及都有哪些比较知名的虚拟机(资料收集于网络):</p>
+<p><strong>① Sun Classic VM</strong></p>
+<p>1996 年 1 月，Sun 公司发布 JDK 1.0 版本，这时支持 Java 语言运行的就是 Classic VM。</p>
+<p>Classic VM 只能使用纯解释执行的方式来运行 Java 代码，执行效率非常差，与传统的 C&#x2F;C++ 程序执行效率有很大差距，也正是这个时期给大众留下了 “Java 语言很慢” 这种印象。</p>
+<p><strong>② Sun Exact VM</strong></p>
+<p>在 JDK 1.2 版本时，Sun 团队曾在 Solaris 平台上发布过一款名为 Exact VM 的虚拟机，该虚拟机解决了 Classic VM 中许多的问题，提升了 Java 应用的整体的运行效率。</p>
+<p>Exact VM 使用准确式内存管理 (Exact Memory Management) 而得名，该技术实现了虚拟机可以区分内存中某个位置的数据具体是什么类型，减少了每次定位对象间接查找的开销，提升执行性能。并且 Exact VM 执行系统已经具备现代高性能虚拟机的雏形，比如支持两级即时编译器、编译器与解释器混合工作模式等，具备现代高性能虚拟机的维形。</p>
+<p><strong>③ Sun HotSpot VM</strong></p>
+<p>在 JDK 1.3 版本时，Sun 将默认的虚拟机从 Classic VM 替换为了 HotSpot VM，该虚拟机的使用已经延伸到了现在，也是目前来说使用范围最广的虚拟机。不过，HotSpot VM 在最初并非由 Sun 公司开发，而是由 Longview Technologies 公司设计，Sun 公司注意到了这款虚拟机在 JIT 编译上有许多优秀的理念和实际效果，在 1997 年收购了 Longview Technologies 公司，从而获得了 HotSpot VM。</p>
+<p>HotSpot VM 既继承了 Sun 之前两款商用虚拟机的优点，也有许多自己新的技术优势。如热点代码探测技术，可以通过执行计数器找出最具有编译价值的代码，然后通知 JIT 编译器以方法为单位进行编译。</p>
+<p>在 2006 年的 JavaOne 大会上，Sun 公司宣布将 Java 进行开源，其中也包括了 HotSpot VM (基于GPL协议)，并在此基础上建立了 OpenJDK。不过在 2009 年 Oracle 收购 Sun 公司，并极力的对 HotSpot VM 进行改造，使其性能更优。</p>
+<p>当下我们提及 Java 虚拟机时，大多数指的都是 HotSpot 虚拟机，因此深入了解 HotSpot 虚拟机，对我们开发者来说是非常有必要的。</p>
+<p><strong>其它虚拟机</strong></p>
+<p>除了 Sun 公司以外，其他组织&#x2F;公司也研发过不少虚拟机的实现，比如：</p>
+<ul>
+<li>JRockit: BEA System 公司的 JRockit，BEA 公司后来被 Oracle 公司收购，JRockit 虚拟机也不再继续发展。</li>
+<li>OpenJ9: IBM 公司的 J9，后来开源捐献给了 Eclipse 基金会，更名为 OpenJ9。</li>
+<li>…</li>
+</ul>
+<h1 id="五、Java-虚拟机规范"><a href="#五、Java-虚拟机规范" class="headerlink" title="五、Java 虚拟机规范"></a>五、Java 虚拟机规范</h1><p><strong>Java 虚拟机规范根据名字就知道，它是一种 Java 虚拟机实现的规范，也可以说它是一种约定，需要实现 Java 虚拟机的开发者们共同遵守并维护。</strong></p>
+<p>简而言之就是说，Java 虚拟机规范约定了 Java 虚拟机中要实现的大致功能，但是 Java 虚拟机规范中并没有规划具体实现的细节，这些实现细节部分将留给开发者们来实现。这就好比我们 Java 开发中的抽象类，抽象类中定义了抽象方法，开发者们只需要实现这些抽象方法就能实现具体的功能。所以，抽象方法的定义者并不关心这些抽象方法实现的细节，只要求实现这些抽象方法即可。</p>
+<p>实际上，在 Java 虚拟机规范中规定了虚拟机组成结构、字节码文件结构、虚拟机编译器、加载类的阶段、异常、以及字节码指令集等内容，没有细节和具体功能的描述。</p>
+<p>我们只要浏览一遍 Java 虚拟机规范，才能对其内容有所了解，这里给出 Oracle 官网的 Java 虚拟机规范地址，如下:</p>
+<p>Oracle Java 虚拟机规范: <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/index.html">https://docs.oracle.com/javase/specs/index.html</a><br>感兴趣的朋友可以自行查看，相信可以加强你对 Java 虚拟机整体设计的认知。</p>
+<h1 id="六、Java-虚拟机语言无关性"><a href="#六、Java-虚拟机语言无关性" class="headerlink" title="六、Java 虚拟机语言无关性"></a>六、Java 虚拟机语言无关性</h1><p>在正常情况下，我们肯定会认为 Java 虚拟机是用于运行 Java 语言的，其实这么说并不能说是错误，但是也不完全对，这是因为 Java 虚拟机实际上运行的是特定的二进制字节码文件。实际上 Java 虚拟机和某种语言并没有必然的关联，因为不管什么语言只要能够编译成字节码文件，并符合 Java 虚拟机规范，那么 Java 虚拟机就可以加载该字节码文件，并且执行字节码文件中的指令。</p>
+<p>JVM 支持的语言: Clojure、JRuby、Groovy、Scala、JavaScript、Kotlin、…<br><img src="/posts/37dc559b/my-jvm-languages-not-associated.png" alt="alt text"></p>
+<p>因此，每种语言只要编译成符合 Java 虚拟机规范的字节码文件，就可以使用 Java 虚拟机运行指定语言的代码。<br><img src="/posts/37dc559b/jvm-language-compile.png" alt="alt text"></p>
+<h1 id="七、Java-虚拟机的组成"><a href="#七、Java-虚拟机的组成" class="headerlink" title="七、Java 虚拟机的组成"></a>七、Java 虚拟机的组成</h1><p>虚拟机的组成可以简单那划分为 <code>类加载器</code>、<code>执行引擎</code>，以及运行时数据区里面的 <code>堆</code>、<code>方法区</code>、<code>程序计数器</code>、<code>虚拟机栈</code>、<code>本地方法栈</code> 等。<br><img src="/posts/37dc559b/my-jvm-constitute-concept.svg" alt="alt text"></p>
+<p><strong>字节码文件</strong></p>
+<p>我们编写的 Java 代码在经过编译后就会转换为 Java 虚拟机可以执行的字节码文件，字节码文件中包含了 <code>魔数</code>、<code>编译的版本号</code>、<code>常量池</code> 以及 <code>字节码指令</code> 等；</p>
+<p><strong>类加载器</strong></p>
+<p>在 Java 中执类初始化时，需要执行 <code>加载</code>、<code>链接</code> 和 <code>初始化</code> 三个阶段，其中类加载器就是在 <code>加载阶段</code> 中用于将本地或网络中的 <code>字节码文件</code> 加载到 Java 虚拟机中的工具。</p>
+<p><strong>堆</strong></p>
+<p>堆是在 <code>JVM</code> 启动时创建的，是 <code>JVM</code> 运行时数据区中的一块线程共享的内存区域，其内存空间在逻辑上连续，但物理上不一定连接，其主要用于存储 Java 中的 <code>成员变量</code>、<code>类变量</code> 以及 <code>引用类型的局部变量</code> 等。</p>
+<p><strong>方法区</strong></p>
+<p>方法区是在 <code>JVM</code> 启动时创建的，是 <code>JVM</code> 运行时数据区中的一块线程共享的内存区域，其内存空间在逻辑上连续，但物理上不一定连接，主要用于存储 <code>类信息</code>、<code>方法信息</code>、<code>域信息</code>、<code>JIT代码缓存</code>、<code>运行时常量池</code>。</p>
+<p><strong>虚拟机栈</strong></p>
+<p>虚拟机栈是 <code>JVM</code> 运行时数据区中的一块线程私有的内存区域，每当我们创建一个 <code>线程</code> 时就会创建一个 <code>虚拟机栈</code>。虚拟机栈主要用于存储线程的 栈帧，每当线程调用方法时就会创建一个栈帧，线程会在栈帧中执行代码计算逻辑，存储计算过程中的中间变量，和方法中的局部变量，当线程调用方法结束后就会使栈帧出栈，销毁栈帧中的数据。</p>
+<p><strong>本地方法栈</strong></p>
+<p>本地方法栈和虚拟机栈一样，都是用于存储线程执行 <code>方法</code> 时的一些数据，不过虚拟机栈只会在线程调用 Java 中的方法时起作用，而本地方法栈则是线程调用 Native 类型的方法时起作用。</p>
+<p><strong>程序计数器</strong></p>
+<p>程序计数器是 <code>JVM</code> 运行时数据区中的一块线程私有的内存区域，每当我们创建一个线程时就会创建一个程序计数器，其主要用于记录线程执行到的 <code>字节码位置</code>，这样可以保证线程在获得 CPU 时间片后执行时，能够恢复到正确的执行位置。</p>
+<h1 id="八、JVM-的生命周期"><a href="#八、JVM-的生命周期" class="headerlink" title="八、JVM 的生命周期"></a>八、JVM 的生命周期</h1><p>JVM 生命周期主要有三个部分，主要是虚拟机<code> 启动</code>、<code>运行</code> 和 <code>退出</code> 几个过程。</p>
+<p><strong>启动</strong></p>
+<p>Java 虚拟机的启动是通过引导类加载器 (Bootstrap Class Loader) 创建一个初始类 (initial class) 来完成的，这个类是由虚拟机的具体实现指定的。<br>自定义的类是由系统类加载器加载的。自定义类的顶级父类都是 Object，Object 作为核心 API 中的类，是需要被引导加载器 (bootstrap class loader) 加载的。父类的加载是优先于子类加载的，所以要加载自定义类之前，会就加载 Object 类。<br><strong>执行</strong></p>
+<p>JVM 运行启动以后有一个清晰的任务，那就是只执行 Java 程序，并且 Java 程序执行时 JVM 才会运行，Java 程序结束时 JVM 就会停止。<br>在执行一个 Java 程序时，实际上底层真正在执行的是 Java 虚拟机的进程。<br><strong>退出</strong></p>
+<p>JVM 在执行过程中，如果遇到以下几种情况就会退出:</p>
+<ul>
+<li>① 程序正常执行结束；</li>
+<li>② 程序在执行过程中遇到了异常或错误而异常终止；</li>
+<li>③ 由于操作系统用现错误而导致 Java 虚拟机进程终止；</li>
+<li>④ 某线程调用 Runtime 类或 system 类的 exit 方法，或 Runtime 类的 halt 方法，并且 Java 安全管理器也允许这次 exit 或 halt 操作；</li>
+<li>⑤ 还有一些其它情况，比如在 JNI（Java Native Interface）规范中描述了使用 JNI Invocation API 来加载或卸载 Java 虚拟机时，就存在 Java 虚拟机退出的情况；</li>
+</ul>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/37dc559b.html">https://www.ai-x.co.uk/posts/37dc559b.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JVM/">JVM</a><a class="post-meta__tags" href="/tags/Java%E8%99%9A%E6%8B%9F%E6%9C%BA/">Java虚拟机</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-java-virtual-machine.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/e730d627.html" title="Java编程之字节码文件结构"><img class="cover" src="/img/cover-java-virtual-machine-class-1001.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Java编程之字节码文件结构</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/f6ad1877.html" title="vscode搭建Java开发环境-Spring Boot项目创建、运行、调试"><img class="cover" src="/img/cover-vscode-java.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">vscode搭建Java开发环境-Spring Boot项目创建、运行、调试</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/ebbbafa8.html" title="Java编程之早期的Applet与Servlet技术"><img class="cover" src="/img/cover-applet-servlet.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-26</div><div class="info-item-2">Java编程之早期的Applet与Servlet技术</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/df702e.html" title="Spring Boot趣味实战课学习内容"><img class="cover" src="/img/cover-spring-interest.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-29</div><div class="info-item-2">Spring Boot趣味实战课学习内容</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/e8d6f13f.html" title="【转载】智能后端与架构知识图谱技术"><img class="cover" src="/img/cover-aiarchitecuture.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-17</div><div class="info-item-2">【转载】智能后端与架构知识图谱技术</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">56</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">28</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">19</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、Java 虚拟机是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3-Java-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">二、为什么需要了解 Java 虚拟机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java-JDK-%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%8E%86%E5%8F%B2"><span class="toc-number">3.</span> <span class="toc-text">三、Java JDK 的迭代历史</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2%E4%B8%8E%E7%A7%8D%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">四、Java 虚拟机发展史与种类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%A7%84%E8%8C%83"><span class="toc-number">5.</span> <span class="toc-text">五、Java 虚拟机规范</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%AF%AD%E8%A8%80%E6%97%A0%E5%85%B3%E6%80%A7"><span class="toc-number">6.</span> <span class="toc-text">六、Java 虚拟机语言无关性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">7.</span> <span class="toc-text">七、Java 虚拟机的组成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81JVM-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">8.</span> <span class="toc-text">八、JVM 的生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">9.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Citrix Virtual Apps and Desktops 虚拟化解决方案"></a><div class="content"><a class="title" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案">Citrix Virtual Apps and Desktops 虚拟化解决方案</a><time datetime="2025-09-21T18:05:38.000Z" title="发表于 2025-09-21 18:05:38">2025-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术"><img src="/img/cover-deepseekAI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入揭秘 DeepSeek 核心技术"></a><div class="content"><a class="title" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术">深入揭秘 DeepSeek 核心技术</a><time datetime="2025-03-08T18:53:17.000Z" title="发表于 2025-03-08 18:53:17">2025-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览"><img src="/img/cover-aibigmodels.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI大模型九大核心技术总览"></a><div class="content"><a class="title" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览">AI大模型九大核心技术总览</a><time datetime="2025-02-25T22:28:11.000Z" title="发表于 2025-02-25 22:28:11">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS"><img src="/img/cover-swift.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨境支付中绕不开的SWIFT、CIPS、CHIPS"></a><div class="content"><a class="title" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS">跨境支付中绕不开的SWIFT、CIPS、CHIPS</a><time datetime="2025-02-23T09:59:26.000Z" title="发表于 2025-02-23 09:59:26">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img src="/img/cover-javacore2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"></a><div class="content"><a class="title" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</a><time datetime="2025-02-19T22:06:59.000Z" title="发表于 2025-02-19 22:06:59">2025-02-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'ce8d7e519fbcc8b366383280e2bfad25'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (56)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (19)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

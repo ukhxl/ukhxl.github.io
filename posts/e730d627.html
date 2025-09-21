@@ -1,0 +1,845 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java编程之字节码文件结构 | AI-X</title><meta name="author" content="AI-X"><meta name="copyright" content="AI-X"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<meta property="og:title" content="Java编程之字节码文件结构">
+<meta property="og:url" content="https://www.ai-x.co.uk/posts/e730d627.html">
+<meta property="og:site_name" content="AI-X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ai-x.co.uk/img/cover-java-virtual-machine-class-1001.png">
+<meta property="article:published_time" content="2024-12-14T09:29:55.000Z">
+<meta property="article:modified_time" content="2025-09-21T18:54:57.203Z">
+<meta property="article:author" content="AI-X">
+<meta property="article:tag" content="JAVA字节码">
+<meta property="article:tag" content="class文件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ai-x.co.uk/img/cover-java-virtual-machine-class-1001.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.ai-x.co.uk/posts/e730d627.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'pub-6067535447489483',
+  enable_page_level_ads: 'true'
+});</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: AI-X","link":"链接: ","source":"来源: AI-X","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java编程之字节码文件结构',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-21 18:54:57',
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/customall.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="https://ai.tianli0.top/static/public/tianli_gpt.min.css"><script src="/js/echarts.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/aixlog.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/cover-java-virtual-machine-class-1001.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/aixlog.png" alt="Logo"><span class="site-name">AI-X</span></a><a class="nav-page-title" href="/"><span class="site-name">Java编程之字节码文件结构</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/charts/"><i class="fa-fw fas fa-camera-retro"></i><span> 统计</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-comments"></i><span> 交流</span></a></div><div class="menus_item"><a class="site-page" href="/Timeline/"><i class="fa-fw fa fa-paper-plane"></i><span> 留痕</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Java编程之字节码文件结构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-14T09:29:55.000Z" title="发表于 2024-12-14 09:29:55">2024-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-21T18:54:57.203Z" title="更新于 2025-09-21 18:54:57">2025-09-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/">AI-X开发</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/">编程/开发技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">11.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>36分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id data-flag-title><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url(/img/cover-java-virtual-machine-class-1001.png);"></div><article class="post-content" id="article-container"><h1 id="一、什么是字节码"><a href="#一、什么是字节码" class="headerlink" title="一、什么是字节码"></a>一、什么是字节码</h1><p>首先，我们知道计算机底层之间只能识别二进制的机器码 0 和 1，无法直接理解开发者用不同语言编写的代码。因此，我们需要将编写的代码转换为计算机可以识别和执行的二进制机器码。然而，由于不同的 CPU 指令集和操作系统的差异，即使我们直接将开发语言编译成二进制机器码，不同的 CPU 指令集和操作系统也会导致执行的命令不同。为了解决这个问题，大多数语言创造者选择了一种与操作系统和机器指令集无关的、平台中立的自定义格式，作为应用程序编译后存储的文件格式。</p>
+<p>比如，Sun 公司在 Java 语言创建之初，就提出过 <code>Write Once，Run Anywhere</code> (一次编写，到处运行) 的口号，并且为之实践，不仅创建了 ByteCode (字节码文件) 作为存储 Java 语言的中间格式，而且还创建了 Java Virtual Machine (Java 虚拟机) 来执行字节码文件。Sun 公司以及其它虚拟机提供商发布了许多可以运行在各种不同平台上的 Java 虚拟机，这些虚拟机可以加载及运行相同的字节码文件，统一使用字节码作为存储格式，使相同的字节码可以在不同的平台上运行，实现了 “一次编译，到处运行” 的设计理念。</p>
+<p>在 1997 年发布的第一版 Java 虚拟机规范中，就经承诺过: In the future，we will consider bounded extensions to the Java virtual machine to provide better support for other languages (在未来，我们会对 Java 虚拟机进行适当的扩展，以便更好地支持其它语言运行于 JVM 之上)，在 JDK 1.7 到 1.8 版本期间，JVM 设计者通过 JSR-292 基本兑现了这个承诺。</p>
+<p>到现在为止，已经有很多语言可以运行在 Java 虚拟机之上，如 Clojure、Groovy、JRuby、Jython、Scala 等，这些语言之所以能够在 Java 虚拟机中运行，主要是因为它们在编译后会生成符合规范的字节码文件，而 Java 虚拟机运行的正是字节码文件。因此，无论哪种语言，只要能将这些语言中的指令编译为符合规范的字节码文件，就可以使得编写的应用程序能够在 Java 虚拟机中正常运行。</p>
+<p><img src="/posts/e730d627/jvm-language-compile.png" alt="alt text"></p>
+<h1 id="二、示例字节码文件"><a href="#二、示例字节码文件" class="headerlink" title="二、示例字节码文件"></a>二、示例字节码文件</h1><p>为了进行后续的字节码文件分析，先贴一段 Java 示例代码，将其转换为字节码文件，然后使用软件 Nodepad++ 打开示例字节码文件，使用 HEX-Editor 插件观察十六进制的字节码文件内容。</p>
+<p>(1) 先给出示例 Java 代码，内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    private int a;</span><br><span class="line">    private String b = &quot;mydlq&quot;;</span><br><span class="line"></span><br><span class="line">    public void a() &#123;</span><br><span class="line">        byte i = 15;</span><br><span class="line">        int j = 8;</span><br><span class="line">        int k = i + j;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(2) 使用 javac 命令将 Java 代码编译为 class 字节码 文件，命令如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ javac Test</span><br></pre></td></tr></table></figure>
+<p>(3) 最后，使用 Notepad++ 打开该示例字节码文件，使用 HEX-Editor 插件来观察十六进制下字节码文件组成，操作如下 (注意: 如果 Notepad++ 中没有安装 HEX-Editor 插件请先安装):</p>
+<p><img src="/posts/e730d627/notepad-hex-editor.png" alt="alt text"></p>
+<p>使用插件进行展示后，我们可以观察到如下的字节码文件内容:</p>
+<p><img src="/posts/e730d627/java-class-constant-pool-0.png" alt="alt text"></p>
+<h1 id="三、字节码文件的相关概念"><a href="#三、字节码文件的相关概念" class="headerlink" title="三、字节码文件的相关概念"></a>三、字节码文件的相关概念</h1><p>在介绍字节码格式之前，确实有必要先介绍一些与之相关的概念，这样能够更好地理解字节码文件的结构和含义。</p>
+<h2 id="3-1-字面量-符号引用"><a href="#3-1-字面量-符号引用" class="headerlink" title="3.1 字面量&#x2F;符号引用"></a>3.1 字面量&#x2F;符号引用</h2><p>在字节码文件常量池中，很多常量存储的都是 字面量(Literal) 或者 符号引用(Symbolic References)，这俩个概念如下:<br><img src="/posts/e730d627/java-class-constant-literal-symbolic.png" alt="alt text"></p>
+<p><code>字面量</code> 和 <code>符号引用</code> 是字节码文件中常量池的重要组成部分，它们提供了字节码文件中使用的各种常量的定义和引用方式。字面量 直接存储常量的值，而 符号引用 则提供了对其它类、方法、字段或接口的引用，使得字节码文件可以描述和处理更加复杂的程序结构和逻辑。</p>
+<h2 id="3-2-全限定名-简单名称-描述符"><a href="#3-2-全限定名-简单名称-描述符" class="headerlink" title="3.2 全限定名&#x2F;简单名称&#x2F;描述符"></a>3.2 全限定名&#x2F;简单名称&#x2F;描述符</h2><p>全限定名(Fully Qualified Name)，简单名称(Simple Name) 和 描述符(Descriptor) 是字节码文件中常用的概念，用于表示类、方法和字段的命名和类型信息。这里对这些概念进行一个简单介绍，如下:<br><img src="/posts/e730d627/java-class-constant-fully-qulity-name.png" alt="alt text"></p>
+<p>而字节码文件中的 描述符 存在多种类型，基本上是由以下组成:<br><img src="/posts/e730d627/java-class-constant-describer.png" alt="alt text"></p>
+<p>这些概念在常量池表中起到重要的作用，通过使用 全限定名、简单名称 和 描述符，可以准确地表示类、字段和方法的信息，帮助虚拟机正确加载和解析字节码文件中的内容。</p>
+<blockquote>
+<p>注: 上面的内容中还有一些需要注意的点，如下:<br>● 对于数组类型，每一维度将使用一个前置的 “[“ 字符来描述。例如，一个定义为 “java.lang.String[][]” 类型的二维数组将被记录为 “[[Ljava&#x2F;lang&#x2F;String;”，一个整型数组 “int[]” 被记录为 “[I”。<br>● 用描述符来描述方法时，按照先参数列表，后返回值的顺序描述。参数列表按照参数的严格顺序放在一组小括号 “()” 内。例如，方法 “java.lang.String tostring()” 的描述符为 “()Ljava&#x2F;lang&#x2F;String;”，方法 “int abc(int[]x, int y)” 的描述符为 “([II)I”。</p>
+</blockquote>
+<h1 id="四、字节码文件数据类型"><a href="#四、字节码文件数据类型" class="headerlink" title="四、字节码文件数据类型"></a>四、字节码文件数据类型</h1><h2 id="4-1-字节码文件与类和接口的关系"><a href="#4-1-字节码文件与类和接口的关系" class="headerlink" title="4.1 字节码文件与类和接口的关系"></a>4.1 字节码文件与类和接口的关系</h2><p><code>字节码文件</code> 是编译 J<code>ava</code> 源代码后生成的 二进制文件，用于存储 <code>类</code> 和<code>接口</code> 的具体实现和信息。每个字节码文件对应着唯一的类或接口定义。然而，并非所有的类和接口都必须存储在字节码文件中。在 Java 中，类和接口可以通过类加载器在运行时动态生成，无需提前定义在字节码文件中。这种动态生成的类和接口可以通过 Java 的反射机制来使用和操作，为 Java 提供了动态编程的能力。</p>
+<h2 id="4-2-字节码文件中两种基本数据类型"><a href="#4-2-字节码文件中两种基本数据类型" class="headerlink" title="4.2 字节码文件中两种基本数据类型"></a>4.2 字节码文件中两种基本数据类型</h2><p>字节码文件 是由 特定的结构 组成的，在它的内部没有使用分隔符来区分不同的段落。字节码文件中的字节顺序和数量都遵循严格的规定。所有 16 位、32 位和 64 位长度的数据都由连续的 8 位字节构成。多字节数据项总是按照 big-endian 顺序存储，即高位字节在地址最低位，低位字节在地址最高位。因此，一个完整的字节码文件由一组 8 位字节单位的字节流组成。这种规定确保了字节码文件的可移植性和一致性。</p>
+<p>根据 Java 虚拟机规范的定义，字节码文件采用一种类似于 C 语言结构体的伪结构来存储数据。这种伪结构中只包含两种基本数据类型，即 无符号数 和 表。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无符号数</td>
+<td>无符号数是基本的数据类型，以 u1、u2、u4 和 u8 组成，分别表示 1 个字节、2 个字节、4 个字节和 8 个字节的无符号数。无符号数在字节码中用于描述数字、索引引用、数量值或者按照 UTF-8 编码构成的字符串值。</td>
+</tr>
+<tr>
+<td>表</td>
+<td>表是一种复合数据类型，由多个无符号数或其它表作为数据项组成。在字节码文件中，所有的表通常以 “_info” 结尾命名。表被用于描述具有层次关系的复合结构数据。实际上，整个 class 文件本质上就是一个表，由表中的各种数据项构成。</td>
+</tr>
+</tbody></table>
+<h2 id="4-3-字节码文件的组成结构"><a href="#4-3-字节码文件的组成结构" class="headerlink" title="4.3 字节码文件的组成结构"></a>4.3 字节码文件的组成结构</h2><p><code>字节码文件</code> 的构成大体上对应着一个 ClassFile 文件结构，结构的组成中总共包含以下几个部分:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ClassFile &#123;    </span><br><span class="line">    u4             magic;                                   // 字节码文件魔数，0xcafebabe    </span><br><span class="line">    u2             minor_version;                           // 主版本号    </span><br><span class="line">    u2             major_version;                           // 次版本号    </span><br><span class="line">    u2             constant_pool_count;                     // 常量池大小    </span><br><span class="line">    cp_info        constant_pool[constant_pool_count-1];    // 常量池    </span><br><span class="line">    u2             access_flags;                            // 访问标志 </span><br><span class="line">    u2             this_class;                              // 类索引  </span><br><span class="line">    u2             super_class;                             // 父类索引   </span><br><span class="line">    u2             interfaces_count;                        // 接口计数器    </span><br><span class="line">    u2             interfaces[interfaces_count];            // 接口索引集合    </span><br><span class="line">    u2             fields_count;                            // 字段表集合计数器    </span><br><span class="line">    field_info     fields[fields_count];                    // 字段表集合    </span><br><span class="line">    u2             methods_count;                           // 方法计数器    </span><br><span class="line">    method_info    methods[methods_count];                  // 方法表集合    </span><br><span class="line">    u2             attributes_count;                        // 附加属性信息</span><br><span class="line">    attribute_info attributes[attributes_count];            // 附加属性集合</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 ClassFile 结构中，存在 <code>魔数</code>、<code>主/副版本号</code>、<code>常量池</code>、<code>访问标志</code>、<code>类索引</code>、<code>父类索引</code>、<code>接口索引集合</code>、<code>字段表集合</code>、<code>方法表集合</code> 和 <code>属性表集合</code> 等内容。这种结构化的方式，以及按顺序排列的文件结构，使得字节码文件能够准确地描述出 <code>Java</code> <code>类和接口的定义</code>、<code>结构和行为</code>。</p>
+<p>实际上，整个字节码文件可以看作是一张表，由多个部分组成，可以归纳如下:</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>magic</td>
+<td>u4</td>
+<td>4字节</td>
+<td>魔数，用于识别 class 文件格式</td>
+</tr>
+<tr>
+<td>minor_version</td>
+<td>u2</td>
+<td>2字节</td>
+<td>副版本号</td>
+</tr>
+<tr>
+<td>major_version</td>
+<td>u2</td>
+<td>2字节</td>
+<td>主版本号</td>
+</tr>
+<tr>
+<td>constant_pool_count</td>
+<td>u2</td>
+<td>2字节</td>
+<td>常量池计数器</td>
+</tr>
+<tr>
+<td>constant_pool</td>
+<td>cp_info</td>
+<td>n字节</td>
+<td>常量池</td>
+</tr>
+<tr>
+<td>access_flags</td>
+<td>u2</td>
+<td>2字节</td>
+<td>访问标志</td>
+</tr>
+<tr>
+<td>this_class	u2</td>
+<td>2字节</td>
+<td>类索引</td>
+<td></td>
+</tr>
+<tr>
+<td>super_class</td>
+<td>u2</td>
+<td>2字节</td>
+<td>父类索引</td>
+</tr>
+<tr>
+<td>interfaces_count</td>
+<td>u2</td>
+<td>2字节</td>
+<td>接口计数器</td>
+</tr>
+<tr>
+<td>interfaces</td>
+<td>u2</td>
+<td>2字节</td>
+<td>接口索引集合</td>
+</tr>
+<tr>
+<td>fields_count</td>
+<td>u2</td>
+<td>2字节</td>
+<td>字段计数器</td>
+</tr>
+<tr>
+<td>fields</td>
+<td>field_info</td>
+<td>n字节</td>
+<td>字段表集合</td>
+</tr>
+<tr>
+<td>methods_count</td>
+<td>u2</td>
+<td>2字节</td>
+<td>方法计数器</td>
+</tr>
+<tr>
+<td>methods</td>
+<td>method_info</td>
+<td>n字节</td>
+<td>方法表集合</td>
+</tr>
+<tr>
+<td>attributes_count</td>
+<td>u2</td>
+<td>2字节</td>
+<td>附加属性计数器</td>
+</tr>
+<tr>
+<td>attributes</td>
+<td>attribute_info</td>
+<td>n字节</td>
+<td>附加属性集合</td>
+</tr>
+</tbody></table>
+<p>上面表中的类型存在多种，去重以后对这些类型进行划分，可以大致划分如下:</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u1</td>
+<td>1字节</td>
+<td>1个字节</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2字节</td>
+<td>2个字节</td>
+</tr>
+<tr>
+<td>u4</td>
+<td>4字节</td>
+<td>4个字节</td>
+</tr>
+<tr>
+<td>u8</td>
+<td>8字节</td>
+<td>8个字节</td>
+</tr>
+<tr>
+<td>cp_info</td>
+<td>n字节</td>
+<td>常量表</td>
+</tr>
+<tr>
+<td>field_info</td>
+<td>n字节</td>
+<td>字段表</td>
+</tr>
+<tr>
+<td>method_info</td>
+<td>n字节</td>
+<td>方法表</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>n字节</td>
+<td>属性表</td>
+</tr>
+</tbody></table>
+<h1 id="五、字节码文件数据格式"><a href="#五、字节码文件数据格式" class="headerlink" title="五、字节码文件数据格式"></a>五、字节码文件数据格式</h1><p>前面笼统的介绍了字节码文件的组成结构，知道了字节码的构成中都有哪些内容，不过还不够清晰，这里将对其中的各项进行一个详细的介绍，如下:</p>
+<h2 id="5-1-魔数"><a href="#5-1-魔数" class="headerlink" title="5.1 魔数"></a>5.1 魔数</h2><p><strong>(1) 魔数简介</strong><br>字节码文件的前 4 个字节是魔数 (Magic Number)。 魔数的唯一作用是确定一个文件是否是一个可以被 Java 虚拟机所接受的字节码文件。它的固定值为 0xCAFEBABE，该值在 1991 年前后就已经确定，并且不会改变。魔数是一个固定的标识，用于标示一个文件的格式。通过检查文件的开头四个字节是否等于魔数，Java 虚拟机可以确认文件的有效性，进而决定是否加载并解析该文件。这种魔数机制可确保只有符合规定格式的字节码文件才能被虚拟机正确解析和执行。</p>
+<p>其实，很多文件存储标准中都使用魔术来进行标识，例如 gif、jpeg 等文件头中，都有魔数进行标识。使用魔数而不是扩展名来进行标识，主要是基于安全方面的考虑，因为文件扩展名可以随意地改动，而文件格式的制定者可以自由地选择魔数值，只要这个魔数值还没有被广泛采用过，同时又不会引起混淆即可。</p>
+<p><strong>(2) 魔数分析示例</strong><br>根据上面的”示例字节码文件”为例，我们判断一下该文件是否为一个符合规范的字节码文件。关于示例的字节码文件内容开头部分，这里给出一个示例截图，如下所示:<br><img src="/posts/e730d627/java-class-magic.png" alt="alt text"></p>
+<p>通过图中可知，在示例字节码文件内容的开头存在 ca fe ba be 这个标识，这也说明了该文件是一个可以被 Java 虚拟机所接受的有效 Java 字节码文件。</p>
+<h2 id="5-2-主-副版本号"><a href="#5-2-主-副版本号" class="headerlink" title="5.2 主&#x2F;副版本号"></a>5.2 主&#x2F;副版本号</h2><p><strong>(1) 主&#x2F;副版本号简介</strong><br>字节码文件前 4 个字节是魔数，而后面 4 个字节是字节码编译版本号。 其中第 5<del>6 个字节代表的含义是编译的 副版本号(minor_version)，第 7</del>8 个字节代表的含义是编译的 主版本号(major_version)，它们一起共同构成了字节码文件的格式版本号。</p>
+<p>Java 的版本号对应的值是从 45 开始的，并且 JDK 1.1 之后的每个 JDK 大版本发布主版本号时，都会使版本号值加 1 (JDK 1.0～1.1 使用了 45.0～45.3 的版本号)。不同版本的 Java 编译器编译的字节码文件对应的版本是不一样的，大部分情况下高版本的 Java 虚拟机可以兼容运行由低版本编译器生成的字节码文件，但是低版本的 Java 虚拟机不能运行由高版本编译的字节码文件，否则 Java 虚拟机将会抛出 java.lang.UnsupportedClassVersionError 异常。</p>
+<p>为了方便理解，我将字节码文件的主要版本号对应关系整理如下表：<br><img src="/posts/e730d627/java-class-version.png" alt="alt text"></p>
+<p>这个表格展示了字节码文件主要版本号与对应的 JDK 版本之间的关系。不同的 JDK 版本会对应不同的主要版本号，每个主要版本号都引入了一些新的特性和功能。</p>
+<p><strong>(2) 主&#x2F;副版本号分析示例</strong><br>根据上面的”示例字节码文件”为例，我们判断一下该示例字节码文件的版本号。这里给出一个示例截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-version-example.png" alt="alt text"></p>
+<p>通过图中可知，在示例字节码文件内容中，副版本号十六进制为 0x0000，主版本号十六进制为 0x0034，转换为十进制后为分别为 0 和 52，这说明当前字节码文件的副版本号为 0，主版本号为 52，即编译当前字节码文件的 JDK 版本为 JDK 8，</p>
+<h2 id="5-3-常量池"><a href="#5-3-常量池" class="headerlink" title="5.3 常量池"></a>5.3 常量池</h2><p><strong>(1) 常量池简介</strong><br>在主&#x2F;次版本号后面就是常量池 (Constant Pool)。常量池在字节码文件中扮演着重要的角色，它可以被视为一个资源库。作为字节码文件结构中与其它项目关联最多的数据类型之一，常量池在字节码文件中占据了较大的空间，并且是第一个出现的表类型数据项。</p>
+<p>除了占据空间较大的特点外，常量池对于字段和方法的解析也至关重要。它存储了与 类、接口、方法 和 字段 相关的各种常量信息，包括 字面量、符号引用 等。这些常量信息在程序的执行过程中被频繁使用，如方法调用、字段访问等。</p>
+<p>随着 Java 虚拟机的不断发展，常量池的内容也不断丰富，支持更多类型的常量和引用。可以说，常量池是整个字节码文件的基石，为字节码的解析和执行提供了必要的数据支持。</p>
+<p><strong>(2) 常量池的组成</strong><br>常量池主要是以 常量池计数器(constant_pool_count) 和 常量池表(constant_pool) 组成，如下:</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>类型</th>
+<th>数量</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>constant_pool_count</td>
+<td>常量池计数器</td>
+<td>u2</td>
+<td>1</td>
+<td>记录常量池表中的常量数量</td>
+</tr>
+<tr>
+<td>constant_pool</td>
+<td>常量池表</td>
+<td>cp_info[]</td>
+<td>constant_pool_count - 1</td>
+<td>记录常量</td>
+</tr>
+</tbody></table>
+<p><strong>常量池计数器 (constant_pool_count)</strong></p>
+<p>常量池计数器 (constant_pool_count) 是一项 u2 类型的无符号数，常放在常量池的入口，用于记录常量池表的大小。</p>
+<p>需要注意的是，常量池计数器的值是从 1 开始的，而不是 0。例如，当 constant_pool_count &#x3D; 1 时，表示常量池中有 0 个常量项，而不是 1 个。这种设计是为了与索引的编号方式保持一致，常量池中的每个常量项都可以通过索引进行访问，索引从 1 开始，所以容量计数也从 1 开始。</p>
+<p><strong>常量池表 (constant_pool)</strong></p>
+<p>常量池表 (constant_pool) 用于存储字节码文件中使用到的各种常量。常量池表的结构比较复杂，它由多个常量表项 (cp_info) 组成。</p>
+<p>常量池表的作用是保存字节码中使用的字面量、符号引用和其它常量。字面量包括整数、浮点数、字符串等字面值常量，而符号引用包括类和接口的全限定名、字段和方法的名称和描述符等。常量池表的主要作用是提供给字节码指令引用和使用这些常量。</p>
+<p>每个常量表项在常量池表中占据一个位置，常量表项的索引从 1 开始 (索引为 0 的位置被 JVM 保留)。常量池表中的常量表项可以通过索引相互引用，从而构成复杂的关联关系。</p>
+<blockquote>
+<p>注: 常量池表中的常量是按照索引顺序排列的，可以通过索引快速定位到对应的常量表项。</p>
+</blockquote>
+<p><strong>(3) 常量表项的类型和结构</strong><br>常量池中的 常量池表 由多个 常量表项(cp_info) 组成，其中包含了不同类型的常量。目前 (JDK 8 版本) 常量池共有 14 种不同的常量类型，如下表所示:<br><img src="/posts/e730d627/java-classs-constant-cpinfo.png" alt="alt text"><br>根据上述表格中每个类型的描述，可以得知每种类型都用于描述常量池中的内容，其中大部分是字面量和符号引用。例如，使用 CONSTANT_Integer_info 类型来描述常量池中的字面量信息，而且该类型只能表示整型字面量信息。</p>
+<p>这意味着常量池中的每个项都有特定的类型来指示其含义和用途。这些类型对于解析和引用字节码文件中的类、字段、方法和字面量等信息至关重要。通过使用不同的常量类型，可以准确地表示不同种类的数据，并在需要时进行正确的解析和使用。</p>
+<p>(4) 分析常量池中的常量<br>分析常量池计数器</p>
+<p>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件中常量池计数器的值。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-constant-pool-count.png" alt="alt text"></p>
+<p>通过图中可知，在示例字节码文件内容中，常量池计数器位置的值十六进制为 0x0015，转换为十进制为 21，因此 constant_pool_count&#x3D;21，也就是说示例字节码文件常量池中有 21-1，即 20，表明常量池表中存在 20 个常量。</p>
+<p>分析常量池中的常量</p>
+<p>由于分析常量池常量内容过多，就不单独放本篇博文中进行介绍。这里暂时先只给出通过 NodePad++ 观察到的”示例字节码文件”中常量池内容部分，如下图所示:<br><img src="/posts/e730d627/java-class-constant-pool.png" alt="alt text"></p>
+<p><strong>(5) 使用命令分析常量池常量</strong><br>其实除了使用 NodePad++ 打开字节码对常量池进行分析外，还有一些其它的工具可以分析字节码常量池。比如，在 JDK 中就自带了字节码工具，可以使用命令行方式分析常量池信息，其命令如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ javap -verbose Test.class</span><br></pre></td></tr></table></figure>
+<p>命令执行后输出的结果如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Classfile Test.class</span><br><span class="line">  Last modified 2022-9-22; size 323 bytes</span><br><span class="line">  MD5 checksum 369bbb5b3f16a1f95edf8bddcc6f2197</span><br><span class="line">  Compiled from &quot;Test.java&quot;</span><br><span class="line">public class Test</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #5.#16         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = String             #17            // mydlq</span><br><span class="line">   #3 = Fieldref           #4.#18         // Test.b:Ljava/lang/String;</span><br><span class="line">   #4 = Class              #19            // Test</span><br><span class="line">   #5 = Class              #20            // java/lang/Object</span><br><span class="line">   #6 = Utf8               a</span><br><span class="line">   #7 = Utf8               I</span><br><span class="line">   #8 = Utf8               b</span><br><span class="line">   #9 = Utf8               Ljava/lang/String;</span><br><span class="line">  #10 = Utf8               &lt;init&gt;</span><br><span class="line">  #11 = Utf8               ()V</span><br><span class="line">  #12 = Utf8               Code</span><br><span class="line">  #13 = Utf8               LineNumberTable</span><br><span class="line">  #14 = Utf8               SourceFile</span><br><span class="line">  #15 = Utf8               Test.java</span><br><span class="line">  #16 = NameAndType        #10:#11        // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">  #17 = Utf8               mydlq</span><br><span class="line">  #18 = NameAndType        #8:#9          // b:Ljava/lang/String;</span><br><span class="line">  #19 = Utf8               Test</span><br><span class="line">  #20 = Utf8               java/lang/Object</span><br></pre></td></tr></table></figure>
+<p>可以看到输出的结果中，已经很明确的标识不同的索引位置中的常量，以及这些常量引用其它常量的情况，可以通过索引位置来查看常量的具体内容。例如，可以看到某个常量是通过索引引用了另一个常量，或者某个常量是字面量值的直接表示。通过这些工具的输出结果，可以更方便地分析和理解字节码文件中常量池中的常量以及它们之间的关系。</p>
+<h2 id="5-4-访问标志"><a href="#5-4-访问标志" class="headerlink" title="5.4 访问标志"></a>5.4 访问标志</h2><p><strong>(1) 访问标志简介</strong><br>在常量池之后就是访问标志 (access_flags)。访问标志是一项 u2 类型的无符号数，从字面意思上理解的话访问标志其实就是修饰符的意思，用于标识一个类或接口被哪个访问标识所修饰。包括这个 Class 是类还是接口，修饰符是否定义为 public 类型，是否被 abstract 修饰为抽象类。而且，如果当前 Class 是一个类的话，则还可以标识当前类是否被声明为 final 等。</p>
+<p>通过访问标志，我们可以了解到类或接口的修饰情况。比如，如果访问标志中包含 public，则表示该类或接口是公共的，可以被其它类访问；如果访问标志中包含 abstract，则表示该类是一个抽象类，不能直接实例化；如果访问标志中包含 final，则表示该类是最终类，不能被继承。</p>
+<p>通过解析访问标志，我们可以了解类或接口的基本特性和限制，有助于理解其在 Java 虚拟机中的行为和使用方式。</p>
+<p><strong>(2) 访问标志表</strong><br>目前 (JDK8 版本) 在字节码文件中，访问标志包括的类型如下表所示:</p>
+<p><img src="/posts/e730d627/java-class-accessflags.png" alt="alt text"><br>访问标志中一共有 16 个标志位，当前只定义了 8 个，表中没有使用的标志是为未来扩充而预留的，这些预留的标志在编译器中应该设置为 0。</p>
+<p><strong>(3) 访问标志分析示例</strong><br>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件中的访问标志。分析之前我们先根据示例 Java 源代码中的内容猜测一下，它可能包含哪些标志位，这里先列出几条猜测:</p>
+<p>猜测1: 示例的字节码文件使用 JDK8 进行编译，所以 ACC_SUPER 值为真；<br>猜测2: 示例的 Test 类被 public 关键字修饰，所以 ACC_PUBLIC 值为真；<br>猜测3: 示例的 Test 类是一个普通类，它并不是接口、枚举、注解，没有使用 final、abstract 修饰，所以 ACC_ENUM、ACC_ANNOTATION、ACC_SYNTHETIC、ACC_ABSTRACT、ACC_INTERFACE、ACC_FINAL 值为假；<br>为了验证猜测，这里同样使用 NodePad++ 打开字节码文件，观察字节码中访问标志的这块内容，如下图所示:</p>
+<p><img src="/posts/e730d627/java-class-access-flags.png" alt="alt text"></p>
+<p>根据上图中的内容，可以观察到示例中的访问标志 access_flags 值十六进制为 0x0021，由于访问标志的值会使用 “按位或运算符” 进行设置或计算，即 accessFlags &#x3D; ACC_PUBLIC | ACC_FINAL，所以 0x0021 &#x3D; 0x0001 | 0x0020。其中 0x0001 表示使用了 public 修饰符，即 ACC_PUBLIC 标志为真。而 0x0020 表示允许使用 invokespecial 指令的新语义，即 ACC_SUPER 标志为真。</p>
+<h2 id="5-5-类索引、父类索引、接口索引集合"><a href="#5-5-类索引、父类索引、接口索引集合" class="headerlink" title="5.5 类索引、父类索引、接口索引集合"></a>5.5 类索引、父类索引、接口索引集合</h2><p><strong>(1) 类索引&#x2F;父类索引&#x2F;接口索引集合概述</strong><br>紧随访问标志之后的就是类索引 (this_class)、父类索引 (super_class) 和接口索引集合 (interfaces)。 这些索引信息用于描述类和接口之间的继承和实现关系。</p>
+<p>关于类索引、父类索引和接口索引集合这三个的数据项，汇总到表中如下所示:<br><img src="/posts/e730d627/java-class-index.png" alt="alt text"></p>
+<p><strong>(2) 类索引</strong><br><strong>类索引简介</strong></p>
+<p>类索引 (this_class) 是一项 u2 类型的无符号数，用于指示当前类在常量池中的索引位置。通过类索引可以在常量池中定位到对应的常量项，从而获取当前类的全限定名，并进一步获取有关该类的详细信息。</p>
+<p><strong>类索引分析示例</strong></p>
+<p>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件的类索引信息。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-this-class.png" alt="alt text"></p>
+<p>通过图中可知，在示例字节码文件中，类索引的十六进制值为 0x0004，转化为十进制后为 4。这意味着该字节码文件引用了常量池中索引为 4 的常量项。</p>
+<p>在常量池中，索引为 4 的常量项属于 CONSTANT_Class_info 类型，它用于表示一个类或接口的符号引用。常量池中索引为 4 的常量项又引用了常量池中索引为 19 的常量项。通过查找常量池中索引为 19 的常量项，我们可以得到该常量项的字面量值为 Test。因此，根据字节码文件的结构和常量池中的内容，可以确定当前类的类名为 Test。</p>
+<p><strong>(3) 父类索引</strong><br><strong>父类索引简介</strong></p>
+<p>父类索引 (super_class) 也是一个是一项 u2 类型的无符号数，用于指示当前类的父类在常量池中的索引位置。通过父类索引可以在常量池中找到对应的常量项，并获取父类的相关信息。</p>
+<p>值得注意的是，如果一个类没有明确的父类，则它可能是一个顶级类或接口，父类索引 (super_class) 的值将为常量池中的特殊索引值 0。这意味着它没有直接的父类，或者继承自 Java 的基础类 Object。</p>
+<p><strong>父类索引分析示例</strong></p>
+<p>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件的父类索引信息。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p>通过图中可知，在示例字节码文件中，父类索引的十六进制值为 0x0005，转化为十进制后为 5。这意味着该字节码文件引用了常量池中索引为 5 的常量项。</p>
+<p>在常量池中，索引为 5 的常量项属于 CONSTANT_Class_info 类型，它用于表示一个类或接口的符号引用。常量池中索引为 5 的常量项又引用了常量池中索引为 20 的常量项。通过查找常量池中索引为 20 的常量项，我们可以得到该常量项的字面量值为 java&#x2F;lang&#x2F;Object。因此，根据字节码文件的结构和常量池中的内容，可以确定当前父类的类名为 java&#x2F;lang&#x2F;Object。</p>
+<p><strong>(4) 接口索引集合</strong><br><strong>接口计数器简介</strong></p>
+<p>接口计数器 (interfaces_count) 是一项 u2 类型的无符号数，用于表示当前类或接口实现的接口数量。</p>
+<p><strong>接口索引集合简介</strong></p>
+<p>接口索引集合 (interfaces) 是一个变长的表结构，用于描述当前类所实现的接口。在字节码文件中，接口索引集合紧随父类索引之后，用于指示当前类实现的接口列表。</p>
+<p>接口索引集合的长度根据接口的数量而定，每个索引占据两个字节。通过接口索引集合，字节码文件能够明确地表示当前类所实现的接口，确保类在实现接口时符合接口的要求。</p>
+<p>注: 接口索引集合中的接口顺序与类实现接口的顺序保持一致，即第一个接口索引对应类实现的第一个接口，第二个接口索引对应类实现的第二个接口，依此类推。</p>
+<p><strong>接口索引集合分析示例</strong></p>
+<p>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件的接口索引集合。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-this-interfaces_count.png.crdownload" alt="text"></p>
+<p>通过图中可知，在示例字节码文件中，接口计数器的十六进制值为 0x0000，转化为十进制后值为 0，这表明接口名索引集合为空，即当前类没有实现任何接口。</p>
+<h2 id="5-6-字段表集合"><a href="#5-6-字段表集合" class="headerlink" title="5.6 字段表集合"></a>5.6 字段表集合</h2><p><strong>(1) 字段表集合简介</strong><br>在类索引、父类索引和接口索引集合之后就是字段表集合 (fields)。 字段表集合中的 字段表(field_info) 用于描述接口或者类中声明的变量。每个字段表记录了一个字段的相关信息，包括字段的访问标志、字段名、字段描述符 以及可选的属性集合。</p>
+<blockquote>
+<p>注:<br>● 在 Java 中，字段包括类变量和实例变量，但是不包括方法内的局部变量。<br>● 字段表集合中不会列出从父类或者实现的接口中继承而来的字段，但有可能列出原本 Java 代码之中不存在的字段。譬如在内部类中为了保持对外部类的访问性，会自动添加指向外部类实例的字段。<br>● 在 Java 语言中字段是无法重载的，两个字段的数据类型、修饰符不管是否相同，都必须使用不一样的名称，但是对于字节码来讲，如果两个字段的描述符不一致，那字段重名就是合法的。</p>
+</blockquote>
+<p><strong>(2) 字段表集合的组成</strong><br>字段表集合主要是以 字段表集合计数器(fields_count) 和 字段表集合(fields) 组成，如下:<br><img src="/posts/e730d627/java-class-fields.png" alt="alt text"></p>
+<p><strong>字段表集合计数器 (fields_count)</strong></p>
+<p>字段表集合计数器 (fields_count) 是一个项 u2 类型的无符号数，用于表示字段表集合中字段表的数量。</p>
+<p><strong>字段表集合 (fields)</strong></p>
+<p>字段表集合 (fields) 用于描述类或接口中声明的字段信息。它是一个数组，是一个由多个 字段表(field_info) 组成的数据结构。</p>
+<p>每个字段表包含了一个字段的详细信息，包括字段的名称、访问标志、描述符、属性表等。字段的名称表示字段的标识符，访问标志表示字段的访问级别和属性，描述符表示字段的类型和参数，属性表包含了与字段相关的附加信息，例如注解、默认值等。</p>
+<p>字段表集合中的每个字段表都按顺序排列，并且字段表的数量由字段表集合计数器 (fields_count) 确定。通过解析字段表集合，可以获取字节码文件中所有声明的字段的信息，从而了解类或接口的结构和属性。</p>
+<p><strong>(3) 字段表 field_info 结构</strong><br>字段表 field_info 的结构如下所示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">field_info &#123;</span><br><span class="line">    u2 access_flags;</span><br><span class="line">    u2 name_index;</span><br><span class="line">    u2 descriptor_index;</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将上面的结构汇总到表格中，如下:<br><img src="/posts/e730d627/java-class-fields-structure.png" alt="alt text"></p>
+<p>字段访问标志 (access_flags)</p>
+<p>字节码中的字段可以使用多个 标志(access_flags) 来描述当前字段的访问权限和基本属性，这些标志是一个 u2 的数据类型，其中可以设置的标志位和含义如下表所示:<br><img src="/posts/e730d627/java-class-fields-flags.png" alt="alt text"></p>
+<blockquote>
+<p>注: 由于语法约束，字段访问标志遵循如下规则:<br>● ① ACC_FINAL、ACC_VOLATILE 不能同时选择，而 ACC_PUBLIC、ACC_PRIVATE、ACC_PROTECTED 三个标志最多只能选择其一。<br>● ② 接口之中的字段必须有 ACC_PUBLIC、ACC_STATIC、ACC_FINAL 标志，这些都是由 Java 本身的语言规则所导致的。</p>
+</blockquote>
+<p><strong>字段名称索引 (name_index)</strong></p>
+<p>字段名称索引 (name_index) 存储了字段的名称在常量池中的索引值。通过读取字段表中的 name_index 字段，可以获取字段名称在常量池中的索引值，进而可以在常量池中查找到对应的名称常量项，得到字段的名称，实现对字段名称的引用和解析，使得在字节码文件中能够准确地识别和使用字段。</p>
+<blockquote>
+<p>注: 常量池中记录的名称是一个非限定名称，这里介绍下全限定名称和非限定名称这两个概念:<br>● 全限定名称: 如 “club&#x2F;mydlq&#x2F;TestClass” 就是全限定名称，和类名类似，不过分隔符使用的不是 “.”，而是使用的 “&#x2F;“ 作为分隔符，并且为了使连续的多个全限定名之间不产生混淆，在使用时会在最后加入一个 “;” 号表示全限定名结束。<br>● 非限定名称: 也称为简单名称，如 “java.lang.Object” 则表示为 “Object”，就是非限定名称。</p>
+</blockquote>
+<p><strong>字段描述符索引 (descriptor_index)</strong></p>
+<p>字段描述符索引也是一个关联到常量池中常量的索引，它的作用是用来描述字段的数据类型、方法的参数列表（包括数量、类型以及顺序）和返回值。根据描述符的规则，基本数据类型（byte、char、double、float、int、long、short、boolean）及代表无返回值的 void 类型，都用一个大写字符来表示，而对象则用字符 “L + 对象的全限定名” 来表示，归总如下表:<br><img src="/posts/e730d627/java-class-fields-index.png" alt="alt text"></p>
+<p><strong>字段属性表集合计数器 (attributes_count)</strong></p>
+<p>字段属性表集合计数器 (attributes_count) 是一个项 u2 类型的无符号数，表示该字段拥有的属性数量。通过读取该字段，可以确定字段属性表的数量，并在后续解析中按照数量进行迭代和处理。</p>
+<p><strong>字段属性表集合 (attributes)</strong></p>
+<p>字段属性表集合用于存储一些额外的信息，比如初始化值、一些注释信息等。字段属性表集合是一个数组，包含了多个属性表 (attribute_info)。</p>
+<p>属性表 attribut_info 结构如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u1 info[attribute_length]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不同属性具体的作用，需要参考属性表集合中对各个属性的介绍。</p>
+<p><strong>(4) 分析示例字节码中的字段表集合</strong><br>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件的字段表集合。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-field-collection.png" alt="alt text"></p>
+<p>根据图中的内容，可以分析出示例字节码文件中字段计数器的十六进制值为 0x0002，转换为十进制为 2，则说明字段表中存在两个字段。第一个字段为 private int a，第二个字段: private String b。</p>
+<h2 id="5-7-方法表集合"><a href="#5-7-方法表集合" class="headerlink" title="5.7 方法表集合"></a>5.7 方法表集合</h2><p><strong>(1) 方法表集合简介</strong><br>在字段表集合之后就是方法表集合 (methods)。 方法表集合用于对字节码文件中的方法进行描述，跟字段表集合非常相似，方法表 (method_info) 中的结构与同字段表一样，依次包括 访问标志(access_flags)、名称索引(name_index)、描述符索引(descriptor_index)、属性表集合(attributes) 几项。这些数据项目的含义也与字段表中的非常类似，仅在访问标志和属性表集合的可选项中有所区别。</p>
+<p>在字节码文件中，每一个方法表项都对应着一个类或者接口中的方法信息，比如方法的访问修饰符 (public、private 或 protected)，方法的返回值类型以及方法的参数信息等。</p>
+<p>一方面方法表只描述当前类或接口中声明的方法，不包括从父类或父接口继承的方法。另一方面，方法表有可能会出现由编译器自动添加的方法，最典型的便是编译器产生的方法信息 (如，类或接口初始化方法 <clinit>() 和实例初始化方法 <init>())。</init></clinit></p>
+<blockquote>
+<p>注:<br>在 Java 语言中，要重载 (Overload) 一个方法，除了要与原方法具有相同的简单名称之外，还要求必须拥有一个与原方法不同的特征签名，特征签名就是一个方法中各个参数在常量池中的字段符号引用的集合，也就是因为返回值不会包含在特征签名之中，因此 Java 语言里无法仅仅依靠返回值的不同来对一个已有方法进行重载。但在字节码文件格式中，特征签名的范围更大一些，只要描述符不是完全一致的两个方法就可以共存。也就是说如果两个方法有相同的名称和特征签名，但返回值不同，那么也是可以合法共存于同一个字节码文件中。</p>
+</blockquote>
+<p>也就是说，尽管 Java 语法规范并不允许在一个类或者接口中声明多个方法签名相同的方法，但是和 Java 语法规范相反，字节码文件中却恰恰允许存放多个方法签名相同的方法，唯一的条件就是这些方法之间的返回值不能相同</p>
+<p><strong>(2) 方法表集合的组成</strong><br>常量池主要是以 方法表集合计数器(methods_count) 和 方法表集合(methods) 组成，如下:</p>
+<p><img src="/posts/e730d627/java-class-methods.png" alt="alt text"><br><strong>方法表集合计数器 (methods_count)</strong></p>
+<p>方法表集合计数器 (methods_count) 是一个项 u2 类型的无符号数，用于表示方法表集合中方法表的数量。</p>
+<p><strong>方法表集合 (methods)</strong></p>
+<p>方法表集合 (methods) 用于存储类或接口中定义的方法的信息。它是一个数组，它是一个由多个方法属性表 (method_info) 组成的结构。</p>
+<p>每个方法都可以包含多个属性，这些属性提供了有关方法的额外信息，例如方法的访问修饰符、参数列表、异常表、局部变量表等。</p>
+<p>每个方法属性表由多个字段组成，包括方法名称索引(name_index)、方法描述符索引(descriptor_index)、访问标志(access_flags)、属性表集合(attributes)。</p>
+<p><strong>(3) 方法表 method_info 结构</strong><br>方法表 method_info 的结构如下所示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method_info &#123;</span><br><span class="line">    u2 access_flags;</span><br><span class="line">    u2 name_index;</span><br><span class="line">    u2 descriptor_index;</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将上面的结构汇总到表格中，如下:<br><img src="/posts/e730d627/java-class-methods-structure.png" alt="alt text"></p>
+<p><strong>方法访问标志 (access_flags)</strong></p>
+<p>和字段表中的访问标志一样，方法表中也可以使用多个标志 (access_flags) 来描述当前方法的访问权限和基本属性，例如 public、private、static 等。</p>
+<p>方法访问标志是一个 u2 的数据类型，其中可以设置的标志位和含义如下表所示:</p>
+<p><img src="/posts/e730d627/java-class-methods-flags.png" alt="alt text"></p>
+<p><strong>方法名称索引 (name_index)</strong></p>
+<p>方法名称索引 (name_index) 存储了方法的名称在常量池中的索引值。通过读取方法表中的 name_index 字段，可以获取方法名称在常量池中的索引值，进而可以在常量池中查找到对应的名称常量项，得到方法的名称，并进一步获取有关该方法的信息，如方法的参数和返回类型等。</p>
+<p><strong>方法描述符索引 (descriptor_index)</strong></p>
+<p>方法描述符索引 (descriptor_index) 存储了方法描述符在常量池中的索引值。通过该索引可以在常量池中定位到对应的常量项，从而获取该方法在常量池中的方法描述符。</p>
+<p>字段描述符是一个字符串，用于描述字段的类型和属性。它包含一系列字符，每个字符代表一种类型或属性。例如，常用的字段描述符有 “I” 表示整数类型，”Ljava&#x2F;lang&#x2F;String;” 表示字符串类型。</p>
+<p><strong>方法属性表集合计数器 (attributes_count)</strong></p>
+<p>方法属性表集合计数器 (attributes_count) 是一个项 u2 类型的无符号数，表示该字段拥有的属性数量。通过读取该字段，可以确定方法属性表的数量，并在后续解析中按照数量进行迭代和处理，根据属性的类型和内容进一步理解和分析方法的特性和行为。</p>
+<p><strong>方法属性集合 (attributes)</strong></p>
+<p>方法属性表集合用于存储一些额外的信息，比如初始化值、一些注释信息等。方法属性表集合是一个数组，包含了多个属性表 (attribute_info)。</p>
+<p>属性表 attribut_info 结构如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u1 info[attribute_length]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不同属性具体的作用，需要参考属性表集合中对各个属性的介绍。</p>
+<p><strong>(4) 分析示例字节码中的方法表集合</strong><br>根据上面的”示例字节码文件”为例，我们分析一下该示例字节码文件的方法表集合。这里给出示例字节码对应内容的截图，如下所示:</p>
+<p><img src="/posts/e730d627/java-class-method-collection-0.png" alt="alt text"></p>
+<p>根据图中的内容，可以分析出示例字节码文件中字段计数器的十六进制值为 0x0002，转换为十进制为 2，则说明字段表中存在两个方法。第一个方法为 public void <init>()，第二个字段为 public void a()。</init></p>
+<p>图中的属性结构为 attribute_info 结构，其中属性名称索引值为 0x000c，关联常量池中的第 12 个常量，常量的字面量为 Code，即该属性的名称，该属性一般用于存储方法的字节码指令。</p>
+<blockquote>
+<p>注: 因图大小原因，上图中只分析了方发表集合中的第一个方法表</p>
+</blockquote>
+<h2 id="5-8-属性表集合"><a href="#5-8-属性表集合" class="headerlink" title="5.8 属性表集合"></a>5.8 属性表集合</h2><p><strong>(1) 属性表集合简介</strong><br>在方法表集合之后就是 “属性表集合” (attributes)。属性表集合用于记录字节码文件中的辅助信息。 比如，字节码文件中的源文件名称，以及任何带有 RetentionPolicy.CLASS 或者 RetentionPolicy.RUNTIME 的注解。这类信息通常被用于 Java 虚拟机的验证和运行，以及 Java 程序的调试。</p>
+<p>此外，字段表和方法表中也都有各自的属性表，以描述某些场景专有的信息。</p>
+<p>注: 属性表集合的限制没有那么严格，不再要求各个属性表具有严格的顺序，并且只要不与已有的属性名重复，任何人实现的编译器都可以向属性表中写入自己定义的属性信息，但 Java 虚拟机运行时会忽略掉它不认识的属性。</p>
+<p><strong>(2) 属性表 attribute_info 结构</strong><br><strong>属性表集合计数器 (attributes_count)</strong></p>
+<p>属性表集合计数器 (attributes_count) 的值表示当前 class 文件属性表的成员个数。</p>
+<p><strong>属性表结构 (attribute_info)</strong></p>
+<p>属性表都是 attribute_info 结构，其结构比较灵活，各种不同的属性只要满足以下结构即可:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u1 info[attribute_length]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体描述信息归总到下表中:</p>
+<p><img src="/posts/e730d627/java-class-methods-attribute.png" alt="alt text"></p>
+<p><strong>(3) 属性类型</strong><br>属性表实际上可以有很多类型，Java 8 里面定义了 23 种属性。下面这些是虚拟机中预定义的属性:<br><img src="/posts/e730d627/java-class-methods-attribute-info.png" alt="alt text"></p>
+<p><strong>(4) 部分属性详解</strong><br>① Code 属性</p>
+<p>Code 属性用于存放方法体中的代码。方法体中的代码在经过 Javac 编译器处理之后，会变成字节码指令存储在 Code 属性内。一般情况下 Code 属性出现在方法表属性集合中，但并非所有方法表都有 Code 属性，如接口或者抽象类中的抽象方法，他们没有具体的方法体，因此也就不会有 Code 属性。</p>
+<p>Code 属性的结构如下:</p>
+<p><img src="/posts/e730d627/java-class-method-code.png" alt="alt text"><br>② Exceptions 属性</p>
+<p>Exceptions 属性位方法表的属性表中，该属性指出了一个方法可能抛出的非运行时异常，也就是方法描述时在 throws 关键字后面列举的异常，一个方法表的属性表中最多只能有一个 Exceptions 属性。</p>
+<p>Exceptions 属性的结构如下:<br><img src="/posts/e730d627/java-class-exception.png" alt="alt text"></p>
+<p>此属性中的 number_of_exceptions 项表示方法可能抛出 number_of_exceptions 种非运行时异常，每一种非运行时异常使用一个 exception_index_table 项表示。而 exception_index_table 是一个指向常量池中 CONSTANT_Class_info 型常量的索引。</p>
+<p>③ LineNumberTable 属性</p>
+<p>LineNumberTable 属性用于描述 Java 源码行号与字节码行号 (字节码的偏移量) 之间的对应关系，位于 Code 结构的属性表中。它并不是运行时必需的属性，但默认会生成到 Class 文件之中，可以在 Javac 中使用 -g：none 或 -g：lines 选项来取消或要求生成这项信息。如果选择不生成 LineNumberTable 属性，对程序运行产生的最主要影响就是当抛出异常时，堆栈中将不会显示出错的行号，并且在调试程序的时候也无法按照源码行来设置断点。</p>
+<p>LineNumberTable 属性的结构如下:</p>
+<p><img src="/posts/e730d627/java-class-linenumbertable.png" alt="alt text"><br>④ LocalVariableTable 属性</p>
+<p>LocalVariableTable 位于 Code 属性的属性表中，用于调试器在执行方法的过程中确定某个局部变量的值。在 Code 属性的属性表中 LocalVariableTable 属性可以按照任意顺序出现，不过 Code 属性中的每个局部变量最多只能有一个 LocalVariableTable 属性。</p>
+<p>LocalVariableTable 属性的结构如下:</p>
+<p><img src="/posts/e730d627/java-class-localvariabletable.png" alt="alt text"><br>⑤ Deprecated 属性</p>
+<p>Deprecated 属性用于表示某个类、字段或者方法，已经被程序作者定为不再推荐使用，它可以通过代码中使用 @deprecated 注解进行设置。</p>
+<p>Deprecated 属性的结构如下:</p>
+<p><img src="/posts/e730d627/java-class-deprecated.png" alt="alt text"><br>⑥ Synthetic 属性</p>
+<p>Synthetic 属性代表此字段或者方法并不是由 Java 源码直接产生的，而是由编译器自行添加的，在 JDK 5 之后，标识一个类、字段或者方法是编译器自动产生的，也可以设置它们访问标志中的 ACC_SYNTHETIC 标志位。</p>
+<p>编译器通过生成一些在源代码中不存在的 Synthetic 方法、字段甚至是整个类的方式，实现了越权访问 (越过 private 修饰器) 或其它绕开了语言限制的功能，这可以算是一种早期优化的技巧，其中最典型的例子就是枚举类中自动生成的枚举元素数组和嵌套类的桥接方法 (Bridge Method)。所有由不属于用户代码产生的类、方法及字段都应当至少设置 Synthetic 属性或者 ACC_SYNTHETIC 标志位中的一项，唯一的例外是实例构造器 <init>() 方法和类构造器 <clinit>() 方法。</clinit></init></p>
+<p>Synthetic 属性的结构如下:<br><img src="/posts/e730d627/java-class-synthetic.png" alt="alt text"><br>⑦ 其它属性…略</p>
+<p>JKD 8 虚拟机规范中总共定义了 23 个属性，这里就不一一介绍了，详情可以看 Orable 的 Java 虚拟机规范。</p>
+<h1 id="参考文献或转载相关："><a href="#参考文献或转载相关：" class="headerlink" title="参考文献或转载相关："></a>参考文献或转载相关：</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="/about/">AI-X</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.ai-x.co.uk/posts/e730d627.html">https://www.ai-x.co.uk/posts/e730d627.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.ai-x.co.uk" target="_blank">AI-X</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JAVA%E5%AD%97%E8%8A%82%E7%A0%81/">JAVA字节码</a><a class="post-meta__tags" href="/tags/class%E6%96%87%E4%BB%B6/">class文件</a></div><div class="post-share"><div class="social-share" data-image="/img/cover-java-virtual-machine-class-1001.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechatGet.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechatGet.jpg"></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/2089cfc6.html" title="Kubernetes容器扩容策略方式"><img class="cover" src="/img/cover-k8s.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Kubernetes容器扩容策略方式</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/posts/37dc559b.html" title="Java编程之JDK及Java虚拟机"><img class="cover" src="/img/cover-java-virtual-machine.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Java编程之JDK及Java虚拟机</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/aixlog.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">AI-X</div><div class="author-info-description">AI创造价值</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">128</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">391</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ukhxl"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ukhxl" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:lihengxu.uk@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">AI-X，AI创造价值，关注成长和拓展。本站内若内容或图片失效，请留言反馈。 部分素材来自网络，甚至未注明出处，若不小心影响到您的利益，请联系我们删除。</div></div><div class="card-widget card-widget aside aside-count"><div class="item-headline"><i class="fas fa-hourglass-half"></i><span>人生倒计时</span></div><div class="item-content"><div id="life-progress"></div> <script src="https://cdn-js.moeworld.top/gh/qxdn/life-progress@latest/autoload.min.js"></script></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list expandBtn" id="aside-cat-list">
+            <li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/"><span class="card-category-list-name">AI-X开发</span><span class="card-category-list-count">56</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">前端/浏览器技术</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">大模型/神经网络</span><span class="card-category-list-count">10</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9C%BA%E5%99%A8-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">机器/深度学习</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E6%9E%B6%E6%9E%84-%E6%A1%86%E6%9E%B6%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">架构/框架技术</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B-%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">编程/开发技术</span><span class="card-category-list-count">28</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/"><span class="card-category-list-name">AI-X拓展</span><span class="card-category-list-count">19</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E4%B8%9A%E8%B4%A2%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">业财相关</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%95%B0%E7%90%86%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">数理相关</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E6%98%93%E5%8C%BB%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">易医相关</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E8%8B%B1%E8%AF%AD%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">英语相关</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E6%8B%93%E5%B1%95/%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">项目运营</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item parent"><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">AI-X运维</span><span class="card-category-list-count">53</span><i class="fas fa-caret-left expand"></i></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/Linux-Unix-%E5%BC%80%E6%BA%90%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Linux/Unix/开源技术</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%89%E5%85%A8-%E8%AE%A4%E8%AF%81-%E6%BC%94%E7%BB%83%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">安全/认证/演练技术</span><span class="card-category-list-count">16</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%AE%B9%E5%99%A8-%E8%99%9A%E6%8B%9F%E5%8C%96-%E4%BA%91%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">容器/虚拟化/云技术</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E5%BE%AE%E8%BD%AF%E6%8A%80%E6%9C%AF-%E7%BB%88%E7%AB%AF%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">微软技术/终端技术</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">数据处理/存储技术</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89/"><span class="card-category-list-name">网络技术/软件定义</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-X%E8%BF%90%E7%BB%B4/%E8%AF%AD%E9%9F%B3%E7%94%B5%E8%AF%9D-%E8%A7%86%E9%A2%91%E4%BC%9A%E8%AE%AE/"><span class="card-category-list-name">语音电话/视频会议</span><span class="card-category-list-count">3</span></a></li></ul></li>
+          </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">一、什么是字节码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A4%BA%E4%BE%8B%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">二、示例字节码文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">三、字节码文件的相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%97%E9%9D%A2%E9%87%8F-%E7%AC%A6%E5%8F%B7%E5%BC%95%E7%94%A8"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 字面量&#x2F;符号引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%85%A8%E9%99%90%E5%AE%9A%E5%90%8D-%E7%AE%80%E5%8D%95%E5%90%8D%E7%A7%B0-%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 全限定名&#x2F;简单名称&#x2F;描述符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">四、字节码文件数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E4%B8%8E%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 字节码文件与类和接口的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E4%B8%AD%E4%B8%A4%E7%A7%8D%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 字节码文件中两种基本数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 字节码文件的组成结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、字节码文件数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E9%AD%94%E6%95%B0"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 魔数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E4%B8%BB-%E5%89%AF%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 主&#x2F;副版本号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E8%AE%BF%E9%97%AE%E6%A0%87%E5%BF%97"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 访问标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E7%B1%BB%E7%B4%A2%E5%BC%95%E3%80%81%E7%88%B6%E7%B1%BB%E7%B4%A2%E5%BC%95%E3%80%81%E6%8E%A5%E5%8F%A3%E7%B4%A2%E5%BC%95%E9%9B%86%E5%90%88"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 类索引、父类索引、接口索引集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-%E5%AD%97%E6%AE%B5%E8%A1%A8%E9%9B%86%E5%90%88"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 字段表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-7-%E6%96%B9%E6%B3%95%E8%A1%A8%E9%9B%86%E5%90%88"><span class="toc-number">5.7.</span> <span class="toc-text">5.7 方法表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-8-%E5%B1%9E%E6%80%A7%E8%A1%A8%E9%9B%86%E5%90%88"><span class="toc-number">5.8.</span> <span class="toc-text">5.8 属性表集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E6%88%96%E8%BD%AC%E8%BD%BD%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">参考文献或转载相关：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案"><img src="/img/defaultcover-top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Citrix Virtual Apps and Desktops 虚拟化解决方案"></a><div class="content"><a class="title" href="/posts/e904107c.html" title="Citrix Virtual Apps and Desktops 虚拟化解决方案">Citrix Virtual Apps and Desktops 虚拟化解决方案</a><time datetime="2025-09-21T18:05:38.000Z" title="发表于 2025-09-21 18:05:38">2025-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术"><img src="/img/cover-deepseekAI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入揭秘 DeepSeek 核心技术"></a><div class="content"><a class="title" href="/posts/fbf7ef29.html" title="深入揭秘 DeepSeek 核心技术">深入揭秘 DeepSeek 核心技术</a><time datetime="2025-03-08T18:53:17.000Z" title="发表于 2025-03-08 18:53:17">2025-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览"><img src="/img/cover-aibigmodels.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI大模型九大核心技术总览"></a><div class="content"><a class="title" href="/posts/36079c3e.html" title="AI大模型九大核心技术总览">AI大模型九大核心技术总览</a><time datetime="2025-02-25T22:28:11.000Z" title="发表于 2025-02-25 22:28:11">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS"><img src="/img/cover-swift.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨境支付中绕不开的SWIFT、CIPS、CHIPS"></a><div class="content"><a class="title" href="/posts/c3e19837.html" title="跨境支付中绕不开的SWIFT、CIPS、CHIPS">跨境支付中绕不开的SWIFT、CIPS、CHIPS</a><time datetime="2025-02-23T09:59:26.000Z" title="发表于 2025-02-23 09:59:26">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"><img src="/img/cover-javacore2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习"></a><div class="content"><a class="title" href="/posts/57f70b19.html" title="Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习">Java高并发核心编程 卷2：多线程、锁、JMM、JUC、高并发设计模式学习</a><time datetime="2025-02-19T22:06:59.000Z" title="发表于 2025-02-19 22:06:59">2025-02-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/background.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By AI-X</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, Welcome to AI-X! <a href="https://WWW.AI-X.CO.UK/">在积累中成长</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23liprvf5xSJScRbrM',
+      clientSecret: '5485e79c27b610b54188d21598eeed4bce81eba4',
+      repo: 'ukhxl.github.io',
+      owner: 'ukhxl',
+      admin: ['ukhxl'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'adefc6ca8b8764652d52e0492cdc5cb7'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[代码]') // replace code      
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0, 150) + '...'
+    }
+    return content
+  },
+
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}"></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '暂无评论'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
+    });
+  }
+
+  const getComment = ele => {
+    fetch('https://api.github.com/repos/ukhxl/ukhxl.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html || item.body),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at
+          }
+        })
+        findTrueUrl(githubArray, ele)
+      }).catch(e => {
+        console.error(e)
+        ele.textContent= "无法获取评论，请确认相关配置是否正确"
+      })
+  }
+  run(keyName, getComment)
+})</script><script>let tianliGPT_postSelector = '\#post \#article-container';let tianliGPT_key = 'XUMmGVoE8oT';</script><script src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script><script src="/js/customall.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zindex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start -->
+  <script data-pjax src="https://cdn.jsdelivr.net/gh/barry-flynn/hexo-github-calendar/hexo_githubcalendar.js"></script>
+  <script data-pjax>
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://github-calendar-api.meta-code.top/api?user=ukhxl";
+            var git_color =['#ebedf0', '#a2f7af', '#6ce480', '#54ad63', '#469252', '#31753c', '#1f5f2a', '#13531f', '#084111', '#032b09', '#000000'];
+            var git_user ="ukhxl";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="width:10%;height:100%;margin:0 auto;display: block"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log("已挂载hexo-github-calendar https://github.com/Barry-Flynn/hexo-github-calendar");
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:280px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱 AI-X开发 (56)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X运维/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 AI-X运维 (53)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X拓展/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 AI-X拓展 (19)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/大模型-神经网络/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 AI大模型 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/机器-深度学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.ai-x.co.uk/categories/AI-X开发/编程-开发技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎭 编程开发 (28)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://www.ai-x.co.uk/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-java-class.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">Java编程之Java Class对象与反射技术</a><div class="blog-slider__text">这篇文章介绍了 Java 编程中 Java Class 对象与反射技术的相关概念。Class 对象是 java.lang.Class 类的对象，保存着每个类型的运行时类型信息，如类名、属性、方法、父类信息等。</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/a69933de.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ipsec.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-05</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">华为路由器IPSecVPN配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/f8303065.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-machinelearning.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-16</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">机器学习技术的关键算法</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/47c84bfb.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ciscoesa.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-12</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">思科邮件网关ESA策略配置</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/1787a560.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="/img/cover-ise.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-04</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">思科ISE身份服务引擎-认证与授权系统</a><div class="blog-slider__text"> </div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/975fcf41.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
